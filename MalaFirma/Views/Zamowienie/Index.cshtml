@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Zamowienie>
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Zamówienia</h2>
+        </div>
+        <div class="col-6 text-end">
+            
+            <a asp-controller="Zamowienie" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Utwórz zamówienie
+            </a>
+        </div>
+    </div>
+    <br />
+
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Opis zamówienia
+                </th>
+                <th>
+                    Uwagi zamówienia
+                </th>
+                <th>
+                    Data zamówienia
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="30%">
+                        @obj.OpisZamowienia
+                    </td>
+                    <td width="20%">
+                        @obj.UwagiZamowienia
+                    </td>
+                    <td width="20%">
+                        @obj.DataZamowienia
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edytuj
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <a asp-controller="Zamowienie" asp-action="Delete" class="btn btn-danger delete"
+                       data-id="@obj.Id"
+                       data-controller="Zamowienie"
+                       data-action="Delete">
+                            <i class="bi bi-trash3-fill"></i> Usuń
+                        </a>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
