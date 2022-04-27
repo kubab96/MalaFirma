@@ -1,4 +1,5 @@
 ﻿using MalaFirma.DataAccess;
+using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,15 +7,15 @@ namespace MalaFirma.Controllers
 {
     public class ZamowienieController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IZamowienieRepository _db;
 
-        public ZamowienieController(ApplicationDbContext db)
+        public ZamowienieController(IZamowienieRepository db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            IEnumerable<Zamowienie> objZamowienieList = _db.Zamowienia;
+            IEnumerable<Zamowienie> objZamowienieList = _db.GetAll();
             return View(objZamowienieList);
         }
 
@@ -29,8 +30,8 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Zamowienia.Add(obj);
-                _db.SaveChanges();
+                _db.Add(obj);
+                _db.Save();
                 TempData["success"] = "Zamówienie zostało pomyślnie dodane";
                 return RedirectToAction("Index");
             }
@@ -43,7 +44,7 @@ namespace MalaFirma.Controllers
             {
                 return NotFound();
             }
-            var zamowienieFormDb = _db.Zamowienia.FirstOrDefault(x => x.Id == id);
+            var zamowienieFormDb = _db.GetFirstOrDefault(x => x.Id == id);
             if (zamowienieFormDb == null)
             {
                 return NotFound();
@@ -57,8 +58,8 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Zamowienia.Update(obj);
-                _db.SaveChanges();
+                _db.Update(obj);
+                _db.Save();
                 TempData["success"] = "Edycja zamówienia przebiegła pomyślnie";
                 return RedirectToAction("Index");
             }
@@ -67,13 +68,13 @@ namespace MalaFirma.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var obj = _db.Zamowienia.Find(id);
+            var obj = _db.GetFirstOrDefault(x=>x.Id==id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Zamowienia.Remove(obj);
-            _db.SaveChanges();
+            _db.Remove(obj);
+            _db.Save();
             TempData["delete"] = "Zamówienie zostało usunięte";
             return RedirectToAction("Index");
 
