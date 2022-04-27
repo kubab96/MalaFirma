@@ -33,16 +33,13 @@
                 <th>
 
                 </th>
-                <th>
-
-                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var obj in Model)
             {
                 <tr>
-                    <td width="30%">
+                    <td width="30%" >
                         @obj.OpisZamowienia
                     </td>
                     <td width="20%">
@@ -51,21 +48,17 @@
                     <td width="20%">
                         @obj.DataZamowienia
                     </td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                    <td style="display: block; margin:auto">
+
+                            <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary" style="width:40%; ">
                                 <i class="bi bi-pencil-square"></i> Edytuj
                             </a>
-                        </div>
-                    </td>
-                    <td>
-                        <a asp-controller="Zamowienie" asp-action="Delete" class="btn btn-danger delete"
+                            <a asp-controller="Zamowienie" asp-action="Delete" class="btn btn-danger delete "
                        data-id="@obj.Id"
                        data-controller="Zamowienie"
-                       data-action="Delete">
+                       data-action="Delete" style="width:40%">
                             <i class="bi bi-trash3-fill"></i> Usuń
                         </a>
-                        
                     </td>
                 </tr>
             }

@@ -1,7 +1,7 @@
 ﻿using MalaFirma.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace MalaFirma.Data
+namespace MalaFirma.DataAccess
 {
     public class ApplicationDbContext : DbContext
     {

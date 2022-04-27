@@ -1,4 +1,4 @@
-﻿using MalaFirma.Data;
+﻿using MalaFirma.DataAccess;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Mvc;
 

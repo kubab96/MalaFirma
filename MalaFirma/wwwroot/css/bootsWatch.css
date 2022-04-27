@@ -332,6 +332,7 @@ th {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
+    
 }
 
 label {
@@ -12281,6 +12282,7 @@ th {
 .table th,
 .table td {
     padding: 1.5rem;
+ 
 }
 
 .table-sm th,
