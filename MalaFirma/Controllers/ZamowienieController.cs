@@ -7,15 +7,15 @@ namespace MalaFirma.Controllers
 {
     public class ZamowienieController : Controller
     {
-        private readonly IZamowienieRepository _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ZamowienieController(IZamowienieRepository db)
+        public ZamowienieController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Zamowienie> objZamowienieList = _db.GetAll();
+            IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll();
             return View(objZamowienieList);
         }
 
@@ -30,8 +30,8 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.Save();
+                _unitOfWork.Zamowienie.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Zamówienie zostało pomyślnie dodane";
                 return RedirectToAction("Index");
             }
@@ -44,7 +44,7 @@ namespace MalaFirma.Controllers
             {
                 return NotFound();
             }
-            var zamowienieFormDb = _db.GetFirstOrDefault(x => x.Id == id);
+            var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             if (zamowienieFormDb == null)
             {
                 return NotFound();
@@ -58,8 +58,8 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Update(obj);
-                _db.Save();
+                _unitOfWork.Zamowienie.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Edycja zamówienia przebiegła pomyślnie";
                 return RedirectToAction("Index");
             }
@@ -68,13 +68,13 @@ namespace MalaFirma.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var obj = _db.GetFirstOrDefault(x=>x.Id==id);
+            var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x=>x.Id==id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Remove(obj);
-            _db.Save();
+            _unitOfWork.Zamowienie.Remove(obj);
+            _unitOfWork.Save();
             TempData["delete"] = "Zamówienie zostało usunięte";
             return RedirectToAction("Index");
 

@@ -1,5 +1,4 @@
-﻿using MalaFirma.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.DataAccess.Repository.IRepository
 {
-    public interface IZamowienieRepository : IRepository<Zamowienie>
+    public interface IUnitOfWork
     {
-        void Update(Zamowienie obj);
+        IZamowienieRepository Zamowienie { get; }
+        void Save();
     }
 }

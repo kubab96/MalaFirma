@@ -1,5 +1,4 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.DataAccess.Repository
 {
-    public class ZamowienieRepository : Repository<Zamowienie>, IZamowienieRepository
+    public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext _db;
-
-        public ZamowienieRepository(ApplicationDbContext db) : base(db)
+        public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
+            Zamowienie = new ZamowienieRepository(_db);
         }
+        public IZamowienieRepository Zamowienie { get; private set; }
 
-        public void Update(Zamowienie obj)
+        public void Save()
         {
-            _db.Zamowienia.Update(obj);
+            _db.SaveChanges();
         }
     }
 }
