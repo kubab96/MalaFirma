@@ -14,8 +14,10 @@ namespace MalaFirma.DataAccess.Repository
         {
             _db = db;
             Zamowienie = new ZamowienieRepository(_db);
+            Wymaganie = new WymaganieRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
+        public IWymaganieRepository Wymaganie { get; private set; }
 
         public void Save()
         {

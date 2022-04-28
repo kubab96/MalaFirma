@@ -8,7 +8,7 @@ namespace MalaFirma.DataAccess
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-
         public DbSet<Zamowienie> Zamowienia { get; set; }
+        public DbSet<Wymaganie> Wymagania { get; set; }
     }
 }
