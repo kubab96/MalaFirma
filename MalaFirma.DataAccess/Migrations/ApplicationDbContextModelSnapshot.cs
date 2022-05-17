@@ -22,21 +22,27 @@ namespace MalaFirma.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MalaFirma.Models.Wymaganie", b =>
+            modelBuilder.Entity("MalaFirma.Models.Proces", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Nazwa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Wymaganie")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ZamowienieId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Wymagania");
+                    b.HasIndex("ZamowienieId");
+
+                    b.ToTable("Procesy");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
@@ -50,17 +56,23 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataZamowienia")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OpisZamowienia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UwagiZamowienia")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Zamowienia");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Proces", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Zamowienie");
                 });
 #pragma warning restore 612, 618
         }

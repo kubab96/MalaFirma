@@ -1,4 +1,4 @@
-﻿@model Wymaganie
+﻿@model Proces
 
 <form method="post" asp-action="Edit">
     <div class="border pt-3 mt-4">
@@ -11,10 +11,15 @@
             <input asp-for="Nazwa" class="form-control" />
             <span asp-validation-for="Nazwa" class="text-danger"></span>
         </div>
+        <div class="mb-3">
+            <label asp-for="Wymaganie"></label>
+            <input asp-for="Wymaganie" class="form-control" />
+            <span asp-validation-for="Wymaganie" class="text-danger"></span>
+        </div>
         
         <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
-        <a asp-controller="Wymaganie" asp-action="Index" class="btn btn-primary" style="width:150px">
-            Wróć do wymagań
+        <a asp-controller="Proces" asp-action="Index" class="btn btn-primary" style="width:150px">
+            Wróć do zamówienia
         </a>
     </div>
 </form>

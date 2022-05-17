@@ -9,7 +9,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         IZamowienieRepository Zamowienie { get; }
-        IWymaganieRepository Wymaganie { get; }
+        IProcesRepository Proces { get; }
         void Save();
     }
 }

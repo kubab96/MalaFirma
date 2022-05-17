@@ -21,5 +21,10 @@ namespace MalaFirma.DataAccess.Repository
         {
             _db.Zamowienia.Update(obj);
         }
+        public void AddId(Zamowienie obj)
+        {
+            
+            _db.Zamowienia.Add(obj);
+        }
     }
 }

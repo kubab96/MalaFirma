@@ -1,0 +1,27 @@
+﻿@model ZamowienieProcesVM
+
+<div class="mb-3">
+            <label asp-for="Zamowienia.UwagiZamowienia"></label>
+            <input asp-for="Zamowienia.UwagiZamowienia" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Zamowienia.DataZamowienia"></label>
+            <input asp-for="Zamowienia.DataZamowienia" class="form-control" />
+        </div>
+
+        <table>
+    <tr>
+        <th>Nazwa</th>
+        <th>Wymaganie</th>
+        <th>ZamowienieId</th>
+    </tr>
+    @foreach (var obj in Model.Procesy)
+    {
+        <tr>
+            <td>@obj.Nazwa</td>
+            <td>@obj.Wymaganie</td>
+            <td>@obj.ZamowienieId</td>
+        </tr>
+    }
+</table>
+

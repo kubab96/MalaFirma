@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MalaFirma.Controllers
 {
-    public class WymaganieController : Controller
+    public class ProcesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public WymaganieController(IUnitOfWork unitOfWork)
+        public ProcesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll();
-            return View(objWymaganieList);
+            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll();
+            return View(objProcesList);
         }
 
         public IActionResult Create()
@@ -26,16 +26,14 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Wymaganie obj)
+        public IActionResult Create(Proces obj, int id)
         {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Wymaganie.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Wymaganie zostało pomyślnie dodane";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
+
+            _unitOfWork.Proces.AddId(obj, id);
+            _unitOfWork.Save();
+            TempData["success"] = "Proces został pomyślnie dodany";
+            return RedirectToAction("SzczegolyZamowienia", "Zamowienie", new { id });
+
         }
 
         public IActionResult Edit(int? id)
@@ -44,23 +42,23 @@ namespace MalaFirma.Controllers
             {
                 return NotFound();
             }
-            var wymaganieFormDb = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
-            if (wymaganieFormDb == null)
+            var procesFormDb = _unitOfWork.Proces.GetFirstOrDefault(x => x.Id == id);
+            if (procesFormDb == null)
             {
                 return NotFound();
             }
-            return View(wymaganieFormDb);
+            return View(procesFormDb);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Wymaganie obj)
+        public IActionResult Edit(Proces obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Wymaganie.Update(obj);
+                _unitOfWork.Proces.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Edycja wymagania przebiegła pomyślnie";
+                TempData["success"] = "Edycja procesu przebiegła pomyślnie";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -68,14 +66,14 @@ namespace MalaFirma.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var obj = _unitOfWork.Wymaganie.GetFirstOrDefault(x=>x.Id==id);
+            var obj = _unitOfWork.Proces.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _unitOfWork.Wymaganie.Remove(obj);
+            _unitOfWork.Proces.Remove(obj);
             _unitOfWork.Save();
-            TempData["delete"] = "Wymaganie zostało usunięte";
+            TempData["delete"] = "Proces został usunięty";
             return RedirectToAction("Index");
 
         }

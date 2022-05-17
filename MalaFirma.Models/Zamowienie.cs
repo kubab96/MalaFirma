@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,7 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Data zamówienia jest wymagana")]
         [DisplayName("Data zamówienia")]
         public DateTime DataZamowienia { get; set; } = DateTime.Now;  
-        [Required(ErrorMessage ="Opis zamówienia jest wymagany")]
-        [DisplayName("Opis zamówienia")]
-        public string OpisZamowienia { get; set; }
         [DisplayName("Uwagi zamówienia")]
-        public string UwagiZamowienia { get; set; }
+        public string? UwagiZamowienia { get; set; }
     }
 }

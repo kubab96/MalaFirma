@@ -9,6 +9,6 @@ namespace MalaFirma.DataAccess
         {
         }
         public DbSet<Zamowienie> Zamowienia { get; set; }
-        public DbSet<Wymaganie> Wymagania { get; set; }
+        public DbSet<Proces> Procesy { get; set; }
     }
 }

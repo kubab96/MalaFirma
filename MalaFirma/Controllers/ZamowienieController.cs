@@ -33,7 +33,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Zamowienie.Add(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Zamówienie zostało pomyślnie dodane";
-                return RedirectToAction("Index");
+                return RedirectToAction("CreateProces", new { id = obj.Id });
             }
             return View(obj);
         }
@@ -68,7 +68,7 @@ namespace MalaFirma.Controllers
 
         public IActionResult Delete(int? id)
         {
-            var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x=>x.Id==id);
+            var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
             {
                 return NotFound();
@@ -79,5 +79,124 @@ namespace MalaFirma.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public ActionResult DetailsZamowienia(int? id)
+        {
+            ZamowienieProcesVM model = new ZamowienieProcesVM();
+            model.Zamowienia = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
+            model.Procesy = objProcesList;
+            return View(model);
+        }
+
+        public IActionResult CreateProces(int? id)
+        {
+            ZamowienieProcesVM model = new ZamowienieProcesVM();
+            model.Zamowienia = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
+            model.Procesy = objProcesList;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id)
+        {
+
+            if (fc["SubmitForm"] == "Create")
+            {
+                var result = _unitOfWork.Proces.GetFirstOrDefault(x => x.ZamowienieId == id);
+                if (result == null)
+                {
+                    TempData["error"] = "Wymagane jest dodanie przynajmniej jednego procesu";
+                    return CreateProces(id);
+                }
+                else
+                {
+                    return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id });
+                }
+            }
+
+            if (fc["SubmitForm"] == "AddProces")
+            {
+                _unitOfWork.Proces.AddId(obj.Proces, id);
+                _unitOfWork.Save();
+                ModelState.Clear();
+                TempData["success"] = "Proces został pomyślnie dodany";
+                return CreateProces(id);
+            }
+            return CreateProces(id);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        //public IActionResult Createe(IFormCollection fc, ZamowienieCreateVM obj)
+        //{
+
+        //    if (fc["SubmitForm"] == "Preview")
+        //    {
+        //        _unitOfWork.Zamowienie.Add(obj.Zamowienia);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "Zamówienie zostało pomyślnie dodane";
+        //        return RedirectToAction("Index");
+        //    }
+        //    if (fc["SubmitForm"] == "Save")
+        //    {
+
+        //        _unitOfWork.Zamowienie.Add(obj.Zamowienia);
+
+        //        var doc = _unitOfWork.Zamowienie.GetFirstOrDefault(d => d.Id == obj.Zamowienia.Id);
+        //        if (doc == null)
+        //        {
+        //            _unitOfWork.Save();
+        //        }
+        //        else { 
+        //        _unitOfWork.Proces.AddId(obj.Procesy, obj.Zamowienia.Id);
+        //        _unitOfWork.Save();
+        //        }
+        //        return View(obj);
+
+        //    }
+
+        //    return View(obj);
+        //}
+        //public IActionResult Createe()
+        //{
+        //    ZamowienieCreateVM modell = new ZamowienieCreateVM();
+        //    return View(modell);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Createee(ZamowienieProcesVM obj)
+        //{
+        //    _unitOfWork.Proces.AddId(obj.Procesy, obj.Zamowienia.Id);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = "Zamówienie zostało pomyślnie dodane";
+        //    return RedirectToAction("Index");
+        //}
     }
 }

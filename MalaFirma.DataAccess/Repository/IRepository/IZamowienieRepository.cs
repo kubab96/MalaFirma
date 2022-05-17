@@ -10,5 +10,6 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     public interface IZamowienieRepository : IRepository<Zamowienie>
     {
         void Update(Zamowienie obj);
+        void AddId (Zamowienie obj);
     }
 }

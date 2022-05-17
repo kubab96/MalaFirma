@@ -7,11 +7,6 @@
             <hr />
         </div>
         <div class="mb-3">
-            <label asp-for="OpisZamowienia"></label>
-            <input asp-for="OpisZamowienia" class="form-control" />
-            <span asp-validation-for="OpisZamowienia" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
             <label asp-for="UwagiZamowienia"></label>
             <input asp-for="UwagiZamowienia" class="form-control" />
         </div>
@@ -20,8 +15,8 @@
             <input class="form-control" asp-for="DataZamowienia" />
             <span asp-validation-for="DataZamowienia" class="text-danger"></span>
         </div>*@
-        
-        <button type="submit" class="btn btn-primary" style="width:150px">Utwórz</button>
+
+        <button type="submit" class="btn btn-primary" style="width:150px">Przejdz do procesów</button>
         <a asp-controller="Zamowienie" asp-action="Index" class="btn btn-primary" style="width:150px">
             Wróć do zamówień
         </a>

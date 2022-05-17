@@ -22,9 +22,6 @@
         <thead>
             <tr>
                 <th>
-                    Opis zamówienia
-                </th>
-                <th>
                     Uwagi zamówienia
                 </th>
                 <th>
@@ -39,9 +36,6 @@
             @foreach (var obj in Model)
             {
                 <tr>
-                    <td width="30%" >
-                        @obj.OpisZamowienia
-                    </td>
                     <td width="20%">
                         @obj.UwagiZamowienia
                     </td>
@@ -58,6 +52,12 @@
                        data-controller="Zamowienie"
                        data-action="Delete" style="width:40%">
                             <i class="bi bi-trash3-fill"></i> Usuń
+                        </a>
+                        <a asp-controller="Zamowienie" asp-action="SzczegolyZamowienia" asp-route-id="@obj.Id" class="btn btn-primary" style="width:40%; ">
+                            <i class="bi bi-pencil-square"></i> Szczegóły zamówienia
+                        </a>
+                        <a asp-controller="Proces" asp-action="Create" asp-route-id="@obj.Id" class="btn btn-primary" style="width:150px">
+                            Dodaj wymaganie
                         </a>
                     </td>
                 </tr>

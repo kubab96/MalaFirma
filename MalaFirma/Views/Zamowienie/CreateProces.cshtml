@@ -1,0 +1,56 @@
+﻿@model ZamowienieProcesVM
+
+<partial name="_Notification" />
+
+<div class="mb-3">
+            <label asp-for="Zamowienia.UwagiZamowienia"></label>
+            <input asp-for="Zamowienia.UwagiZamowienia" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Zamowienia.DataZamowienia"></label>
+            <input asp-for="Zamowienia.DataZamowienia" class="form-control" />
+        </div>
+
+        <table>
+    <tr>
+        <th>Nazwa</th>
+        <th>Wymaganie</th>
+        <th>ZamowienieId</th>
+    </tr>
+    @foreach (var obj in Model.Procesy)
+    {
+        <tr>
+            <td>@obj.Nazwa</td>
+            <td>@obj.Wymaganie</td>
+            <td>@obj.ZamowienieId</td>
+        </tr>
+    }
+</table>
+
+<form method="post">
+    <div class="border pt-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Utwórz proces</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Proces.Nazwa"></label>
+            <input asp-for="Proces.Nazwa" class="form-control" />
+            <span asp-validation-for="Proces.Nazwa" class="text-danger"></span>
+        </div>
+         <div class="mb-3">
+            <label asp-for="Proces.Wymaganie"></label>
+            <input asp-for="Proces.Wymaganie" class="form-control" />
+            <span asp-validation-for="Proces.Wymaganie" class="text-danger"></span>
+        </div>
+        
+        <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary" style="width:150px">Dodaj wymaganie</button>
+        <button type="submit" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary" style="width:150px">Zakończ</button>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
