@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220505134930_test")]
-    partial class test
+    [Migration("20220520161139_potwierdzenie")]
+    partial class potwierdzenie
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,23 @@ namespace MalaFirma.DataAccess.Migrations
                     b.ToTable("Procesy");
                 });
 
+            modelBuilder.Entity("MalaFirma.Models.Pytanie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pytania");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
                 {
                     b.Property<int>("Id")
@@ -57,6 +74,13 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.Property<DateTime>("DataZamowienia")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Potwierdzenie")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UwagiZamowienia")
                         .HasColumnType("nvarchar(max)");

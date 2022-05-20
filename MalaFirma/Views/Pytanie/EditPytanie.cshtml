@@ -1,0 +1,28 @@
+﻿@model Pytanie
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Edytuj pytanie</h6>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Nazwa"></label>
+                    <input asp-for="Nazwa" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                <a asp-controller="Pytanie" asp-action="Index" class="btn btn-primary" style="width:150px">
+                    Wróć do pytań
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}

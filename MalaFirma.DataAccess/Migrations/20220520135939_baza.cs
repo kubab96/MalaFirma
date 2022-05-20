@@ -5,10 +5,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MalaFirma.DataAccess.Migrations
 {
-    public partial class test : Migration
+    public partial class baza : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Pytania",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pytania", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Zamowienia",
                 columns: table => new
@@ -53,6 +66,9 @@ namespace MalaFirma.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Procesy");
+
+            migrationBuilder.DropTable(
+                name: "Pytania");
 
             migrationBuilder.DropTable(
                 name: "Zamowienia");

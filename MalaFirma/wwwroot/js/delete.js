@@ -1,4 +1,3 @@
-
 $((function () {
     var url;
     var redirectUrl;
@@ -9,13 +8,13 @@ $((function () {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Uwaga!</h4>
+                    <h4 class="modal-title" id="myModalLabel">Ostrze&#380;enie!</h4>
                 </div>
                 <div class="modal-body delete-modal-body">
-                    Czy na pewno chcesz usun&#261;&#267; to zam&#243;wienie?
+                    
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel-delete">Anuluj</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="cancel-delete">Anuluj</button>
                     <button type="button" class="btn btn-danger" id="confirm-delete">Usu&#324;</button>
                 </div>
                 </div>

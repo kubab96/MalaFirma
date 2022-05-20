@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.DataAccess.Repository.IRepository
 {
-    public interface IZamowienieRepository : IRepository<Zamowienie>
+    public interface IPytanieRepository : IRepository<Pytanie>
     {
-        void Update(Zamowienie obj);
-        void AddId (Zamowienie obj);
-        void Confirm (Zamowienie obj);
+        void Update(Pytanie obj);
+        void AddId(Pytanie obj);
     }
 }

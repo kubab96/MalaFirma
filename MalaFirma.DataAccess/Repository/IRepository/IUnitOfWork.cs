@@ -10,6 +10,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     {
         IZamowienieRepository Zamowienie { get; }
         IProcesRepository Proces { get; }
+        IPytanieRepository Pytanie { get; }
         void Save();
     }
 }

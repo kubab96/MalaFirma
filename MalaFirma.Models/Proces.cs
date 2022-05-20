@@ -13,8 +13,8 @@ namespace MalaFirma.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Opis zamówienia jest wymagany")]
-        [DisplayName("Opis zamówienia")]
+        [Required(ErrorMessage = "Nazwa zamówienia jest wymagana")]
+        [DisplayName("Nazwa zamówienia")]
         public string Nazwa { get; set; }
         [Required(ErrorMessage = "Wymagane jest wpisanie wymagania")]
         public string Wymaganie { get; set; }

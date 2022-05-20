@@ -13,6 +13,7 @@ namespace MalaFirma.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        #region Zamowienia
         public IActionResult Index()
         {
             IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll();
@@ -30,9 +31,9 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
+                obj.Potwierdzenie = false;
                 _unitOfWork.Zamowienie.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Zamówienie zostało pomyślnie dodane";
                 return RedirectToAction("CreateProces", new { id = obj.Id });
             }
             return View(obj);
@@ -66,6 +67,7 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
+        
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
@@ -89,6 +91,9 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Procesy
         public IActionResult CreateProces(int? id)
         {
             ZamowienieProcesVM model = new ZamowienieProcesVM();
@@ -100,19 +105,25 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id)
+        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id, Zamowienie obj2)
         {
 
             if (fc["SubmitForm"] == "Create")
             {
+                
                 var result = _unitOfWork.Proces.GetFirstOrDefault(x => x.ZamowienieId == id);
                 if (result == null)
                 {
                     TempData["error"] = "Wymagane jest dodanie przynajmniej jednego procesu";
-                    return CreateProces(id);
+                    return View();
                 }
                 else
                 {
+                    var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+                    zamowienieFormDb.Potwierdzenie = true;
+                    _unitOfWork.Zamowienie.Update(zamowienieFormDb);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Zamówienie zostało pomyślnie dodane";
                     return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id });
                 }
             }
@@ -125,12 +136,10 @@ namespace MalaFirma.Controllers
                 TempData["success"] = "Proces został pomyślnie dodany";
                 return CreateProces(id);
             }
-            return CreateProces(id);
+            return View();
         }
 
-
-
-
+        #endregion
 
 
 
