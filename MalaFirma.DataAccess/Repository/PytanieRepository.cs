@@ -24,6 +24,15 @@ namespace MalaFirma.DataAccess.Repository
         public void AddId(Pytanie obj)
         {
 
+            if (_db.Pytania.FirstOrDefault() == null)
+            {
+                obj.Id = 1;
+            }
+            else
+            {
+                obj.Id = _db.Pytania.Max(x => x.Id + 1);
+
+            }
             _db.Pytania.Add(obj);
         }
     }

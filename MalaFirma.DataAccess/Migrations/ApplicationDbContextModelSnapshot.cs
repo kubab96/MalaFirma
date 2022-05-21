@@ -22,6 +22,30 @@ namespace MalaFirma.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("MalaFirma.Models.Odpowiedz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("IdPytania")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PytanieId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Wartosc")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PytanieId");
+
+                    b.ToTable("Odpowiedzi");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>
                 {
                     b.Property<int>("Id")
@@ -48,10 +72,7 @@ namespace MalaFirma.DataAccess.Migrations
             modelBuilder.Entity("MalaFirma.Models.Pytanie", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Nazwa")
                         .IsRequired()
@@ -86,6 +107,17 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Zamowienia");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Odpowiedz", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Pytanie", "Pytanie")
+                        .WithMany()
+                        .HasForeignKey("PytanieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pytanie");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>

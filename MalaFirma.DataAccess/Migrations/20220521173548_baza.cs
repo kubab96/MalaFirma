@@ -13,8 +13,7 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "Pytania",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -28,12 +27,35 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataZamowienia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Potwierdzenie = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Zamowienia", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Odpowiedzi",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Wartosc = table.Column<bool>(type: "bit", nullable: false),
+                    IdPytania = table.Column<int>(type: "int", nullable: false),
+                    PytanieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Odpowiedzi", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Odpowiedzi_Pytania_PytanieId",
+                        column: x => x.PytanieId,
+                        principalTable: "Pytania",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +79,11 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Odpowiedzi_PytanieId",
+                table: "Odpowiedzi",
+                column: "PytanieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Procesy_ZamowienieId",
                 table: "Procesy",
                 column: "ZamowienieId");
@@ -64,6 +91,9 @@ namespace MalaFirma.DataAccess.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Odpowiedzi");
+
             migrationBuilder.DropTable(
                 name: "Procesy");
 

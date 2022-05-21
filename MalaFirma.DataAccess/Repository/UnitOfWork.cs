@@ -16,10 +16,12 @@ namespace MalaFirma.DataAccess.Repository
             Zamowienie = new ZamowienieRepository(_db);
             Proces = new ProcesRepository(_db);
             Pytanie = new PytanieRepository(_db);
+            Odpowiedz = new OdpowiedzRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IProcesRepository Proces { get; private set; }
         public IPytanieRepository Pytanie { get; private set; }
+        public IOdpowiedzRepository Odpowiedz { get; private set; }
 
         public void Save()
         {

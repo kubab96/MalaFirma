@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MalaFirma.Models
 {
-    public class Pytanie
+    public class Odpowiedz
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         public int Id { get; set; }
-        public string Nazwa { get; set; }
+        public bool Wartosc { get; set; }
+        public int IdPytania {get; set;}
+        public Pytanie Pytanie { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(PytanieVM obj)
         {
-            _unitOfWork.Pytanie.Add(obj.Pytanie);
+            _unitOfWork.Pytanie.AddId(obj.Pytanie);
             _unitOfWork.Save();
             TempData["success"] = "Pytanie zostało pomyślnie dodane";
             return RedirectToAction("Index");
@@ -70,6 +70,30 @@ namespace MalaFirma.Controllers
             TempData["delete"] = "Pytanie zostało usunięte";
             return RedirectToAction("Index");
 
+        }
+        public IActionResult PrzegladZamowienia()
+        {
+            PrzegladVM model = new PrzegladVM();
+            model.Pytania = _unitOfWork.Pytanie.GetAll();
+            return View(model);
+        }
+
+        public IActionResult AddOdpowiedz(int? id)
+        {
+            PrzegladVM model = new PrzegladVM();
+            model.Pytanie = _unitOfWork.Pytanie.GetFirstOrDefault(x => x.Id == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddOdpowiedz(PrzegladVM obj, int id)
+        {
+            _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, id);
+            _unitOfWork.Save();
+            ModelState.Clear();
+            TempData["success"] = "Proces został pomyślnie dodany";
+            return PrzegladZamowienia();
         }
     }
 }

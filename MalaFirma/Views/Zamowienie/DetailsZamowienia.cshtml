@@ -6,18 +6,26 @@
             <h6 class="m-0 font-weight-bold text-primary">Dane zamówienia</h6>
         </div>
         <div class="card-body">
-            <div class="mb-3">
-                <label asp-for="Zamowienia.Nazwa"></label>
-                <input asp-for="Zamowienia.Nazwa" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="Zamowienia.UwagiZamowienia"></label>
-                <input asp-for="Zamowienia.UwagiZamowienia" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="Zamowienia.DataZamowienia"></label>
-                <input asp-for="Zamowienia.DataZamowienia" class="form-control" />
-            </div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienia.Nazwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienia.Nazwa)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienia.UwagiZamowienia)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienia.UwagiZamowienia)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienia.DataZamowienia)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienia.DataZamowienia)
+                </dd>
+            </dl>
             @*<div class="card">
                 <div class="card-body">
                 This is some text within a card body.
@@ -44,12 +52,12 @@
                     </tr>
                 }
         </table>
-        
+
     </div>
     <a asp-controller="Zamowienie" asp-action="CreateProces" asp-route-id="@Model.Zamowienia.Id" class="btn btn-primary">
-            Dodaj wymaganie
-        </a>
-        <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@Model.Zamowienia.Id" class="btn btn-warning">
-            <i class="bi bi-pencil-square"></i> Edytuj
-        </a>
+        Dodaj wymaganie
+    </a>
+    <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@Model.Zamowienia.Id" class="btn btn-warning">
+        <i class="bi bi-pencil-square"></i> Edytuj
+    </a>
 </div>
