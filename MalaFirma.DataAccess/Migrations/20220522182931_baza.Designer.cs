@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220521173548_baza")]
+    [Migration("20220522182931_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,18 +32,20 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdPytania")
-                        .HasColumnType("int");
-
                     b.Property<int>("PytanieId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Wartosc")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ZamowienieId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PytanieId");
+
+                    b.HasIndex("ZamowienieId");
 
                     b.ToTable("Odpowiedzi");
                 });
@@ -119,7 +121,15 @@ namespace MalaFirma.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Pytanie");
+
+                    b.Navigation("Zamowienie");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>

@@ -30,18 +30,20 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdPytania")
-                        .HasColumnType("int");
-
                     b.Property<int>("PytanieId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Wartosc")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ZamowienieId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PytanieId");
+
+                    b.HasIndex("ZamowienieId");
 
                     b.ToTable("Odpowiedzi");
                 });
@@ -117,7 +119,15 @@ namespace MalaFirma.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Pytanie");
+
+                    b.Navigation("Zamowienie");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>

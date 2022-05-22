@@ -12,7 +12,9 @@ namespace MalaFirma.Models
         [Key]
         public int Id { get; set; }
         public bool Wartosc { get; set; }
-        public int IdPytania {get; set;}
+        public int PytanieId { get; set;}
         public Pytanie Pytanie { get; set; }
+        public int ZamowienieId { get; set; }
+        public Zamowienie Zamowienie { get; set; }
     }
 }

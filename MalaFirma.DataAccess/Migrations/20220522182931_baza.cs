@@ -44,8 +44,8 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Wartosc = table.Column<bool>(type: "bit", nullable: false),
-                    IdPytania = table.Column<int>(type: "int", nullable: false),
-                    PytanieId = table.Column<int>(type: "int", nullable: false)
+                    PytanieId = table.Column<int>(type: "int", nullable: false),
+                    ZamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,6 +54,12 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_Odpowiedzi_Pytania_PytanieId",
                         column: x => x.PytanieId,
                         principalTable: "Pytania",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Odpowiedzi_Zamowienia_ZamowienieId",
+                        column: x => x.ZamowienieId,
+                        principalTable: "Zamowienia",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -82,6 +88,11 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "IX_Odpowiedzi_PytanieId",
                 table: "Odpowiedzi",
                 column: "PytanieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Odpowiedzi_ZamowienieId",
+                table: "Odpowiedzi",
+                column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Procesy_ZamowienieId",

@@ -1,0 +1,85 @@
+﻿@model PrzegladVM
+@{
+    ViewData["Title"] = "Index";
+    
+}
+<partial name="_Notification" />
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Przegląd zamówienia</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @using MoreLinq
+                    @foreach (var obj in Model.Pytania.ZipLongest(Model.Odpowiedzi, (a,b)=>new {Pyt=a, Odp = b }))
+                    {
+                        <tr>
+                            <td width="80%">
+                                @obj.Pyt.Nazwa
+                            </td>
+                            <td style="display: block; margin:auto">
+
+                                @if(obj.Odp != null && obj.Odp.ZamowienieId == Model.Zamowienie.Id){
+                                @Html.Raw("ss")
+                                }
+                                else
+                                {
+                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Pyt.Id" class="btn btn-primary" style="width:40%; ">
+                                    <i class="bi bi-pencil-square"></i> Odpowiedz
+                                    </a>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+
+
+                    @*obj.Odp.ZamowienieId == Model.Zamowienie.Id && obj.Odp.Wartosc == false*@
+
+
+                    @*@foreach (var obj2 in Model.Odpowiedzi)
+                    {
+                        <tr>
+                            <td width="80%">
+                                @Model.Pytania
+                            </td>
+                            <td style="display: block; margin:auto">
+
+                                @if(obj2.Wartosc == false){
+                                <a asp-controller="Pytanie" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@Model.Pytanie.Id" class="btn btn-primary" style="width:40%; ">
+                                    <i class="bi bi-pencil-square"></i> Odpowiedz
+                                    </a>
+                                }
+                                else
+                                {
+                                    @Html.Raw("as")
+                                }
+
+                            </td>
+                        </tr>
+                    }*@
+                </tbody>
+            </table>
+            @*@foreach (var obj2 in Model.Odpowiedzi)
+                @if (obj2.ZamowienieId == Model.Zamowienie.Id)
+                {
+                <a asp-controller="Pytanie" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary" style="width:40%; ">
+                <i class="bi bi-pencil-square"></i> Odpowiedz
+                </a>
+                }
+                else
+                {
+                @Html.Raw("halo2")
+                }*@
+        </div>
+    </div>
+</div>

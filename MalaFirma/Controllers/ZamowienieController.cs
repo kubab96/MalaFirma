@@ -79,7 +79,6 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
             TempData["delete"] = "Zamówienie zostało usunięte";
             return RedirectToAction("Index");
-
         }
 
         public ActionResult DetailsZamowienia(int? id)
@@ -105,17 +104,15 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id, Zamowienie obj2)
+        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id)
         {
-
             if (fc["SubmitForm"] == "Create")
             {
-                
                 var result = _unitOfWork.Proces.GetFirstOrDefault(x => x.ZamowienieId == id);
                 if (result == null)
                 {
                     TempData["error"] = "Wymagane jest dodanie przynajmniej jednego procesu";
-                    return View();
+                    return CreateProces(id);
                 }
                 else
                 {

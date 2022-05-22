@@ -10,6 +10,6 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     public interface IOdpowiedzRepository : IRepository<Odpowiedz>
     {
         void Update(Odpowiedz obj);
-        void AddId(Odpowiedz obj, int id);
+        void AddId(Odpowiedz obj, int idPytania, int idZamowienia);
     }
 }

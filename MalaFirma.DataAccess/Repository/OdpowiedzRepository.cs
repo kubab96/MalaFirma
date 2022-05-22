@@ -21,9 +21,10 @@ namespace MalaFirma.DataAccess.Repository
         {
             _db.Odpowiedzi.Update(obj);
         }
-        public void AddId(Odpowiedz obj, int id)
+        public void AddId(Odpowiedz obj, int idPytania, int idZamowienia)
         {
-            obj.IdPytania = id;
+            obj.PytanieId = idPytania;
+            obj.ZamowienieId = idZamowienia;
             _db.Odpowiedzi.Add(obj);
         }
 

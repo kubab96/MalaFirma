@@ -2,18 +2,19 @@
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Mvc;
+using MoreLinq;
 
 namespace MalaFirma.Controllers
 {
-    public class PytanieController : Controller
+    public class PrzegladController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public PytanieController(IUnitOfWork unitOfWork)
+        public PrzegladController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Pytanie()
         {
             PytanieVM model = new PytanieVM();
             model.Pytania = _unitOfWork.Pytanie.GetAll();
@@ -22,12 +23,12 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(PytanieVM obj)
+        public IActionResult Pytanie(PytanieVM obj)
         {
             _unitOfWork.Pytanie.AddId(obj.Pytanie);
             _unitOfWork.Save();
             TempData["success"] = "Pytanie zostało pomyślnie dodane";
-            return RedirectToAction("Index");
+            return RedirectToAction("Pytanie");
         }
 
         public IActionResult EditPytanie(int? id)
@@ -53,7 +54,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Pytanie.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Edycja pytania przebiegła pomyślnie";
-                return RedirectToAction("Index");
+                return RedirectToAction("Pytanie");
             }
             return View(obj);
         }
@@ -68,32 +69,39 @@ namespace MalaFirma.Controllers
             _unitOfWork.Pytanie.Remove(obj);
             _unitOfWork.Save();
             TempData["delete"] = "Pytanie zostało usunięte";
-            return RedirectToAction("Index");
+            return RedirectToAction("Pytanie");
 
         }
-        public IActionResult PrzegladZamowienia()
+        public IActionResult PrzegladZamowienia(int? idZamowienia)
         {
             PrzegladVM model = new PrzegladVM();
             model.Pytania = _unitOfWork.Pytanie.GetAll();
+            model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll();
+
+            //model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
+            //IEnumerable<Odpowiedz> objOdpowiedziList = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
+            //model.Odpowiedzi = objOdpowiedziList;
+            //model.Odpowiedz = _unitOfWork.Odpowiedz.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             return View(model);
         }
 
-        public IActionResult AddOdpowiedz(int? id)
+        public IActionResult AddOdpowiedz(int? idPytania, int? idZamowienia)
         {
             PrzegladVM model = new PrzegladVM();
-            model.Pytanie = _unitOfWork.Pytanie.GetFirstOrDefault(x => x.Id == id);
+            model.Pytanie = _unitOfWork.Pytanie.GetFirstOrDefault(x => x.Id == idPytania);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddOdpowiedz(PrzegladVM obj, int id)
+        public IActionResult AddOdpowiedz(PrzegladVM obj, int idPytania, int idZamowienia)
         {
-            _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, id);
+            _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, idPytania, idZamowienia);
             _unitOfWork.Save();
-            ModelState.Clear();
             TempData["success"] = "Proces został pomyślnie dodany";
-            return PrzegladZamowienia();
+            return PrzegladZamowienia(idZamowienia);
         }
     }
 }
