@@ -3,15 +3,12 @@
 <div class="col-xl-12">
     <div class="card mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">Przegląd zamówienia</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Edycja odpowiedzi</h6>
         </div>
         <div class="mb-3">
             <label asp-for="Pytanie.Nazwa"></label>
             <input asp-for="Pytanie.Nazwa" class="form-control" />
         </div>
-
-
-
         <form method="post">
             @Html.CheckBoxFor(model => model.Odpowiedz.Wartosc)
             <div class="mb-3">

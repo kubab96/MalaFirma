@@ -48,7 +48,7 @@
                 {
                     <tr>
                         <td width="30%">@obj.Nazwa</td>
-                        <td width="70%">@obj.Wymaganie</td>
+                        <td width="70%">@obj.Opis</td>
                     </tr>
                 }
         </table>
@@ -61,6 +61,6 @@
         <i class="bi bi-pencil-square"></i> Edytuj
     </a>
     <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienia.Id" class="btn btn-warning">
-        <i class="bi bi-pencil-square"></i> Edytuj
+        <i class="bi bi-pencil-square"></i> Przegląd zamówienia
     </a>
 </div>

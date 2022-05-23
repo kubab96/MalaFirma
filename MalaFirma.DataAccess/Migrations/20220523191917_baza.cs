@@ -44,6 +44,9 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Wartosc = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataPrzegladu = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WymaganeDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PytanieId = table.Column<int>(type: "int", nullable: false),
                     ZamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -70,7 +73,7 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Wymaganie = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

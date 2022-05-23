@@ -9,7 +9,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
 {
     public interface IOdpowiedzRepository : IRepository<Odpowiedz>
     {
-        void Update(Odpowiedz obj);
+        void Update(Odpowiedz obj, int idPytania, int idZamowienia);
         void AddId(Odpowiedz obj, int idPytania, int idZamowienia);
     }
 }

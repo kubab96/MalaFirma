@@ -1,21 +1,30 @@
 ﻿@model Pytanie
 
-<form method="post">
-    <div class="border pt-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">Utwórz pytanie</h2>
-            <hr />
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Edytuj pytanie</h6>
         </div>
-        <div class="mb-3">
-            <label asp-for="Nazwa"></label>
-            <input asp-for="Nazwa" class="form-control" />
+        <div class="card-body">
+            <form method="post">
+                <div class="border pt-3 mt-4">
+                    <div class="row pb-2">
+                        <h2 class="text-primary">Utwórz pytanie</h2>
+                        <hr />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Nazwa"></label>
+                        <input asp-for="Nazwa" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                </div>
+            </form>
         </div>
-    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
     </div>
-</form>
+</div>
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
     }
 }

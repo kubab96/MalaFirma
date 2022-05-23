@@ -13,11 +13,11 @@ namespace MalaFirma.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Nazwa zamówienia jest wymagana")]
-        [DisplayName("Nazwa zamówienia")]
+        [Required(ErrorMessage = "Nazwa procesu do wykonania jest wymagana")]
+        [DisplayName("Nazwa procesu")]
         public string Nazwa { get; set; }
-        [Required(ErrorMessage = "Wymagane jest wpisanie wymagania")]
-        public string Wymaganie { get; set; }
+        [Required(ErrorMessage = "Opis procesu do wykonania jest wymagany")]
+        public string Opis { get; set; }
         public int ZamowienieId { get; set; }
         public Zamowienie Zamowienie { get; set; }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220522182931_baza")]
+    [Migration("20220523191917_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,21 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataPrzegladu")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PytanieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Wartosc")
                         .HasColumnType("bit");
+
+                    b.Property<string>("WymaganeDzialania")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZamowienieId")
                         .HasColumnType("int");
@@ -59,7 +69,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Wymaganie")
+                    b.Property<string>("Opis")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

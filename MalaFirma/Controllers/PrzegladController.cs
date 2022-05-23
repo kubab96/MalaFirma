@@ -76,9 +76,9 @@ namespace MalaFirma.Controllers
         {
             PrzegladVM model = new PrzegladVM();
             model.Pytania = _unitOfWork.Pytanie.GetAll();
-            model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll();
+            //model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll();
 
-            //model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
+            model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
             //IEnumerable<Odpowiedz> objOdpowiedziList = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
             //model.Odpowiedzi = objOdpowiedziList;
             //model.Odpowiedz = _unitOfWork.Odpowiedz.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
@@ -100,8 +100,32 @@ namespace MalaFirma.Controllers
         {
             _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, idPytania, idZamowienia);
             _unitOfWork.Save();
-            TempData["success"] = "Proces został pomyślnie dodany";
-            return PrzegladZamowienia(idZamowienia);
+            TempData["success"] = "Przegląd pytania zakończył się powodzeniem";
+            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
+        }
+
+        public IActionResult EditOdpowiedz(int? idOdpowiedzi, int idPytania)
+        {
+
+            if (idOdpowiedzi == null || idOdpowiedzi == 0)
+            {
+                return NotFound();
+            }
+            PrzegladVM model = new PrzegladVM();
+            model.Odpowiedz = _unitOfWork.Odpowiedz.GetFirstOrDefault(x => x.Id == idOdpowiedzi);
+            model.Pytanie = _unitOfWork.Pytanie.GetFirstOrDefault(x => x.Id == idPytania);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditOdpowiedz(PrzegladVM obj, int idOdpowiedzi, int idPytania, int idZamowienia)
+        {
+            obj.Odpowiedz.Id = idOdpowiedzi;
+            _unitOfWork.Odpowiedz.Update(obj.Odpowiedz, idPytania, idZamowienia);
+            _unitOfWork.Save();
+            TempData["success"] = "Edycja pytania przeglądowego zakończyła się powodzeniem";
+            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
         }
     }
 }

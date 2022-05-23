@@ -30,11 +30,21 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataPrzegladu")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PytanieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Wartosc")
                         .HasColumnType("bit");
+
+                    b.Property<string>("WymaganeDzialania")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZamowienieId")
                         .HasColumnType("int");
@@ -57,7 +67,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Wymaganie")
+                    b.Property<string>("Opis")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
