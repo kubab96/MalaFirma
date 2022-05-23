@@ -1,7 +1,17 @@
 ﻿@model PrzegladVM
 @{
     ViewData["Title"] = "Index";
-    
+    var query =
+    from pyt in Model.Pytania
+    join odp in Model.Odpowiedzi on pyt.Id equals odp.PytanieId into op
+    from pytodp in op.DefaultIfEmpty()
+    select new
+    {
+        pyt.Nazwa,
+        pyt.Id,
+        Odpow = pytodp?.Status ?? string.Empty,
+        IdOdp = pytodp?.Id
+    };
 }
 <partial name="_Notification" />
 
@@ -19,70 +29,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @using MoreLinq
-                    @foreach (var obj in Model.Pytania.ZipLongest(Model.Odpowiedzi, (a,b)=>new {Pyt=a, Odp = b }))
+                    @foreach (var obj in query)
                     {
                         <tr>
-                            <td width="80%">
-                                @obj.Pyt.Nazwa
+                            <td width="70%">
+                                @obj.Nazwa
                             </td>
-                            <td style="display: block; margin:auto">
-
-                                @if(obj.Odp != null && obj.Odp.ZamowienieId == Model.Zamowienie.Id){
-                                @Html.Raw("Zakończono")
-                                <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.Odp.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Pyt.Id" class="btn btn-primary" style="width:40%; ">
-                                    <i class="bi bi-pencil-square"></i> Edytuj
+                            <td>
+                                @if (obj.Odpow == string.Empty)
+                                {
+                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-primary" style="width:40%; ">
+                                        <i class="bi bi-pencil-square"></i> Odpowiedz
                                     </a>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Pyt.Id" class="btn btn-primary" style="width:40%; ">
-                                    <i class="bi bi-pencil-square"></i> Odpowiedz
+                                    @obj.Odpow
+                                    <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.IdOdp" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-primary" style="width:40%; ">
+                                        <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
                                 }
-
                             </td>
                         </tr>
                     }
-
-
-                    @*obj.Odp.ZamowienieId == Model.Zamowienie.Id && obj.Odp.Wartosc == false*@
-
-
-                    @*@foreach (var obj2 in Model.Odpowiedzi)
-                    {
-                        <tr>
-                            <td width="80%">
-                                @Model.Pytania
-                            </td>
-                            <td style="display: block; margin:auto">
-
-                                @if(obj2.Wartosc == false){
-                                <a asp-controller="Pytanie" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@Model.Pytanie.Id" class="btn btn-primary" style="width:40%; ">
-                                    <i class="bi bi-pencil-square"></i> Odpowiedz
-                                    </a>
-                                }
-                                else
-                                {
-                                    @Html.Raw("as")
-                                }
-
-                            </td>
-                        </tr>
-                    }*@
                 </tbody>
             </table>
-            @*@foreach (var obj2 in Model.Odpowiedzi)
-                @if (obj2.ZamowienieId == Model.Zamowienie.Id)
-                {
-                <a asp-controller="Pytanie" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary" style="width:40%; ">
-                <i class="bi bi-pencil-square"></i> Odpowiedz
-                </a>
-                }
-                else
-                {
-                @Html.Raw("halo2")
-                }*@
         </div>
     </div>
 </div>
