@@ -26,10 +26,5 @@ namespace MalaFirma.DataAccess.Repository
             
             _db.Zamowienia.Add(obj);
         }
-        public void Confirm(Zamowienie obj)
-        {
-            obj.Potwierdzenie = true;
-            _db.Zamowienia.Add(obj);
-        }
     }
 }

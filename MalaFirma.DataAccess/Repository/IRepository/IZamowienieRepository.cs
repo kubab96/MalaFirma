@@ -11,6 +11,5 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     {
         void Update(Zamowienie obj);
         void AddId (Zamowienie obj);
-        void Confirm (Zamowienie obj);
     }
 }

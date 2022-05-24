@@ -44,7 +44,7 @@
                     <tbody>
                         @foreach (var obj in Model)
                         {
-                            @if(obj.Potwierdzenie == true)
+                            @if(obj.StatusZamowienia != "Nie potwierdzone")
                             {
                             <tr>
                                 <td width="20%">

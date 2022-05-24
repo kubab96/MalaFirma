@@ -31,7 +31,6 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.Potwierdzenie = false;
                 obj.StatusZamowienia = "Nie potwierdzone";
                 _unitOfWork.Zamowienie.Add(obj);
                 _unitOfWork.Save();
@@ -120,7 +119,6 @@ namespace MalaFirma.Controllers
                 else
                 {
                     var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                    zamowienieFormDb.Potwierdzenie = true;
                     zamowienieFormDb.StatusZamowienia = "Nowe";
                     _unitOfWork.Zamowienie.Update(zamowienieFormDb);
                     _unitOfWork.Save();

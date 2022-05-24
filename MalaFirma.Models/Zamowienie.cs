@@ -21,7 +21,6 @@ namespace MalaFirma.Models
         public DateTime DataZamowienia { get; set; } = DateTime.Now;  
         [DisplayName("Uwagi zamówienia")]
         public string? UwagiZamowienia { get; set; }
-        public bool Potwierdzenie { get; set; }
         public string? StatusZamowienia { get; set; }
     }
 }
