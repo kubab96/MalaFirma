@@ -22,5 +22,6 @@ namespace MalaFirma.Models
         [DisplayName("Uwagi zamówienia")]
         public string? UwagiZamowienia { get; set; }
         public bool Potwierdzenie { get; set; }
+        public string? StatusZamowienia { get; set; }
     }
 }

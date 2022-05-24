@@ -45,6 +45,5 @@ namespace MalaFirma.DataAccess.Repository
             }
             _db.Odpowiedzi.Add(obj);
         }
-
     }
 }

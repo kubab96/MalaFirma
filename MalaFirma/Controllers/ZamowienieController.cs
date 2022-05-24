@@ -32,6 +32,7 @@ namespace MalaFirma.Controllers
             if (ModelState.IsValid)
             {
                 obj.Potwierdzenie = false;
+                obj.StatusZamowienia = "Nie potwierdzone";
                 _unitOfWork.Zamowienie.Add(obj);
                 _unitOfWork.Save();
                 return RedirectToAction("CreateProces", new { id = obj.Id });
@@ -71,13 +72,15 @@ namespace MalaFirma.Controllers
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            var obj2 = _unitOfWork.Odpowiedz.GetAll().Where(Odpowiedz => Odpowiedz.ZamowienieId == id);
             if (obj == null)
             {
                 return NotFound();
             }
             _unitOfWork.Zamowienie.Remove(obj);
+            _unitOfWork.Odpowiedz.RemoveRange(obj2);
             _unitOfWork.Save();
-            TempData["delete"] = "Zamówienie zostało usunięte";
+            TempData["error"] = "Zamówienie zostało usunięte";
             return RedirectToAction("Index");
         }
 
@@ -118,6 +121,7 @@ namespace MalaFirma.Controllers
                 {
                     var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
                     zamowienieFormDb.Potwierdzenie = true;
+                    zamowienieFormDb.StatusZamowienia = "Nowe";
                     _unitOfWork.Zamowienie.Update(zamowienieFormDb);
                     _unitOfWork.Save();
                     TempData["success"] = "Zamówienie zostało pomyślnie dodane";

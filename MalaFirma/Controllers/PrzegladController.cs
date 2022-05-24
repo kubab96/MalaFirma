@@ -68,7 +68,7 @@ namespace MalaFirma.Controllers
             }
             _unitOfWork.Pytanie.Remove(obj);
             _unitOfWork.Save();
-            TempData["delete"] = "Pytanie zostało usunięte";
+            TempData["success"] = "Pytanie zostało usunięte";
             return RedirectToAction("Pytanie");
 
         }
@@ -100,6 +100,7 @@ namespace MalaFirma.Controllers
         {
             _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, idPytania, idZamowienia);
             _unitOfWork.Save();
+            CheckStatus(idZamowienia);
             TempData["success"] = "Przegląd pytania zakończył się powodzeniem";
             return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
         }
@@ -124,8 +125,34 @@ namespace MalaFirma.Controllers
             obj.Odpowiedz.Id = idOdpowiedzi;
             _unitOfWork.Odpowiedz.Update(obj.Odpowiedz, idPytania, idZamowienia);
             _unitOfWork.Save();
+            CheckStatus(idZamowienia);
             TempData["success"] = "Edycja pytania przeglądowego zakończyła się powodzeniem";
             return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
+        }
+        public void CheckStatus(int? idZamowienia)
+        {
+            var obj2 = _unitOfWork.Odpowiedz.GetAll().Where(Odpowiedz => Odpowiedz.ZamowienieId == idZamowienia);
+            var obj3 = _unitOfWork.Pytanie.GetAll();
+            var obj4 = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            int licznik = 0;
+            if (obj2.Count() == obj3.Count())
+            {
+                foreach (var item in obj2)
+                {
+                    if (item.Wartosc == true)
+                    {
+                        licznik++;
+                    }
+                    else { }
+                }
+                if (licznik == obj2.Count())
+                {
+                    obj4.StatusZamowienia = "Zatwierdzone";
+                    _unitOfWork.Save();
+                }
+                else { }
+            }
+            else { }
         }
     }
 }
