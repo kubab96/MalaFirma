@@ -69,7 +69,7 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
-        public IActionResult DeletePytanie(int? id)
+        public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
