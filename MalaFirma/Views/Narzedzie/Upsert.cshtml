@@ -1,0 +1,50 @@
+﻿@model NarzedzieTypVM
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">@(Model.Narzedzie.Id!=0?"Edytuj narzędzie": "Dodaj narzędzie")</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Upsert">
+                <input asp-for="Narzedzie.Id" hidden />
+                <div class="mb-3">
+                    <label asp-for="Narzedzie.Nazwa"></label>
+                    <input asp-for="Narzedzie.Nazwa" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Narzedzie.NumerFabryczny"></label>
+                    <input asp-for="Narzedzie.NumerFabryczny" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Narzedzie.ObslugaMetrologiczna"></label>
+                    @Html.CheckBoxFor(model => model.Narzedzie.ObslugaMetrologiczna)
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Narzedzie.TypNarzedziaId"></label>
+                    <select asp-for="Narzedzie.TypNarzedziaId" asp-items="@Model.TypNarzedzi" class="form-select">
+                        <option disabled selected>-- Wybierz typ narzędzia --</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Narzedzie.Status"></label>
+                    <input asp-for="Narzedzie.Status" class="form-control" />
+                </div>
+                @if (Model.Narzedzie.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                }
+                
+            </form>
+        </div>
+    </div>
+
+    @section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

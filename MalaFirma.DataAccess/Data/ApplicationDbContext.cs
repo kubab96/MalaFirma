@@ -12,5 +12,7 @@ namespace MalaFirma.DataAccess
         public DbSet<Proces> Procesy { get; set; }
         public DbSet<Pytanie> Pytania { get; set; }
         public DbSet<Odpowiedz> Odpowiedzi { get; set; }
+        public DbSet<Narzedzie> Narzedzia { get; set; }
+        public DbSet<TypNarzedzia> TypNarzedzia { get; set; }
     }
 }

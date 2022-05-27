@@ -70,8 +70,8 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Pytanie zostało usunięte";
             return RedirectToAction("Pytanie");
-
         }
+
         public IActionResult PrzegladZamowienia(int? idZamowienia)
         {
             PrzegladVM model = new PrzegladVM();

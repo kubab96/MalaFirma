@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Narzedzie>
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Narzędzia i wyposażenie</h6>
+        </div>
+        <br />
+        <div class="col-12 text-end">
+            <a asp-controller="Narzedzie" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
+                <i class="bi bi-plus-circle"></i> &nbsp; Dodaj narzędzie/wyposażenie
+            </a>
+        </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nazwa
+                            </th>
+                            <th>
+                                Numer Fabryczny
+                            </th>
+                            <th>
+                                Obsluga Metrologiczna
+                            </th>
+                            <th>
+                                Typ narzędzia
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+
+                            <tr>
+                                <td width="30%">
+                                    @obj.Nazwa
+                                </td>
+                                <td width="10%">
+                                    @obj.NumerFabryczny
+                                </td>
+                                <td width="10%">
+                                    @obj.ObslugaMetrologiczna
+                                </td>
+                                <td width="20%">
+                                    @obj.TypNarzedzia.NazwaTypu
+                                </td>
+                                <td width="10%">
+                                    @obj.Status
+                                </td>
+
+                                <td style="display: block; margin:auto">
+
+                                    
+                                    <a class="btn btn-danger delete"
+                               data-id="@obj.Id"
+                               data-controller="Narzedzie"
+                               data-action="Delete"
+                               data-body-message="Czy napewno chcesz usunąć to narzędzie?">
+                                        <i class="bi bi-trash3-fill"></i> Usuń
+                                    </a>
+                                    <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-info" style="width:40%; ">
+                                        <i class="bi bi-pencil-square"></i> Edytuj
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+    </div>
+</div>

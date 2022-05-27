@@ -12,6 +12,8 @@ namespace MalaFirma.DataAccess.Repository.IRepository
         IProcesRepository Proces { get; }
         IPytanieRepository Pytanie { get; }
         IOdpowiedzRepository Odpowiedz { get; }
+        INarzedzieRepository Narzedzie { get; }
+        ITypNarzedziaRepository TypNarzedzia { get; }
         void Save();
     }
 }

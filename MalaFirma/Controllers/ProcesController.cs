@@ -28,12 +28,10 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Proces obj, int id)
         {
-
             _unitOfWork.Proces.AddId(obj, id);
             _unitOfWork.Save();
             TempData["success"] = "Proces został pomyślnie dodany";
             return RedirectToAction("SzczegolyZamowienia", "Zamowienie", new { id });
-
         }
 
         public IActionResult Edit(int? id)

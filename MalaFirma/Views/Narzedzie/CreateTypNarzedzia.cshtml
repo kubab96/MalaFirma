@@ -1,0 +1,30 @@
+﻿@model TypNarzedzia
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Dodaj typ narzędzia</h6>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="border pt-3 mt-4">
+                    <div class="row pb-2">
+                        <h2 class="text-primary">Dodaj typ narzędzia</h2>
+                        <hr />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NazwaTypu"></label>
+                        <input asp-for="NazwaTypu" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}
