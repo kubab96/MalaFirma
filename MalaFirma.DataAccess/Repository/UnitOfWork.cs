@@ -19,6 +19,7 @@ namespace MalaFirma.DataAccess.Repository
             Odpowiedz = new OdpowiedzRepository(_db);
             Narzedzie = new NarzedzieRepository(_db);
             TypNarzedzia = new TypNarzedziaRepository(_db);
+            Dostawca = new DostawcaRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IProcesRepository Proces { get; private set; }
@@ -26,6 +27,7 @@ namespace MalaFirma.DataAccess.Repository
         public IOdpowiedzRepository Odpowiedz { get; private set; }
         public INarzedzieRepository Narzedzie { get; private set; }
         public ITypNarzedziaRepository TypNarzedzia { get; private set; }
+        public IDostawcaRepository Dostawca { get; private set; }
 
         public void Save()
         {

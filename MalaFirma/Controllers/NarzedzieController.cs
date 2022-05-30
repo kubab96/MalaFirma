@@ -41,6 +41,7 @@ namespace MalaFirma.Controllers
             }
             else
             {
+                //edit
                 obj.Narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(u => u.Id == id);
                 return View(obj);
             }

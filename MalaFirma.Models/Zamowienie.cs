@@ -16,7 +16,6 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Nazwa zamówienia jest wymagana")]
         [DisplayName("Nazwa zamówienia")]
         public string Nazwa { get; set; }
-        [Required(ErrorMessage = "Data zamówienia jest wymagana")]
         [DisplayName("Data zamówienia")]
         public DateTime DataZamowienia { get; set; } = DateTime.Now;  
         [DisplayName("Uwagi zamówienia")]

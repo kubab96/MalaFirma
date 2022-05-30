@@ -1,0 +1,48 @@
+﻿@model Dostawca
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">@(Model.Id!=0?"Edytuj dostawcę": "Dodaj dostawcę")</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Upsert">
+                <div class="mb-3">
+                    <label asp-for="NazwaDostawcy"></label>
+                    <input asp-for="NazwaDostawcy" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="AdresDostwacy"></label>
+                    <input asp-for="AdresDostwacy" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ZakresDzialalnosci"></label>
+                    <input asp-for="ZakresDzialalnosci" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DataWygasniecia"></label>
+                    <input class="form-control" asp-for="DataWygasniecia" />
+                    <span asp-validation-for="DataWygasniecia" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Uwagi"></label>
+                    <input asp-for="Uwagi" class="form-control" />
+                </div>
+                @if (Model.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }
