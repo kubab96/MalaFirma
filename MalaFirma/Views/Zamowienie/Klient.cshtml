@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dostawca>
+﻿@model IEnumerable<Klient>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,36 +9,38 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Dostawcy</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Klienci</h6>
         </div>
         <br />
         <div class="col-12 text-end">
-            <a asp-controller="Dostawca" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
-                <i class="bi bi-plus-circle"></i> &nbsp; Dodaj dostawcę
+            <a asp-controller="Zamowienie" asp-action="CreateKlient" class="btn btn-primary" style="margin-right:25px">
+                <i class="bi bi-plus-circle"></i> &nbsp; Utwórz klienta
             </a>
         </div>
-
+        @if (!Model.Any())
+        {
+            <h1 class="text-center">Brak klientów</h1>
+        }
+        else
+        {
             <div class="card-body">
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>
-                                Nazwa dostawcy
+                                Nazwa klienta
                             </th>
                             <th>
-                                Adres dostwacy
+                                Kraj
                             </th>
                             <th>
-                                Zakres dzialalnosci
+                                Miasto
                             </th>
                             <th>
-                                Data zatwierdzenia
+                                Ulica oraz numer
                             </th>
                             <th>
-                                Data wygasniecia
-                            </th>
-                            <th>
-                                Uwagi
+                                Kod pocztowy
                             </th>
                             <th>
 
@@ -48,48 +50,41 @@
                     <tbody>
                         @foreach (var obj in Model)
                         {
-
                             <tr>
-                                <td width="10%">
-                                    @obj.NazwaDostawcy
+                                <td width="20%">
+                                    @obj.NazwaKlienta
                                 </td>
                                 <td width="10%">
-                                    @obj.AdresDostwacy
-                                </td>
-                                <td width="30%">
-                                    @obj.ZakresDzialalnosci
+                                    @obj.Kraj
                                 </td>
                                 <td width="10%">
-                                    @obj.DataZatwierdzenia
+                                    @obj.Miasto
+                                </td>
+                                <td width="15%">
+                                    @obj.UlicaNumer
                                 </td>
                                 <td width="10%">
-                                    @obj.DataWygasniecia
+                                    @obj.KodPocztowy
                                 </td>
-                                <td width="10%">
-                                    @obj.Uwagi
-                                </td>
-
                                 <td style="display: block; margin:auto">
 
                                     
                                     <a class="btn btn-danger delete"
                                data-id="@obj.Id"
-                               data-controller="Dostawca"
-                               data-action="Delete"
-                               data-body-message="Czy napewno chcesz usunąć tego dostawcę?">
+                               data-controller="Zamowienie"
+                               data-action="DeleteKlient"
+                               data-body-message="Czy napewno chcesz usunąć tego klienta?">
                                         <i class="bi bi-trash3-fill"></i> Usuń
                                     </a>
-                                    <a asp-controller="Dostawca" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-info" style="width:40%; ">
+                                    <a asp-controller="Zamowienie" asp-action="EditKlient" asp-route-id="@obj.Id" class="btn btn-info" style="width:40%; ">
                                         <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
-                                    
                                 </td>
                             </tr>
-                            
                         }
                     </tbody>
                 </table>
             </div>
-        
+        }
     </div>
 </div>

@@ -1,0 +1,44 @@
+﻿@model ZamowienieProcesVM
+
+<div class="col-xl-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">@(Model.Zamowienie.Id!=0?"Edytuj zamówienie": "Dodaj zamówienie")</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Upsert">
+                <input asp-for="Zamowienie.Id" hidden />
+                <input asp-for="Zamowienie.StatusZamowienia" hidden />
+                
+                <div class="mb-3">
+                    <label asp-for="Zamowienie.Nazwa"></label>
+                    <input asp-for="Zamowienie.Nazwa" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Zamowienie.KlientId"></label>
+                    <select asp-for="Zamowienie.KlientId" asp-items="@Model.Klienci" class="form-select">
+                        <option disabled selected>-- Wybierz klienta --</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Zamowienie.UwagiZamowienia"></label>
+                    <input asp-for="Zamowienie.UwagiZamowienia" class="form-control" />
+                </div>
+                @if (Model.Zamowienie.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                }
+                
+            </form>
+        </div>
+    </div>
+
+    @section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

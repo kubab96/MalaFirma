@@ -107,5 +107,18 @@ namespace MalaFirma.Controllers
             }
             return View(obj);
         }
+
+        public IActionResult DeleteTypNarzedzia(int? id)
+        {
+            var obj = _unitOfWork.TypNarzedzia.GetFirstOrDefault(x => x.Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.TypNarzedzia.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Typ narzedzia został usunięty";
+            return RedirectToAction("TypNarzedzia");
+        }
     }
 }

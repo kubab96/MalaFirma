@@ -8,14 +8,56 @@
             <h6 class="m-0 font-weight-bold text-primary">Dane zamówienia</h6>
         </div>
         <div class="card-body">
-            <div class="mb-3">
-                <label asp-for="Zamowienia.UwagiZamowienia"></label>
-                <input asp-for="Zamowienia.UwagiZamowienia" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="Zamowienia.DataZamowienia"></label>
-                <input asp-for="Zamowienia.DataZamowienia" class="form-control" />
-            </div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienie.Nazwa)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienie.DataZamowienia)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienie.DataZamowienia)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.NazwaKlienta)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.NazwaKlienta)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.Kraj)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.Kraj)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.Miasto)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.Miasto)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.UlicaNumer)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.UlicaNumer)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.KodPocztowy)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.KodPocztowy)
+                </dd>
+            </dl>
 
             @if (Model.Procesy.Count() != 0)
             {
@@ -51,7 +93,7 @@
     <div class="col-xl-12">
         <div class="card mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Zamówienia</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Procesy</h6>
             </div>
             <div class="card-body">
                 <div class="mb-3">

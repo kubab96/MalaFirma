@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,8 +14,14 @@ namespace MalaFirma.Models
     public class ZamowienieProcesVM
     {
 
-        public Zamowienie Zamowienia { get; set; }
+        public Zamowienie Zamowienie { get; set; }
+        [ValidateNever]
         public IEnumerable<Proces> Procesy { get; set; }
+        [ValidateNever]
         public Proces Proces { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> Klienci { get; set; }
+        [ValidateNever]
+        public Klient Klient { get; set; }
     }
 }

@@ -154,5 +154,22 @@ namespace MalaFirma.Controllers
             }
             else { }
         }
+
+        public IActionResult WynikPrzegladu(int? idZamowienia)
+        {
+            PrzegladVM model = new PrzegladVM();
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult WynikPrzegladu(PrzegladVM obj, int idZamowienia)
+        {
+            _unitOfWork.Przeglad.AddId(obj.Przeglad, idZamowienia);
+            _unitOfWork.Save();
+            TempData["success"] = "Wynik przeglądu zakończył się powodzeniem";
+            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Przeglad.zamowienieId });
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace MalaFirma.DataAccess.Repository.IRepository
         INarzedzieRepository Narzedzie { get; }
         ITypNarzedziaRepository TypNarzedzia { get; }
         IDostawcaRepository Dostawca { get; }
+        IPrzegladRepository Przeglad { get; }
+        IKlientRepository Klient { get; }   
         void Save();
     }
 }

@@ -4,6 +4,7 @@ using MalaFirma.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530205540_z")]
+    partial class z
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,39 +57,6 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dostawcy");
-                });
-
-            modelBuilder.Entity("MalaFirma.Models.Klient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("KodPocztowy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Kraj")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Miasto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NazwaKlienta")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UlicaNumer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Klient");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Narzedzie", b =>
@@ -245,9 +214,6 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataZamowienia")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("KlientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nazwa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -259,8 +225,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KlientId");
 
                     b.ToTable("Zamowienia");
                 });
@@ -315,17 +279,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Zamowienie");
-                });
-
-            modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
-                {
-                    b.HasOne("MalaFirma.Models.Klient", "Klient")
-                        .WithMany()
-                        .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Klient");
                 });
 #pragma warning restore 612, 618
         }

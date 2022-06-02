@@ -17,6 +17,7 @@ namespace MalaFirma.DataAccess.Repository
         {
             _db = db;
             _db.Narzedzia.Include(x => x.TypNarzedzia);
+            _db.Zamowienia.Include(x => x.Klient);
             this.dbSet = _db.Set<T>();
         }
         public void Add(T entity)

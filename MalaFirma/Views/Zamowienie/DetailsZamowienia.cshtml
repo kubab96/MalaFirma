@@ -10,22 +10,52 @@
         <div class="card-body">
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienia.Nazwa)
+                    @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienia.Nazwa)
+                    @Html.DisplayFor(model => model.Zamowienie.Nazwa)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienia.UwagiZamowienia)
+                    @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienia.UwagiZamowienia)
+                    @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienia.DataZamowienia)
+                    @Html.DisplayNameFor(model => model.Zamowienie.DataZamowienia)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienia.DataZamowienia)
+                    @Html.DisplayFor(model => model.Zamowienie.DataZamowienia)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.NazwaKlienta)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.NazwaKlienta)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.Kraj)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.Kraj)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.Miasto)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.Miasto)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.UlicaNumer)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.UlicaNumer)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Klient.KodPocztowy)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Klient.KodPocztowy)
                 </dd>
             </dl>
             @*<div class="card">
@@ -56,13 +86,20 @@
         </table>
 
     </div>
-    <a asp-controller="Zamowienie" asp-action="CreateProces" asp-route-id="@Model.Zamowienia.Id" class="btn btn-primary">
+    <a asp-controller="Zamowienie" asp-action="CreateProces" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
         Dodaj wymaganie
     </a>
-    <a asp-controller="Zamowienie" asp-action="Edit" asp-route-id="@Model.Zamowienia.Id" class="btn btn-warning">
+    <a asp-controller="Zamowienie" asp-action="Upsert" asp-route-id="@Model.Zamowienie.Id" class="btn btn-warning">
         <i class="bi bi-pencil-square"></i> Edytuj
     </a>
-    <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienia.Id" class="btn btn-warning">
+    <a class="btn btn-danger delete"
+                               data-id="@Model.Zamowienie.Id"
+                               data-controller="Zamowienie"
+                               data-action="Delete"
+                               data-body-message="Czy napewno chcesz usunąć to zamówienie?">
+                                        <i class="bi bi-trash3-fill"></i> Usuń
+                                    </a>
+    <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-warning">
         <i class="bi bi-pencil-square"></i> Przegląd zamówienia
     </a>
 </div>

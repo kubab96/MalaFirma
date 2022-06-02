@@ -2,6 +2,7 @@
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MalaFirma.Controllers
 {
@@ -16,57 +17,61 @@ namespace MalaFirma.Controllers
         #region Zamowienia
         public IActionResult Index()
         {
-            IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll();
+            IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll(includeProperties: "Klient");
             return View(objZamowienieList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Zamowienie obj)
-        {
-            if (ModelState.IsValid)
+            ZamowienieProcesVM obj = new()
             {
-                obj.StatusZamowienia = "Nie potwierdzone";
-                _unitOfWork.Zamowienie.Add(obj);
-                _unitOfWork.Save();
-                return RedirectToAction("CreateProces", new { id = obj.Id });
-            }
-            return View(obj);
-        }
-
-        public IActionResult Edit(int? id)
-        {
+                Zamowienie = new(),
+                Klienci = _unitOfWork.Klient.GetAll().Select(
+                u => new SelectListItem
+                {
+                    Text = u.NazwaKlienta,
+                    Value = u.Id.ToString()
+                })
+            };
             if (id == null || id == 0)
             {
-                return NotFound();
+                //create
+                return View(obj);
             }
-            var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            if (zamowienieFormDb == null)
+            else
             {
-                return NotFound();
+                //edit
+                obj.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(u => u.Id == id);
+                return View(obj);
             }
-            return View(zamowienieFormDb);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Zamowienie obj)
+        public IActionResult Upsert(ZamowienieProcesVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Zamowienie.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Edycja zamówienia przebiegła pomyślnie";
-                return RedirectToAction("Index");
+                if (obj.Zamowienie.Id == 0)
+                {
+                    obj.Zamowienie.StatusZamowienia = "Nie potwierdzone";
+                    _unitOfWork.Zamowienie.Add(obj.Zamowienie);
+                    _unitOfWork.Save();
+                    return RedirectToAction("CreateProces", new { id = obj.Zamowienie.Id });
+                }
+                else
+                {
+                    obj.Zamowienie.StatusZamowienia = obj.Zamowienie.StatusZamowienia;
+                    obj.Zamowienie.DataZamowienia = obj.Zamowienie.DataZamowienia;
+                    obj.Zamowienie.KlientId = obj.Zamowienie.KlientId;
+                    _unitOfWork.Zamowienie.Update(obj.Zamowienie);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Zamowienie zostało zedytowane";
+                    return RedirectToAction("Index");
+                }
             }
             return View(obj);
         }
-
         
         public IActionResult Delete(int? id)
         {
@@ -86,7 +91,8 @@ namespace MalaFirma.Controllers
         public ActionResult DetailsZamowienia(int? id)
         {
             ZamowienieProcesVM model = new ZamowienieProcesVM();
-            model.Zamowienia = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
             IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
             model.Procesy = objProcesList;
             return View(model);
@@ -98,7 +104,8 @@ namespace MalaFirma.Controllers
         public IActionResult CreateProces(int? id)
         {
             ZamowienieProcesVM model = new ZamowienieProcesVM();
-            model.Zamowienia = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
             IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
             model.Procesy = objProcesList;
             return View(model);
@@ -139,5 +146,71 @@ namespace MalaFirma.Controllers
         }
 
         #endregion
+
+        public IActionResult Klient()
+        {
+            IEnumerable<Klient> objKlientList = _unitOfWork.Klient.GetAll();
+            return View(objKlientList);
+        }
+
+        public IActionResult CreateKlient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateKlient(Klient obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Klient.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Klient został pomyślnie dodany.";
+                return RedirectToAction("Klient");
+            }
+            return View(obj);
+        }
+
+        public IActionResult EditKlient(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var klientFormDb = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == id);
+            if (klientFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(klientFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditKlient(Klient obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Klient.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Edycja klienta przebiegła pomyślnie";
+                return RedirectToAction("Klient");
+            }
+            return View(obj);
+        }
+
+        public IActionResult DeleteKlient(int? id)
+        {
+            var obj = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.Klient.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Klient został usunięty";
+            return RedirectToAction("Klient");
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace MalaFirma.DataAccess
         public DbSet<Narzedzie> Narzedzia { get; set; }
         public DbSet<TypNarzedzia> TypNarzedzia { get; set; }
         public DbSet<Dostawca> Dostawcy { get; set; }
+        public DbSet<Przeglad> Przeglady { get; set; }
+        public DbSet<Klient> Klient { get; set; }
     }
 }

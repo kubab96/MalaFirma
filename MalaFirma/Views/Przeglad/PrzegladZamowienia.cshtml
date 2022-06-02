@@ -55,5 +55,11 @@
                 </tbody>
             </table>
         </div>
+        @if (Model.Odpowiedzi.Count() == Model.Pytania.Count())
+        {
+            <a asp-controller="Przeglad" asp-action="WynikPrzegladu" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary" style="width:40%; ">
+                <i class="bi bi-pencil-square"></i> Wynik przeglądu
+            </a>
+        }
     </div>
 </div>

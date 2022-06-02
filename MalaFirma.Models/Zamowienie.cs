@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,9 @@ namespace MalaFirma.Models
         [DisplayName("Data zamówienia")]
         public DateTime DataZamowienia { get; set; } = DateTime.Now;  
         [DisplayName("Uwagi zamówienia")]
+        public int KlientId { get; set; }
+        [ValidateNever]
+        public Klient Klient { get; set; }
         public string? UwagiZamowienia { get; set; }
         public string? StatusZamowienia { get; set; }
     }
