@@ -1,9 +1,10 @@
 ﻿using MalaFirma.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MalaFirma.DataAccess
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -17,5 +18,10 @@ namespace MalaFirma.DataAccess
         public DbSet<Dostawca> Dostawcy { get; set; }
         public DbSet<Przeglad> Przeglady { get; set; }
         public DbSet<Klient> Klient { get; set; }
+        public DbSet<KartaProjektu> KartaProjektu { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
+using MalaFirma.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace MalaFirma.DataAccess.Repository
             Dostawca = new DostawcaRepository(_db);
             Przeglad = new PrzegladRepository(_db);
             Klient = new KlientRepository(_db);
+            KartaProjektu = new KartaProjektuRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IProcesRepository Proces { get; private set; }
@@ -32,7 +34,7 @@ namespace MalaFirma.DataAccess.Repository
         public IDostawcaRepository Dostawca { get; private set; }
         public IPrzegladRepository Przeglad { get; private set; }
         public IKlientRepository Klient { get; private set; }
-
+        public IKartaProjektuRepository KartaProjektu { get; private set; }
         public void Save()
         {
             _db.SaveChanges();

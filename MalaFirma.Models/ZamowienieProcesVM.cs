@@ -23,5 +23,9 @@ namespace MalaFirma.Models
         public IEnumerable<SelectListItem> Klienci { get; set; }
         [ValidateNever]
         public Klient Klient { get; set; }
+        [ValidateNever]
+        public IEnumerable<KartaProjektu> KartyProjektu { get; set; }
+        [ValidateNever]
+        public KartaProjektu KartaProjektu { get; set; }
     }
 }

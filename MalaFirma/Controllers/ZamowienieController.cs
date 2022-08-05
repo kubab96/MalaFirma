@@ -57,6 +57,7 @@ namespace MalaFirma.Controllers
                     obj.Zamowienie.StatusZamowienia = "Nie potwierdzone";
                     _unitOfWork.Zamowienie.Add(obj.Zamowienie);
                     _unitOfWork.Save();
+                    AddKartaProjektu(obj.Zamowienie.Id);
                     return RedirectToAction("CreateProces", new { id = obj.Zamowienie.Id });
                 }
                 else
@@ -72,7 +73,16 @@ namespace MalaFirma.Controllers
             }
             return View(obj);
         }
-        
+
+        public void AddKartaProjektu(int id)
+        {
+            KartaProjektu karta = new KartaProjektu();
+            karta.ZamowienieId = id;
+            _unitOfWork.KartaProjektu.AddId(karta);
+            _unitOfWork.Save();
+        }
+
+
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
@@ -136,6 +146,8 @@ namespace MalaFirma.Controllers
 
             if (fc["SubmitForm"] == "AddProces")
             {
+                var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == id);
+                obj.Proces.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Proces.AddId(obj.Proces, id);
                 _unitOfWork.Save();
                 ModelState.Clear();
