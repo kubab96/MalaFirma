@@ -1,0 +1,48 @@
+﻿@model PrzewodnikPracyVM
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Przewodniki Pracy</h6>
+        </div>
+        <br />
+
+            <div class="card-body">
+                Dane wejściowe
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nazwa procesu
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Procesy)
+                        {
+                            <tr>
+                                <td width="20%">
+                                    @obj.Nazwa
+                                </td>
+                                <td width="20%">
+                                    
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        
+    </div>
+</div>

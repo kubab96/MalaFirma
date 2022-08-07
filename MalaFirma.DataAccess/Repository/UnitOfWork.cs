@@ -24,6 +24,9 @@ namespace MalaFirma.DataAccess.Repository
             Przeglad = new PrzegladRepository(_db);
             Klient = new KlientRepository(_db);
             KartaProjektu = new KartaProjektuRepository(_db);
+            PrzewodnikPracy = new PrzewodnikPracyRepository(_db);
+            Operacja = new OperacjaRepository(_db);
+
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IProcesRepository Proces { get; private set; }
@@ -35,6 +38,9 @@ namespace MalaFirma.DataAccess.Repository
         public IPrzegladRepository Przeglad { get; private set; }
         public IKlientRepository Klient { get; private set; }
         public IKartaProjektuRepository KartaProjektu { get; private set; }
+        public IPrzewodnikPracyRepository PrzewodnikPracy { get; private set; }
+        public IOperacjaRepository Operacja { get; private set; }
+        
         public void Save()
         {
             _db.SaveChanges();

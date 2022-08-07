@@ -17,7 +17,7 @@ namespace MalaFirma.Models
         public Przeglad? Przeglad { get; set; }
         public int? ZamowienieId { get; set; }
         public Zamowienie? Zamowienie { get; set; }
-        public string DodatkoweInformacje { get; set; }
-        public string DodatkoweUwagi { get; set; }
+        public string? DodatkoweInformacje { get; set; }
+        public string? DodatkoweUwagi { get; set; }
     }
 }

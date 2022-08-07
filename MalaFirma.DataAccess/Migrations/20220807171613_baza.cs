@@ -91,6 +91,20 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Operacje",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrescOperacji = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataWykonania = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operacje", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pytania",
                 columns: table => new
                 {
@@ -344,6 +358,31 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PrzewodnikPracy",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumerPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZamowienieId = table.Column<int>(type: "int", nullable: true),
+                    ProcesId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrzewodnikPracy", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrzewodnikPracy_Procesy_ProcesId",
+                        column: x => x.ProcesId,
+                        principalTable: "Procesy",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PrzewodnikPracy_Zamowienia_ZamowienieId",
+                        column: x => x.ZamowienieId,
+                        principalTable: "Zamowienia",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "KartaProjektu",
                 columns: table => new
                 {
@@ -351,8 +390,8 @@ namespace MalaFirma.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PrzegladId = table.Column<int>(type: "int", nullable: true),
                     ZamowienieId = table.Column<int>(type: "int", nullable: true),
-                    DodatkoweInformacje = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DodatkoweUwagi = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DodatkoweInformacje = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DodatkoweUwagi = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -449,6 +488,16 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "zamowienieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PrzewodnikPracy_ProcesId",
+                table: "PrzewodnikPracy",
+                column: "ProcesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrzewodnikPracy_ZamowienieId",
+                table: "PrzewodnikPracy",
+                column: "ZamowienieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Zamowienia_KlientId",
                 table: "Zamowienia",
                 column: "KlientId");
@@ -484,7 +533,10 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "Odpowiedzi");
 
             migrationBuilder.DropTable(
-                name: "Procesy");
+                name: "Operacje");
+
+            migrationBuilder.DropTable(
+                name: "PrzewodnikPracy");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -500,6 +552,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pytania");
+
+            migrationBuilder.DropTable(
+                name: "Procesy");
 
             migrationBuilder.DropTable(
                 name: "Zamowienia");

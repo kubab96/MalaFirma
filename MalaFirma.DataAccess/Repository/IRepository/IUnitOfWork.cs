@@ -18,6 +18,10 @@ namespace MalaFirma.DataAccess.Repository.IRepository
         IPrzegladRepository Przeglad { get; }
         IKlientRepository Klient { get; }   
         IKartaProjektuRepository KartaProjektu { get; }
+        IPrzewodnikPracyRepository PrzewodnikPracy { get; }
+        IOperacjaRepository Operacja { get; }
+        
+
         void Save();
     }
 }

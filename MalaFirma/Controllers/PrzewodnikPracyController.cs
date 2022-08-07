@@ -4,24 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MalaFirma.Controllers
 {
-    public class KartaProjektuController : Controller
+    public class PrzewodnikPracyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public KartaProjektuController(IUnitOfWork unitOfWork)
+        public PrzewodnikPracyController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult KartaProjektu(int id)
+        public IActionResult PrzewodnikPracy(int id)
         {
-            KartaProjektuVM model = new KartaProjektuVM();
+            PrzewodnikPracyVM model = new PrzewodnikPracyVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
-            IEnumerable<Przeglad> objPrzegladList = _unitOfWork.Przeglad.GetAll().Where(x => x.zamowienieId == id);
-            model.Przeglady = objPrzegladList;
             IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
             model.Procesy = objProcesList;
-            
+
             return View(model);
         }
+
     }
 }

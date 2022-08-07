@@ -1,0 +1,91 @@
+﻿@model KartaProjektuVM
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Karta Projektu</h6>
+        </div>
+        <br />
+
+
+            @*Tabela procesow*@
+            <div class="card-body">
+                Dane wejściowe
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nazwa dokumentu
+                            </th>
+                            <th>
+                                Nr dokumentu
+                            </th>
+                            <th>
+                                Uwagi
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Procesy)
+                        {
+                            <tr>
+                                <td width="20%">
+                                    @obj.Nazwa
+                                </td>
+                                <td width="20%">
+                                    @obj.Zamowienie.Nazwa
+                                </td>
+                                <td width="20%">
+                                    @obj.Zamowienie.UwagiZamowienia
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @*Przegląd projektu*@
+            <div class="card-body">
+                Dane wejściowe
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Wynik przeglądu
+                            </th>
+                            <th>
+                                Zindetyfikowane problemy
+                            </th>
+                            <th>
+                                Planowane działania
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Przeglady)
+                        {
+                            <tr>
+                                <td width="20%">
+                                    @obj.WynikPrzegladu
+                                </td>
+                                <td width="20%">
+                                </td>
+                                <td width="20%">
+                                    @obj.Zamowienie.UwagiZamowienia
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+    </div>
+</div>

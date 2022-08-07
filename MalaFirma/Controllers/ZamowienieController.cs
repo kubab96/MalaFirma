@@ -149,12 +149,23 @@ namespace MalaFirma.Controllers
                 var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == id);
                 obj.Proces.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Proces.AddId(obj.Proces, id);
+                var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+                AddPrzewodnikPracy(zamowienieId.Id, obj.Proces.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Proces został pomyślnie dodany";
                 return CreateProces(id);
             }
             return View();
+        }
+
+        public void AddPrzewodnikPracy(int idZamowienia, int idProcesu)
+        {
+            PrzewodnikPracy przwodnik = new PrzewodnikPracy();
+            przwodnik.ZamowienieId = idZamowienia;
+            przwodnik.ProcesId = idProcesu;
+            _unitOfWork.PrzewodnikPracy.AddId(przwodnik);
+            _unitOfWork.Save();
         }
 
         #endregion

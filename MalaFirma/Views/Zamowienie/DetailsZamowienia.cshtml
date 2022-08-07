@@ -102,4 +102,7 @@
     <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-warning">
         <i class="bi bi-pencil-square"></i> Przegląd zamówienia
     </a>
+
+    <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-warning" role="button">Karta Projektu</a>
+    <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-warning" role="button">Przewodnik Pracy</a>
 </div>

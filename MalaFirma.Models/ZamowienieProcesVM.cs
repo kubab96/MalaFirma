@@ -27,5 +27,9 @@ namespace MalaFirma.Models
         public IEnumerable<KartaProjektu> KartyProjektu { get; set; }
         [ValidateNever]
         public KartaProjektu KartaProjektu { get; set; }
+        [ValidateNever]
+        public IEnumerable<PrzewodnikPracy> PrzewodnikiPracy { get; set; }
+        [ValidateNever]
+        public PrzewodnikPracy PrzewodnikPracy { get; set; }
     }
 }

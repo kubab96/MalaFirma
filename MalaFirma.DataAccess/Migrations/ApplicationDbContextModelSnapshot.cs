@@ -66,11 +66,9 @@ namespace MalaFirma.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DodatkoweInformacje")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DodatkoweUwagi")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrzegladId")
@@ -189,6 +187,26 @@ namespace MalaFirma.DataAccess.Migrations
                     b.ToTable("Odpowiedzi");
                 });
 
+            modelBuilder.Entity("MalaFirma.Models.Operacja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataWykonania")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TrescOperacji")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Operacje");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>
                 {
                     b.Property<int>("Id")
@@ -237,6 +255,32 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasIndex("zamowienieId");
 
                     b.ToTable("Przeglady");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.PrzewodnikPracy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NumerPrzewodnika")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProcesId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ZamowienieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcesId");
+
+                    b.HasIndex("ZamowienieId");
+
+                    b.ToTable("PrzewodnikPracy");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Pytanie", b =>
@@ -605,6 +649,21 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasForeignKey("zamowienieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.PrzewodnikPracy", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Proces", "Proces")
+                        .WithMany()
+                        .HasForeignKey("ProcesId");
+
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId");
+
+                    b.Navigation("Proces");
 
                     b.Navigation("Zamowienie");
                 });

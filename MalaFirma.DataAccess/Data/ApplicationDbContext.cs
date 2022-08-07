@@ -19,9 +19,15 @@ namespace MalaFirma.DataAccess
         public DbSet<Przeglad> Przeglady { get; set; }
         public DbSet<Klient> Klient { get; set; }
         public DbSet<KartaProjektu> KartaProjektu { get; set; }
+        public DbSet<PrzewodnikPracy> PrzewodnikPracy { get; set; }
+        public DbSet<Operacja> Operacje { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         
+
+
+
+
 
     }
 }
