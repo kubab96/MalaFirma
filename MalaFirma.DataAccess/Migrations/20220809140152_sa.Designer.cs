@@ -4,6 +4,7 @@ using MalaFirma.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220809140152_sa")]
+    partial class sa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,7 +200,7 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataWykonania")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProcesId")
+                    b.Property<int>("PrzewodnikPracyId")
                         .HasColumnType("int");
 
                     b.Property<string>("TrescOperacji")
@@ -207,7 +209,7 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProcesId");
+                    b.HasIndex("PrzewodnikPracyId");
 
                     b.ToTable("Operacje");
                 });
@@ -632,13 +634,13 @@ namespace MalaFirma.DataAccess.Migrations
 
             modelBuilder.Entity("MalaFirma.Models.Operacja", b =>
                 {
-                    b.HasOne("MalaFirma.Models.Proces", "Proces")
+                    b.HasOne("MalaFirma.Models.PrzewodnikPracy", "PrzewodnikPracy")
                         .WithMany()
-                        .HasForeignKey("ProcesId")
+                        .HasForeignKey("PrzewodnikPracyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Proces");
+                    b.Navigation("PrzewodnikPracy");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>

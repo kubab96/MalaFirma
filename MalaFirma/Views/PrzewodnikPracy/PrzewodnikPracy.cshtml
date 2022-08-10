@@ -12,9 +12,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Przewodniki Pracy</h6>
         </div>
         <br />
-
             <div class="card-body">
-                Dane wejściowe
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -34,7 +32,7 @@
                                     @obj.Nazwa
                                 </td>
                                 <td width="20%">
-                                    
+                                    <a href="@Url.Action("Operacja", "PrzewodnikPracy", new { id = obj.Id })" class="btn btn-warning" role="button">Wyświetl</a>
                                 </td>
                             </tr>
                             

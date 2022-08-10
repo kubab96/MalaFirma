@@ -19,11 +19,15 @@ namespace MalaFirma.DataAccess.Repository
 
         public void Update(Operacja obj)
         {
-            _db.Operacje.Update(obj);
+            var objFromDb = _db.Operacje.FirstOrDefault(x => x.Id == obj.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.TrescOperacji = obj.TrescOperacji;
+            }
         }
-        public void AddId(Operacja obj)
+        public void AddId(Operacja obj, int idProcesu)
         {
-
+            obj.ProcesId = idProcesu;
             _db.Operacje.Add(obj);
         }
     }

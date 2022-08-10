@@ -1,0 +1,28 @@
+﻿@model Operacja
+
+<form method="post">
+    <div class="col-xl-12">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Edycja zamówienia</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label asp-for="TrescOperacji"></label>
+                    <input asp-for="TrescOperacji" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edytuj</button>
+                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-idProcesu="@Model.ProcesId" class="btn btn-primary">
+                    Wróć do operacji
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}
