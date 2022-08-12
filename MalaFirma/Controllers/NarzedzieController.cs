@@ -55,19 +55,40 @@ namespace MalaFirma.Controllers
             {
                 if(obj.Narzedzie.Id == 0)
                 {
+                    int numer = 1;
+                    var liczbaNarzedzi = _unitOfWork.Narzedzie.GetAll().Count();
+                    int numerIdentyfikacyjny = numer + liczbaNarzedzi;
+                    obj.Narzedzie.NumerIdentyfikacyjny = "FM/" + numerIdentyfikacyjny;
                     _unitOfWork.Narzedzie.Add(obj.Narzedzie);
                     _unitOfWork.Save();
+                    if (obj.Narzedzie.ObslugaMetrologiczna == true)
+                    {
+                        AddObsluga(obj.Narzedzie.Id);
+                    }
                     TempData["success"] = "Narzędzie zostało pomyślnie dodane";
                 }
                 else
                 {
                     _unitOfWork.Narzedzie.Update(obj.Narzedzie);
+                    if (obj.Narzedzie.ObslugaMetrologiczna == true)
+                    {
+                        obj.ObslugaMetrologiczna.NarzedzieId = obj.Narzedzie.Id;
+                        _unitOfWork.ObslugaMetrologiczna.Update(obj.ObslugaMetrologiczna);
+                    }
                     _unitOfWork.Save();
                     TempData["success"] = "Narzędzie zostało zedytowane";
                 }
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public void AddObsluga(int id)
+        {
+            ObslugaMetrologiczna obsluga = new ObslugaMetrologiczna();
+            obsluga.NarzedzieId = id;
+            _unitOfWork.ObslugaMetrologiczna.AddId(obsluga);
+            _unitOfWork.Save();
         }
 
         public IActionResult Delete(int? id)

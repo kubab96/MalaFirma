@@ -65,6 +65,8 @@
                     <thead>
                         <tr>
                             <th>Nazwa</th>
+                            <th>Ilość</th>
+                            <th>Materiał</th>
                             <th>Wymaganie</th>
 
                         </tr>
@@ -74,8 +76,10 @@
                     {
 
                         <tr>
-                            <td width="30%">@obj.Nazwa</td>
-                            <td width="70%">@obj.Opis</td>
+                            <td width="20%">@obj.Nazwa</td>
+                            <td width="20%">@obj.Ilosc</td>
+                            <td width="20%">@obj.Material</td>
+                            <td width="40%">@obj.Opis</td>
                         </tr>
 
                     }
@@ -83,7 +87,7 @@
             }
             else
             {
-                
+
             }
         </div>
     </div>
@@ -102,8 +106,18 @@
                     <span asp-validation-for="Proces.Nazwa" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
+                    <label asp-for="Proces.Ilosc"></label>
+                    <input asp-for="Proces.Ilosc" class="form-control" value="1" />
+                    <span asp-validation-for="Proces.Ilosc" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Proces.Material"></label>
+                    <input asp-for="Proces.Material" class="form-control" />
+                    <span asp-validation-for="Proces.Material" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
                     <label asp-for="Proces.Opis"></label>
-                    <input asp-for="Proces.Opis" class="form-control" />
+                    <input asp-for="Proces.Opis" class="form-control"/>
                     <span asp-validation-for="Proces.Opis" class="text-danger"></span>
                 </div>
 

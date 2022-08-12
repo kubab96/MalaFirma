@@ -1,43 +1,44 @@
 ﻿@model Klient
 
 <form method="post">
-    <div class="col-xl-12">
-        <div class="card mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label asp-for="NazwaKlienta"></label>
-                    <input asp-for="NazwaKlienta" class="form-control" />
-                    <span asp-validation-for="NazwaKlienta" class="text-danger"></span>
+    <div class="container p-3">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="Kraj"></label>
-                    <input asp-for="Kraj" class="form-control" />
-                    <span asp-validation-for="Kraj" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Miasto"></label>
-                    <input asp-for="Miasto" class="form-control" />
-                    <span asp-validation-for="Miasto" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="UlicaNumer"></label>
-                    <input asp-for="UlicaNumer" class="form-control" />
-                    <span asp-validation-for="UlicaNumer" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="KodPocztowy"></label>
-                    <input asp-for="KodPocztowy" class="form-control" />
-                    <span asp-validation-for="KodPocztowy" class="text-danger"></span>
-                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="NazwaKlienta"></label>
+                        <input asp-for="NazwaKlienta" class="form-control" />
+                        <span asp-validation-for="NazwaKlienta" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Kraj"></label>
+                        <input asp-for="Kraj" class="form-control" />
+                        <span asp-validation-for="Kraj" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Miasto"></label>
+                        <input asp-for="Miasto" class="form-control" />
+                        <span asp-validation-for="Miasto" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UlicaNumer"></label>
+                        <input asp-for="UlicaNumer" class="form-control" />
+                        <span asp-validation-for="UlicaNumer" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="KodPocztowy"></label>
+                        <input asp-for="KodPocztowy" class="form-control" />
+                        <span asp-validation-for="KodPocztowy" class="text-danger"></span>
+                    </div>
 
-
-                <button type="submit" class="btn btn-primary" style="width:150px">Utwórz</button>
-                <a asp-controller="Zamowienie" asp-action="Klient" class="btn btn-primary" style="width:150px">
-                    Wróć do listy klientów
-                </a>
+                    <a asp-controller="Zamowienie" asp-action="Klient" style="width:300px" class="btn btn-primary">
+                        Wróć do listy klientów
+                    </a>
+                    <button type="submit" class="btn btn-primary" style="width:300px; float:right" >Utwórz</button>
+                </div>
             </div>
         </div>
     </div>

@@ -17,9 +17,12 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Nazwa narzędzia/wyposażenia jest wymagana.")]
         [DisplayName("Nazwa")]
         public string Nazwa { get; set; }
+        [ValidateNever]
+        [DisplayName("Numer identyfikacyjny")]
+        public string NumerIdentyfikacyjny { get; set; }
         [Required(ErrorMessage = "Numer fabryczny jest wymagany.")]
         [DisplayName("Numer fabryczny")]
-        public int NumerFabryczny { get; set; }
+        public string NumerFabryczny { get; set; }
         [Required(ErrorMessage = "Wymagane jest podanie czy narzędzie/wyposażenie jest poddawane obsłudze metorologicznej.")]
         [DisplayName("Obsługa Metrologiczna")]
         public bool ObslugaMetrologiczna { get; set; }

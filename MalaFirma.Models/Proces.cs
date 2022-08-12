@@ -18,6 +18,8 @@ namespace MalaFirma.Models
         public string Nazwa { get; set; }
         [Required(ErrorMessage = "Opis procesu do wykonania jest wymagany")]
         public string Opis { get; set; }
+        public int Ilosc { get; set; }
+        public string Material { get; set; }
         public int ZamowienieId { get; set; }
         public Zamowienie Zamowienie { get; set; }
         public int? KartaProjektuId { get; set; }

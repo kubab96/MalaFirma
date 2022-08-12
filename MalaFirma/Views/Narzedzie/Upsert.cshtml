@@ -16,10 +16,8 @@
                     <label asp-for="Narzedzie.NumerFabryczny"></label>
                     <input asp-for="Narzedzie.NumerFabryczny" class="form-control" />
                 </div>
-                <div class="mb-3">
-                    <label asp-for="Narzedzie.ObslugaMetrologiczna"></label>
-                    @Html.CheckBoxFor(model => model.Narzedzie.ObslugaMetrologiczna)
-                </div>
+                
+                
                 <div class="mb-3">
                     <label asp-for="Narzedzie.TypNarzedziaId"></label>
                     <select asp-for="Narzedzie.TypNarzedziaId" asp-items="@Model.TypNarzedzi" class="form-select">
@@ -30,6 +28,31 @@
                     <label asp-for="Narzedzie.Status"></label>
                     <input asp-for="Narzedzie.Status" class="form-control" />
                 </div>
+
+                <div class="mb-3">
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" onclick="Show()" id="ObslugaMetrologiczna" asp-for="Narzedzie.ObslugaMetrologiczna">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Obsluga Metrologiczna</label>
+                    </div>
+                </div>
+
+                <div id="obsluga" style="display:none" class="mb-3">
+
+                    <div class="mb-3">
+                        <label asp-for="ObslugaMetrologiczna.DataObslugi"></label>
+                        <input asp-for="ObslugaMetrologiczna.DataObslugi" class="form-control" />
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label asp-for="ObslugaMetrologiczna.DataWaznosci"></label>
+                        <input asp-for="ObslugaMetrologiczna.DataWaznosci" class="form-control" />
+                    </div>
+
+                </div>
+
                 @if (Model.Narzedzie.Id != 0)
                 {
                     <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
@@ -38,13 +61,28 @@
                 {
                     <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
                 }
-                
+
             </form>
         </div>
     </div>
 
     @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial" />
+
+        <script type="text/javascript">
+            function Show() {
+
+                if ((document.getElementById('ObslugaMetrologiczna').checked)) {
+                 document.getElementById('obsluga').style = "display:inherit"
+                }
+                else {
+
+                document.getElementById('obsluga').style = "display:none"
+                }
+            }
+        </script>
     }
+
+
     }
+

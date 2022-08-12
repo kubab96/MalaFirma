@@ -151,6 +151,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Proces.AddId(obj.Proces, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
                 AddPrzewodnikPracy(zamowienieId.Id, obj.Proces.Id);
+                AddSwiadectwoJakosci(zamowienieId.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Proces został pomyślnie dodany";
@@ -165,6 +166,14 @@ namespace MalaFirma.Controllers
             przwodnik.ZamowienieId = idZamowienia;
             przwodnik.ProcesId = idProcesu;
             _unitOfWork.PrzewodnikPracy.AddId(przwodnik);
+            _unitOfWork.Save();
+        }
+
+        public void AddSwiadectwoJakosci(int idZamowienia)
+        {
+            SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
+            swiadectwo.ZamowienieId = idZamowienia;
+            _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
             _unitOfWork.Save();
         }
 

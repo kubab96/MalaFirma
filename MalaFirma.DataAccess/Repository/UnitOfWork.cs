@@ -26,7 +26,8 @@ namespace MalaFirma.DataAccess.Repository
             KartaProjektu = new KartaProjektuRepository(_db);
             PrzewodnikPracy = new PrzewodnikPracyRepository(_db);
             Operacja = new OperacjaRepository(_db);
-
+            SwiadectwoJakosci = new SwiadectwoJakosciRepository(_db);
+            ObslugaMetrologiczna = new ObslugaMetrologicznaRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IProcesRepository Proces { get; private set; }
@@ -40,7 +41,10 @@ namespace MalaFirma.DataAccess.Repository
         public IKartaProjektuRepository KartaProjektu { get; private set; }
         public IPrzewodnikPracyRepository PrzewodnikPracy { get; private set; }
         public IOperacjaRepository Operacja { get; private set; }
+        public ISwiadectwoJakosciRepository SwiadectwoJakosci { get; private set; }
+        public IObslugaMetrologicznaRepository ObslugaMetrologiczna { get; private set; }
         
+
         public void Save()
         {
             _db.SaveChanges();

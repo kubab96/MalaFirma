@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220807171613_baza")]
-    partial class baza
+    [Migration("20220812191318_obsluga")]
+    partial class obsluga
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -133,8 +133,13 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumerFabryczny")
-                        .HasColumnType("int");
+                    b.Property<string>("NumerFabryczny")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumerIdentyfikacyjny")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ObslugaMetrologiczna")
                         .HasColumnType("bit");
@@ -151,6 +156,30 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasIndex("TypNarzedziaId");
 
                     b.ToTable("Narzedzia");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.ObslugaMetrologiczna", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataObslugi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataWaznosci")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NarzedzieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NarzedzieId");
+
+                    b.ToTable("ObslugaMetrologiczna");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Odpowiedz", b =>
@@ -200,11 +229,16 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataWykonania")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ProcesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TrescOperacji")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProcesId");
 
                     b.ToTable("Operacje");
                 });
@@ -214,8 +248,15 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<int>("Ilosc")
+                        .HasColumnType("int");
+
                     b.Property<int?>("KartaProjektuId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nazwa")
                         .IsRequired()
@@ -297,6 +338,27 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pytania");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.SwiadectwoJakosci", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NumerSwiadectwa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ZamowienieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ZamowienieId");
+
+                    b.ToTable("SwiadectwoJakosci");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.TypNarzedzia", b =>
@@ -608,6 +670,17 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Navigation("TypNarzedzia");
                 });
 
+            modelBuilder.Entity("MalaFirma.Models.ObslugaMetrologiczna", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Narzedzie", "Narzedzie")
+                        .WithMany()
+                        .HasForeignKey("NarzedzieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Narzedzie");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Odpowiedz", b =>
                 {
                     b.HasOne("MalaFirma.Models.Pytanie", "Pytanie")
@@ -625,6 +698,17 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Navigation("Pytanie");
 
                     b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Operacja", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Proces", "Proces")
+                        .WithMany()
+                        .HasForeignKey("ProcesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proces");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Proces", b =>
@@ -666,6 +750,15 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasForeignKey("ZamowienieId");
 
                     b.Navigation("Proces");
+
+                    b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.SwiadectwoJakosci", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId");
 
                     b.Navigation("Zamowienie");
                 });

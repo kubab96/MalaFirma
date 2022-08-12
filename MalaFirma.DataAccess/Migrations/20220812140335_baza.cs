@@ -91,20 +91,6 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Operacje",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrescOperacji = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataWykonania = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Operacje", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pytania",
                 columns: table => new
                 {
@@ -265,7 +251,8 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumerFabryczny = table.Column<int>(type: "int", nullable: false),
+                    NumerIdentyfikacyjny = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumerFabryczny = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ObslugaMetrologiczna = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TypNarzedziaId = table.Column<int>(type: "int", nullable: false)
@@ -318,6 +305,8 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ilosc = table.Column<int>(type: "int", nullable: false),
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZamowienieId = table.Column<int>(type: "int", nullable: false),
                     KartaProjektuId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -353,6 +342,46 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_Przeglady_Zamowienia_zamowienieId",
                         column: x => x.zamowienieId,
                         principalTable: "Zamowienia",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SwiadectwoJakosci",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumerSwiadectwa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZamowienieId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SwiadectwoJakosci", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SwiadectwoJakosci_Zamowienia_ZamowienieId",
+                        column: x => x.ZamowienieId,
+                        principalTable: "Zamowienia",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Operacje",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrescOperacji = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataWykonania = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProcesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operacje", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Operacje_Procesy_ProcesId",
+                        column: x => x.ProcesId,
+                        principalTable: "Procesy",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -473,6 +502,11 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Operacje_ProcesId",
+                table: "Operacje",
+                column: "ProcesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Procesy_KartaProjektuId",
                 table: "Procesy",
                 column: "KartaProjektuId");
@@ -495,6 +529,11 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PrzewodnikPracy_ZamowienieId",
                 table: "PrzewodnikPracy",
+                column: "ZamowienieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SwiadectwoJakosci_ZamowienieId",
+                table: "SwiadectwoJakosci",
                 column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
@@ -537,6 +576,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrzewodnikPracy");
+
+            migrationBuilder.DropTable(
+                name: "SwiadectwoJakosci");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
