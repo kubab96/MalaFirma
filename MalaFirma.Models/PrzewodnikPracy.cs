@@ -16,5 +16,6 @@ namespace MalaFirma.Models
         public Zamowienie Zamowienie { get; set; }
         public int? ProcesId { get; set; }
         public Proces Proces { get; set; }
+        public string? StatusPrzewodnika { get; set; }
     }
 }

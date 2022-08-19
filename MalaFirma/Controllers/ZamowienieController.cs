@@ -162,10 +162,11 @@ namespace MalaFirma.Controllers
 
         public void AddPrzewodnikPracy(int idZamowienia, int idProcesu)
         {
-            PrzewodnikPracy przwodnik = new PrzewodnikPracy();
-            przwodnik.ZamowienieId = idZamowienia;
-            przwodnik.ProcesId = idProcesu;
-            _unitOfWork.PrzewodnikPracy.AddId(przwodnik);
+            PrzewodnikPracy przewodnik = new PrzewodnikPracy();
+            przewodnik.ZamowienieId = idZamowienia;
+            przewodnik.ProcesId = idProcesu;
+            przewodnik.StatusPrzewodnika = "W trakcie";
+            _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
             _unitOfWork.Save();
         }
 
