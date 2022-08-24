@@ -11,12 +11,16 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Karta Projektu</h6>
         </div>
-        <br />
 
 
-            @*Tabela procesow*@
+
+        @*Tabela procesow*@
+
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">I. Dane wejściowe</h6>
+            </div>
             <div class="card-body">
-                Dane wejściowe
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -45,15 +49,20 @@
                                     @obj.Zamowienie.UwagiZamowienia
                                 </td>
                             </tr>
-                            
+
                         }
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            @*Przegląd projektu*@
+        @*Przegląd projektu*@
+        <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">II. Przegląd projektu</h6>
+            </div>
             <div class="card-body">
-                Dane wejściowe
+
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -81,11 +90,12 @@
                                     @obj.Zamowienie.UwagiZamowienia
                                 </td>
                             </tr>
-                            
+
                         }
                     </tbody>
                 </table>
             </div>
-        
+
+        </div>
     </div>
 </div>

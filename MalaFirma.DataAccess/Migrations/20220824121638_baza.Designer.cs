@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220812191318_obsluga")]
-    partial class obsluga
+    [Migration("20220824121638_baza")]
+    partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -313,6 +313,9 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.Property<int?>("ProcesId")
                         .HasColumnType("int");
+
+                    b.Property<string>("StatusPrzewodnika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ZamowienieId")
                         .HasColumnType("int");

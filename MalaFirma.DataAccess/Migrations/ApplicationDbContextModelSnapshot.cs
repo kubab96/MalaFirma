@@ -312,6 +312,9 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<int?>("ProcesId")
                         .HasColumnType("int");
 
+                    b.Property<string>("StatusPrzewodnika")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ZamowienieId")
                         .HasColumnType("int");
 

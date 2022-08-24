@@ -35,10 +35,10 @@
                         {
 
                             <tr>
-                                <td width="84%">
+                                <td width="75%">
                                     @obj.NazwaTypu
                                 </td>
-                                <td style="display: block; margin:auto">
+                                <td style="display: block; margin:auto; text-align: center;" >
 
                                     
                                     <a class="btn btn-danger delete"
@@ -48,7 +48,7 @@
                                data-body-message="Czy napewno chcesz usunąć ten typ narzędzia?">
                                         <i class="bi bi-trash3-fill"></i> Usuń
                                     </a>
-                                    <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-info" style="width:40%; ">
+                                    <a asp-controller="Narzedzie" asp-action="EditTypNarzedzia" asp-route-id="@obj.Id" class="btn btn-info">
                                         <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
                                 </td>

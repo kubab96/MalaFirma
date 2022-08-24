@@ -366,6 +366,27 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ObslugaMetrologiczna",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataObslugi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataWaznosci = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NarzedzieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObslugaMetrologiczna", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ObslugaMetrologiczna_Narzedzia_NarzedzieId",
+                        column: x => x.NarzedzieId,
+                        principalTable: "Narzedzia",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Operacje",
                 columns: table => new
                 {
@@ -394,7 +415,8 @@ namespace MalaFirma.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumerPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZamowienieId = table.Column<int>(type: "int", nullable: true),
-                    ProcesId = table.Column<int>(type: "int", nullable: true)
+                    ProcesId = table.Column<int>(type: "int", nullable: true),
+                    StatusPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -492,6 +514,11 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "TypNarzedziaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ObslugaMetrologiczna_NarzedzieId",
+                table: "ObslugaMetrologiczna",
+                column: "NarzedzieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Odpowiedzi_PytanieId",
                 table: "Odpowiedzi",
                 column: "PytanieId");
@@ -566,7 +593,7 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "KartaProjektu");
 
             migrationBuilder.DropTable(
-                name: "Narzedzia");
+                name: "ObslugaMetrologiczna");
 
             migrationBuilder.DropTable(
                 name: "Odpowiedzi");
@@ -590,13 +617,16 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "Przeglady");
 
             migrationBuilder.DropTable(
-                name: "TypNarzedzia");
+                name: "Narzedzia");
 
             migrationBuilder.DropTable(
                 name: "Pytania");
 
             migrationBuilder.DropTable(
                 name: "Procesy");
+
+            migrationBuilder.DropTable(
+                name: "TypNarzedzia");
 
             migrationBuilder.DropTable(
                 name: "Zamowienia");

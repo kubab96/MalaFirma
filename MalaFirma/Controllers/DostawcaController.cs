@@ -63,10 +63,17 @@ namespace MalaFirma.Controllers
                     _unitOfWork.Dostawca.Update(obj);
                     _unitOfWork.Save();
                     TempData["success"] = "Dostawca został zedytowany";
+                    return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
                 }
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public ActionResult DetailsDostawca(int? id)
+        {
+            var dostawca = _unitOfWork.Dostawca.GetFirstOrDefault(x => x.Id == id);
+            return View(dostawca);
         }
 
         public IActionResult Delete(int? id)
@@ -79,7 +86,8 @@ namespace MalaFirma.Controllers
             _unitOfWork.Dostawca.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = "Dostawca został usunięty";
-            return RedirectToAction("Index");
+            IEnumerable<Dostawca> objDostawcaList = _unitOfWork.Dostawca.GetAll();
+            return RedirectToAction("Index", objDostawcaList);
         }
     }
 }

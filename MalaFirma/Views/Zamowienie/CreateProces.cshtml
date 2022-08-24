@@ -2,9 +2,9 @@
 
 <partial name="_Notification" />
 
-<div class="col-xl-12">
-    <div class="card mb-4">
-        <div class="card-header">
+<div class="container p-3">
+ <div class="card shadow mb-4">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Dane zamówienia</h6>
         </div>
         <div class="card-body">
@@ -59,45 +59,35 @@
                 </dd>
             </dl>
 
-            @if (Model.Procesy.Count() != 0)
-            {
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nazwa</th>
-                            <th>Ilość</th>
-                            <th>Materiał</th>
-                            <th>Wymaganie</th>
+        </div>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Procesy</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Wymaganie</th>
 
-                        </tr>
-
-                    </thead>
+                    </tr>
                     @foreach (var obj in Model.Procesy)
                     {
-
                         <tr>
-                            <td width="20%">@obj.Nazwa</td>
-                            <td width="20%">@obj.Ilosc</td>
-                            <td width="20%">@obj.Material</td>
-                            <td width="40%">@obj.Opis</td>
+                            <td width="30%">@obj.Nazwa</td>
+                            <td width="70%">@obj.Opis</td>
                         </tr>
-
                     }
-                </table>
-            }
-            else
-            {
+            </table>
 
-            }
         </div>
     </div>
-</div>
 
 <form method="post">
     <div class="col-xl-12">
         <div class="card mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Procesy</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Utwórz proces do wykonania</h6>
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -121,7 +111,7 @@
                     <span asp-validation-for="Proces.Opis" class="text-danger"></span>
                 </div>
 
-                <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary">Dodaj wymaganie</button>
+                <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary">Dodaj proces</button>
                 <button type="submit" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary">Zakończ</button>
             </div>
         </div>

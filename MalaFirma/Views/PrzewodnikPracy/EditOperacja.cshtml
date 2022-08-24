@@ -1,10 +1,10 @@
 ﻿@model Operacja
 
 <form method="post">
-    <div class="col-xl-12">
-        <div class="card mb-4">
+    <div class="container p-3">
+        <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edycja zamówienia</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Edycja operacji</h6>
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -13,9 +13,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Edytuj</button>
-                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-idProcesu="@Model.ProcesId" class="btn btn-primary">
-                    Wróć do operacji
-                </a>
+                <a href="@Url.Action("Operacja", "PrzewodnikPracy", new { id = Model.ProcesId })" class="btn btn-primary" role="button">Wróć do przewodnika</a>
             </div>
         </div>
     </div>

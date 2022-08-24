@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace MalaFirma.Models
         public IEnumerable<Operacja> Operacje { get; set; }
         [ValidateNever]
         public Operacja Operacja { get; set; }
+        [ValidateNever]
+        public IFormFile Rysunek { get; set; }
     }
 }

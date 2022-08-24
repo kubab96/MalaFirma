@@ -1,22 +1,38 @@
 ﻿@model PrzegladVM
 
-<div class="col-xl-12">
-    <div class="card mb-4">
-        <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">Edycja odpowiedzi</h6>
-        </div>
-        <div class="mb-3">
-            <label asp-for="Pytanie.Nazwa"></label>
-            <input asp-for="Pytanie.Nazwa" class="form-control" />
-        </div>
-        <form method="post">
-            @Html.CheckBoxFor(model => model.Odpowiedz.Wartosc)
-            <div class="mb-3">
-                <label asp-for="Odpowiedz.WymaganeDzialania"></label>
-                <input asp-for="Odpowiedz.WymaganeDzialania" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
-        </form>
+<div class="container p-3">
 
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Przegląd zamówieia</h6>
+        </div>
+        <br />
+
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Pytanie.Nazwa"></label>
+                <input asp-for="Pytanie.Nazwa" class="form-control" />
+            </div>
+
+
+
+            <form method="post">
+
+
+                <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" onclick="Show()" id="ObslugaMetrologiczna" asp-for="Odpowiedz.Wartosc">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Obsluga Metrologiczna</label>
+                    </div>
+
+                @*@Html.CheckBoxFor(model => model.Odpowiedz.Wartosc)*@
+                <div class="mb-3">
+                    <label asp-for="Odpowiedz.WymaganeDzialania"></label>
+                    <input asp-for="Odpowiedz.WymaganeDzialania" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:150px">Udziel odpowiedzi</button>
+            </form>
+
+        </div>
     </div>
 </div>

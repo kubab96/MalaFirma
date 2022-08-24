@@ -7,9 +7,11 @@ namespace MalaFirma.Controllers
     public class PrzewodnikPracyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public PrzewodnikPracyController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public PrzewodnikPracyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult PrzewodnikPracy(int id)
         {
@@ -20,6 +22,17 @@ namespace MalaFirma.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult PrzewodnikPracy(PrzewodnikPracyVM model)
+        {
+            
+
+
+            return View(model);
+        }
+
+        
 
         public IActionResult Operacja(int id)
         {
