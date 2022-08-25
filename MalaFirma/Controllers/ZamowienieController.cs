@@ -137,6 +137,7 @@ namespace MalaFirma.Controllers
                 {
                     var zamowienieFormDb = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
                     zamowienieFormDb.StatusZamowienia = "Nowe";
+                    zamowienieFormDb.UwagiZamowienia = obj.Zamowienie.UwagiZamowienia;
                     _unitOfWork.Zamowienie.Update(zamowienieFormDb);
                     _unitOfWork.Save();
                     TempData["success"] = "Zamówienie zostało pomyślnie dodane";
@@ -155,7 +156,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Proces został pomyślnie dodany";
-                return CreateProces(id);
+                return RedirectToAction("CreateProces", "Zamowienie", new { id });
             }
             return View();
         }

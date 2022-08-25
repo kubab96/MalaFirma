@@ -20,10 +20,6 @@
                         <option disabled selected>-- Wybierz klienta --</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="Zamowienie.UwagiZamowienia"></label>
-                    <input asp-for="Zamowienie.UwagiZamowienia" class="form-control" />
-                </div>
                 @if (Model.Zamowienie.Id != 0)
                 {
                     <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>

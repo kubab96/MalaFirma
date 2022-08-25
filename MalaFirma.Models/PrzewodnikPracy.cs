@@ -19,5 +19,6 @@ namespace MalaFirma.Models
         public int? ProcesId { get; set; }
         public Proces Proces { get; set; }
         public string? StatusPrzewodnika { get; set; }
+        public string? Rysunek { get; set; }
     }
 }

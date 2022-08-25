@@ -13,7 +13,7 @@
         </div>
         <br />
 
-            <div class="col-12 text-end">
+        <div class="col-12 text-end">
             <a asp-controller="PrzewodnikPracy" asp-action="AddOperacja" asp-route-idProcesu="@Model.Proces.Id" class="btn btn-primary" style="margin-right:25px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz operację
             </a>
@@ -53,8 +53,8 @@
                                data-controller="PrzewodnikPracy"
                                data-action="DeleteOperacja"
                                data-body-message="Czy napewno chcesz usunąć tą operację?">
-                                        <i class="bi bi-trash3-fill"></i> Usuń
-                                    </a>
+                                    <i class="bi bi-trash3-fill"></i> Usuń
+                                </a>
 
                             </td>
                         </tr>
@@ -62,8 +62,60 @@
                     }
                 </tbody>
             </table>
+            <br />
+
+            
+            <form method="post" asp-action="Operacja" enctype="multipart/form-data">
+                <input asp-for="PrzewodnikPracy.Rysunek" hidden />
+                <div class="mb-3">
+                    <input type="file" id="formFile" name="file" class="form-control" />
+                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="width:150px">Zatwierdź</button>
+                    <div style="display: inline">
+                        <div style="display: inline">
+                    @if (Model.PrzewodnikPracy.Rysunek != null){
+                    <a class="btn btn-danger delete"
+                               data-id="@Model.PrzewodnikPracy.Id"
+                               data-controller="PrzewodnikPracy"
+                               data-action="DeleteRysunek"
+                               data-body-message="Czy napewno chcesz usunąć tą operację?">
+                                    <i class="bi bi-trash3-fill"></i> Usuń
+                                </a>
+                                }
+                    <img src="@Model.PrzewodnikPracy.Rysunek" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                    <br />
+                    
+                </div>
+                
+                    
+                                </div></div>
+                
+            </form>
+
         </div>
 
 
     </div>
 </div>
+
+@section Scripts{
+    @{
+
+    }
+<script>
+
+function ValidateInput(){
+    if(document.getElementById("formFile").value==""){
+        Swal.fire({
+        icon: 'error',
+        title: 'Wystąpił błąd',
+        footer: 'Nie załadowano rysunku.',
+    });
+    return false;
+    }
+    return true;
+}
+
+
+</script>
+
+}

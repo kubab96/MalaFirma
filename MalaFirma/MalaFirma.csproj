@@ -59,4 +59,8 @@
     <ProjectReference Include="..\MalaFirma.Utility\MalaFirma.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\rysunki\" />
+  </ItemGroup>
+
 </Project>

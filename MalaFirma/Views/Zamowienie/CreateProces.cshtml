@@ -3,121 +3,81 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
- <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Dane zamówienia</h6>
-        </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.Nazwa)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.DataZamowienia)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.DataZamowienia)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.NazwaKlienta)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.NazwaKlienta)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.Kraj)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.Kraj)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.Miasto)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.Miasto)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.UlicaNumer)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.UlicaNumer)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.KodPocztowy)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.KodPocztowy)
-                </dd>
-            </dl>
-
-        </div>
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Procesy</h6>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nazwa</th>
-                        <th>Wymaganie</th>
-
-                    </tr>
-                    @foreach (var obj in Model.Procesy)
-                    {
-                        <tr>
-                            <td width="30%">@obj.Nazwa</td>
-                            <td width="70%">@obj.Opis</td>
-                        </tr>
-                    }
-            </table>
-
-        </div>
-    </div>
-
-<form method="post">
-    <div class="col-xl-12">
-        <div class="card mb-4">
+    @if (Model.Procesy.Any())
+    {
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Utwórz proces do wykonania</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Procesy do wykonania</h6>
             </div>
             <div class="card-body">
-                <div class="mb-3">
-                    <label asp-for="Proces.Nazwa"></label>
-                    <input asp-for="Proces.Nazwa" class="form-control" />
-                    <span asp-validation-for="Proces.Nazwa" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Proces.Ilosc"></label>
-                    <input asp-for="Proces.Ilosc" class="form-control" value="1" />
-                    <span asp-validation-for="Proces.Ilosc" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Proces.Material"></label>
-                    <input asp-for="Proces.Material" class="form-control" />
-                    <span asp-validation-for="Proces.Material" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Proces.Opis"></label>
-                    <input asp-for="Proces.Opis" class="form-control"/>
-                    <span asp-validation-for="Proces.Opis" class="text-danger"></span>
-                </div>
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Wymaganie</th>
 
-                <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary">Dodaj proces</button>
-                <button type="submit" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary">Zakończ</button>
+                        </tr>
+                        @foreach (var obj in Model.Procesy)
+                        {
+                            <tr>
+                                <td width="30%">@obj.Nazwa</td>
+                                <td width="70%">@obj.Opis</td>
+                            </tr>
+                        }
+                </table>
+
             </div>
         </div>
-    </div>
-</form>
+    }
 
+    <form method="post">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Utwórz proces do wykonania</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Proces.Nazwa"></label>
+                        <input asp-for="Proces.Nazwa" class="form-control" />
+                        <span asp-validation-for="Proces.Nazwa" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Proces.Ilosc"></label>
+                        <input asp-for="Proces.Ilosc" class="form-control" value="1" />
+                        <span asp-validation-for="Proces.Ilosc" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Proces.Material"></label>
+                        <input asp-for="Proces.Material" class="form-control" />
+                        <span asp-validation-for="Proces.Material" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Proces.Opis"></label>
+                        <input asp-for="Proces.Opis" class="form-control" />
+                        <span asp-validation-for="Proces.Opis" class="text-danger"></span>
+                    </div>
+                    <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary">Dodaj proces</button>
+
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Uwagi do zamówienia</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="Zamowienie.UwagiZamowienia"></label>
+                        <input asp-for="Zamowienie.UwagiZamowienia" class="form-control" />
+                        <span asp-validation-for="Zamowienie.UwagiZamowienia" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary">Zakończ</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 
