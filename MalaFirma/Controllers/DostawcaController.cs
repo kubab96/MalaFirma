@@ -39,6 +39,10 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Dostawca obj)
         {
+            if(String.IsNullOrEmpty(obj.Uwagi))
+            {
+                obj.Uwagi = "Brak";
+            }
             if (ModelState.IsValid)
             {
                 if (obj.Id == 0)

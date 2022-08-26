@@ -32,7 +32,6 @@ namespace MalaFirma.DataAccess.Repository
         }
         public void AddId(Dostawca obj)
         {
-
             _db.Dostawcy.Add(obj);
         }
     }

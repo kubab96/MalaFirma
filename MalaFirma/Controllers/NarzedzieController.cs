@@ -34,7 +34,7 @@ namespace MalaFirma.Controllers
                     Value = u.Id.ToString()
                 })
             };
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 //create
                 return View(obj);
@@ -43,6 +43,7 @@ namespace MalaFirma.Controllers
             {
                 //edit
                 obj.Narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(u => u.Id == id);
+                obj.ObslugaMetrologiczna = _unitOfWork.ObslugaMetrologiczna.GetFirstOrDefault(x => x.NarzedzieId == id);
                 return View(obj);
             }
         }
@@ -51,43 +52,57 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(NarzedzieTypVM obj)
         {
-            if (ModelState.IsValid)
+
+            if (obj.Narzedzie.Id == 0)
             {
-                if(obj.Narzedzie.Id == 0)
+                int numer = 1;
+                var liczbaNarzedzi = _unitOfWork.Narzedzie.GetAll().Count();
+                int numerIdentyfikacyjny = numer + liczbaNarzedzi;
+                obj.Narzedzie.NumerIdentyfikacyjny = "FM/" + numerIdentyfikacyjny;
+                _unitOfWork.Narzedzie.Add(obj.Narzedzie);
+                _unitOfWork.Save();
+                if (obj.Narzedzie.ObslugaMetrologiczna == true)
                 {
-                    int numer = 1;
-                    var liczbaNarzedzi = _unitOfWork.Narzedzie.GetAll().Count();
-                    int numerIdentyfikacyjny = numer + liczbaNarzedzi;
-                    obj.Narzedzie.NumerIdentyfikacyjny = "FM/" + numerIdentyfikacyjny;
-                    _unitOfWork.Narzedzie.Add(obj.Narzedzie);
-                    _unitOfWork.Save();
-                    if (obj.Narzedzie.ObslugaMetrologiczna == true)
-                    {
-                        AddObsluga(obj.Narzedzie.Id);
-                    }
-                    TempData["success"] = "Narzędzie zostało pomyślnie dodane";
+                    AddObsluga(obj.Narzedzie.Id, obj.ObslugaMetrologiczna.DataWaznosci);
                 }
-                else
-                {
-                    _unitOfWork.Narzedzie.Update(obj.Narzedzie);
-                    if (obj.Narzedzie.ObslugaMetrologiczna == true)
-                    {
-                        obj.ObslugaMetrologiczna.NarzedzieId = obj.Narzedzie.Id;
-                        _unitOfWork.ObslugaMetrologiczna.Update(obj.ObslugaMetrologiczna);
-                    }
-                    _unitOfWork.Save();
-                    TempData["success"] = "Narzędzie zostało zedytowane";
-                }
-                return RedirectToAction("Index");
+                TempData["success"] = "Narzędzie zostało pomyślnie dodane";
             }
-            return View(obj);
+            else
+            {
+                _unitOfWork.Narzedzie.Update(obj.Narzedzie);
+                if (obj.Narzedzie.ObslugaMetrologiczna == true)
+                {
+                    var obsluga = _unitOfWork.ObslugaMetrologiczna.GetFirstOrDefault(x => x.NarzedzieId == obj.Narzedzie.Id);
+                    if (obsluga == null)
+                    {
+                        AddObsluga(obj.Narzedzie.Id, obj.ObslugaMetrologiczna.DataWaznosci);
+                    }
+                    else
+                    {
+                        EditObsluga(obj.Narzedzie.Id, obj.ObslugaMetrologiczna.DataWaznosci);
+                    }
+                    
+                }
+                _unitOfWork.Save();
+                TempData["success"] = "Narzędzie zostało zedytowane";
+            }
+            return RedirectToAction("Index");
         }
 
-        public void AddObsluga(int id)
+        public void AddObsluga(int id, DateTime dataWaznosci)
         {
             ObslugaMetrologiczna obsluga = new ObslugaMetrologiczna();
+            obsluga.DataWaznosci = dataWaznosci;
             obsluga.NarzedzieId = id;
             _unitOfWork.ObslugaMetrologiczna.AddId(obsluga);
+            _unitOfWork.Save();
+        }
+
+        public void EditObsluga(int id, DateTime dataWaznosci)
+        {
+            var obsluga = _unitOfWork.ObslugaMetrologiczna.GetFirstOrDefault(x => x.NarzedzieId == id);
+            obsluga.DataWaznosci = dataWaznosci;
+            _unitOfWork.ObslugaMetrologiczna.Update(obsluga);
             _unitOfWork.Save();
         }
 

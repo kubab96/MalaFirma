@@ -15,5 +15,6 @@ namespace MalaFirma.Models
         public IEnumerable<SelectListItem> TypNarzedzi { get; set; }
         [ValidateNever]
         public ObslugaMetrologiczna ObslugaMetrologiczna { get; set; }
+
     }
 }

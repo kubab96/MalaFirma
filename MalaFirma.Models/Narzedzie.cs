@@ -26,6 +26,7 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Wymagane jest podanie czy narzędzie/wyposażenie jest poddawane obsłudze metorologicznej.")]
         [DisplayName("Obsługa Metrologiczna")]
         public bool ObslugaMetrologiczna { get; set; }
+        [Required(ErrorMessage = "Status narzędzia jest wymagany.")]
         public string Status { get; set; }
         [DisplayName("Typ narzędzia")]
         [Required(ErrorMessage = "Wymagane jest podanie typu narzędzia.")]
