@@ -8,32 +8,32 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.DataAccess.Repository
 {
-    public class ProcesRepository : Repository<Proces>, IProcesRepository
+    public class WymaganieRepository : Repository<Wymaganie>, IWymaganieRepository
     {
         private ApplicationDbContext _db;
 
-        public ProcesRepository(ApplicationDbContext db) : base(db)
+        public WymaganieRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(Proces obj)
+        public void Update(Wymaganie obj)
         {
-            _db.Procesy.Update(obj);
+            _db.Wymagania.Update(obj);
         }
-        public void AddId(Proces obj, int id)
+        public void AddId(Wymaganie obj, int id)
         {
-            if (_db.Procesy.FirstOrDefault() == null)
+            if (_db.Wymagania.FirstOrDefault() == null)
             {
                 obj.Id = 1;
             }
             else
             {
-                obj.Id = _db.Procesy.Max(x => x.Id + 1);
+                obj.Id = _db.Wymagania.Max(x => x.Id + 1);
 
             }
             obj.ZamowienieId = id;
-            _db.Procesy.Add(obj);
+            _db.Wymagania.Add(obj);
         }
     }
 }

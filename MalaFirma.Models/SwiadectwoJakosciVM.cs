@@ -16,8 +16,8 @@ namespace MalaFirma.Models
         [ValidateNever]
         public IEnumerable<SwiadectwoJakosci> SwiadectwaJakosci { get; set; }
         [ValidateNever]
-        public IEnumerable<Proces> Procesy { get; set; }
+        public IEnumerable<Wymaganie> Wymagania { get; set; }
         [ValidateNever]
-        public Proces Proces { get; set; }
+        public Wymaganie Wymaganie { get; set; }
     }
 }

@@ -18,8 +18,8 @@ namespace MalaFirma.Controllers
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
-            model.Procesy = objProcesList;
+            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganiaList;
 
             return View(model);
         }
@@ -27,9 +27,9 @@ namespace MalaFirma.Controllers
         public IActionResult Operacja(int id)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
-            model.Proces = _unitOfWork.Proces.GetFirstOrDefault(x => x.Id == id);
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
-            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.ProcesId == id);
+            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == id);
             model.Operacje = objOperacjaList;
             return View(model);
         }
@@ -104,21 +104,21 @@ namespace MalaFirma.Controllers
             return View();
         }
 
-        public IActionResult AddOperacja(int? idProcesu)
+        public IActionResult AddOperacja(int? idWymagania)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
-            model.Proces = _unitOfWork.Proces.GetFirstOrDefault(x => x.Id == idProcesu);
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == idWymagania);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddOperacja(PrzewodnikPracyVM obj, int idProcesu)
+        public IActionResult AddOperacja(PrzewodnikPracyVM obj, int idWymagania)
         {
-            _unitOfWork.Operacja.AddId(obj.Operacja, idProcesu);
+            _unitOfWork.Operacja.AddId(obj.Operacja, idWymagania);
             _unitOfWork.Save();
             TempData["success"] = "Operacja została pomyślnie dodana";
-            return RedirectToAction("Operacja", new { id = idProcesu });
+            return RedirectToAction("Operacja", new { id = idWymagania });
         }
 
         public IActionResult EditOperacja(int? id)
@@ -137,14 +137,14 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditOperacja(Operacja obj, int idProcesu)
+        public IActionResult EditOperacja(Operacja obj, int idWymagania)
         {
             if (ModelState.IsValid)
             {
                 _unitOfWork.Operacja.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Edycja operacji przebiegła pomyślnie";
-                return RedirectToAction("Operacja", new { id = idProcesu });
+                return RedirectToAction("Operacja", new { id = idWymagania });
 
             }
             return View(obj);
@@ -161,7 +161,7 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
             ModelState.Clear();
             TempData["success"] = "Operacja została usunięta";
-            return RedirectToAction("Operacja", new { id = obj.ProcesId });
+            return RedirectToAction("Operacja", new { id = obj.WymaganieId });
         }
 
 

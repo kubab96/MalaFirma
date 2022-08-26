@@ -1,4 +1,4 @@
-﻿@model ZamowienieProcesVM
+﻿@model ZamowienieWymaganieVM
 
 <partial name="_Notification" />
 
@@ -63,7 +63,7 @@
 
         </div>
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Procesy</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Wymagania</h6>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped" style="width:100%">
@@ -73,7 +73,7 @@
                         <th>Wymaganie</th>
 
                     </tr>
-                    @foreach (var obj in Model.Procesy)
+                    @foreach (var obj in Model.Wymagania)
                     {
                         <tr>
                             <td width="30%">@obj.Nazwa</td>
@@ -84,8 +84,8 @@
 
         </div>
     </div>
-    <a asp-controller="Zamowienie" asp-action="CreateProces" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-        Dodaj proces
+    <a asp-controller="Zamowienie" asp-action="CreateWymaganie" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+        Dodaj wymaganie
     </a>
     <a asp-controller="Zamowienie" asp-action="Upsert" asp-route-id="@Model.Zamowienie.Id" class="btn btn-warning">
         <i class="bi bi-pencil-square"></i> Edytuj
@@ -103,4 +103,5 @@
 
     <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>
     <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
+     <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
 </div>

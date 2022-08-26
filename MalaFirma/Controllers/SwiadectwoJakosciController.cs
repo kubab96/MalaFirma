@@ -15,8 +15,8 @@ namespace MalaFirma.Controllers
         {
             SwiadectwoJakosciVM model = new SwiadectwoJakosciVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
-            model.Procesy = objProcesList;
+            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganiaList;
 
             return View(model);
         }

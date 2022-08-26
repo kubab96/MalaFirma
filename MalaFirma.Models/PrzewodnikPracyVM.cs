@@ -11,9 +11,9 @@ namespace MalaFirma.Models
     public class PrzewodnikPracyVM
     {
         [ValidateNever]
-        public IEnumerable<Proces> Procesy { get; set; }
+        public IEnumerable<Wymaganie> Wymagania { get; set; }
         [ValidateNever]
-        public Proces Proces { get; set; }
+        public Wymaganie Wymaganie { get; set; }
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
         [ValidateNever]

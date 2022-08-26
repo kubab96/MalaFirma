@@ -14,7 +14,7 @@
         <br />
 
         <div class="col-12 text-end">
-            <a asp-controller="PrzewodnikPracy" asp-action="AddOperacja" asp-route-idProcesu="@Model.Proces.Id" class="btn btn-primary" style="margin-right:25px">
+            <a asp-controller="PrzewodnikPracy" asp-action="AddOperacja" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-primary" style="margin-right:25px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz operację
             </a>
         </div>
@@ -44,7 +44,7 @@
                                 @obj.DataWykonania
                             </td>
                             <td width="20%">
-                                <a asp-controller="PrzewodnikPracy" asp-action="EditOperacja" asp-route-id="@obj.Id" asp-route-idProcesu="@Model.Proces.Id" class="btn btn-info" style="width:40%; ">
+                                <a asp-controller="PrzewodnikPracy" asp-action="EditOperacja" asp-route-id="@obj.Id" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-info" style="width:40%; ">
                                     <i class="bi bi-pencil-square"></i> Edytuj
                                 </a>
 

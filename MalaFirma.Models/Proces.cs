@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.Models
 {
-    public class Proces
+    public class Wymaganie
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Nazwa procesu do wykonania jest wymagana")]
-        [DisplayName("Nazwa procesu")]
+        [Required(ErrorMessage = "Nazwa wymagania do wykonania jest wymagana.")]
+        [DisplayName("Nazwa wymagania")]
         public string Nazwa { get; set; }
-        [Required(ErrorMessage = "Opis procesu do wykonania jest wymagany")]
+        [Required(ErrorMessage = "Opis wymagania do wykonania jest wymagany.")]
         public string Opis { get; set; }
-        public int Ilosc { get; set; }
-        public string Material { get; set; }
+        [DisplayName("Ilość")]
+        public int? Ilosc { get; set; }
+        [DisplayName("Materiał")]
+        public string? Material { get; set; }
         public int ZamowienieId { get; set; }
         public Zamowienie Zamowienie { get; set; }
         public int? KartaProjektuId { get; set; }

@@ -1,13 +1,13 @@
-﻿@model ZamowienieProcesVM
+﻿@model ZamowienieWymaganieVM
 
 <partial name="_Notification" />
 
 <div class="container p-3">
-    @if (Model.Procesy.Any())
+    @if (Model.Wymagania.Any())
     {
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Procesy do wykonania</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Wymagania do zamówienia</h6>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-striped" style="width:100%">
@@ -17,7 +17,7 @@
                             <th>Wymaganie</th>
 
                         </tr>
-                        @foreach (var obj in Model.Procesy)
+                        @foreach (var obj in Model.Wymagania)
                         {
                             <tr>
                                 <td width="30%">@obj.Nazwa</td>
@@ -34,30 +34,30 @@
         <div class="col-xl-12">
             <div class="card mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Utwórz proces do wykonania</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label asp-for="Proces.Nazwa"></label>
-                        <input asp-for="Proces.Nazwa" class="form-control" />
-                        <span asp-validation-for="Proces.Nazwa" class="text-danger"></span>
+                        <label asp-for="Wymaganie.Nazwa"></label>
+                        <input asp-for="Wymaganie.Nazwa" class="form-control" />
+                        <span asp-validation-for="Wymaganie.Nazwa" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Proces.Ilosc"></label>
-                        <input asp-for="Proces.Ilosc" class="form-control" value="1" />
-                        <span asp-validation-for="Proces.Ilosc" class="text-danger"></span>
+                        <label asp-for="Wymaganie.Ilosc"></label>
+                        <input asp-for="Wymaganie.Ilosc" class="form-control" value="1" />
+                        <span asp-validation-for="Wymaganie.Ilosc" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Proces.Material"></label>
-                        <input asp-for="Proces.Material" class="form-control" />
-                        <span asp-validation-for="Proces.Material" class="text-danger"></span>
+                        <label asp-for="Wymaganie.Material"></label>
+                        <input asp-for="Wymaganie.Material" class="form-control" />
+                        <span asp-validation-for="Wymaganie.Material" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Proces.Opis"></label>
-                        <input asp-for="Proces.Opis" class="form-control" />
-                        <span asp-validation-for="Proces.Opis" class="text-danger"></span>
+                        <label asp-for="Wymaganie.Opis"></label>
+                        <input asp-for="Wymaganie.Opis" class="form-control" />
+                        <span asp-validation-for="Wymaganie.Opis" class="text-danger"></span>
                     </div>
-                    <button type="submit" name="SubmitForm" value="AddProces" class="btn btn-primary">Dodaj proces</button>
+                    <button type="submit" name="SubmitForm" value="AddWymaganie" class="btn btn-primary">Dodaj wymaganie</button>
 
                 </div>
             </div>

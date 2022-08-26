@@ -18,8 +18,8 @@ namespace MalaFirma.Controllers
             model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
             IEnumerable<Przeglad> objPrzegladList = _unitOfWork.Przeglad.GetAll().Where(x => x.zamowienieId == id);
             model.Przeglady = objPrzegladList;
-            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
-            model.Procesy = objProcesList;
+            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganiaList;
             
             return View(model);
         }

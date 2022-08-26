@@ -15,7 +15,7 @@ namespace MalaFirma.DataAccess.Repository
         {
             _db = db;
             Zamowienie = new ZamowienieRepository(_db);
-            Proces = new ProcesRepository(_db);
+            Wymaganie = new WymaganieRepository(_db);
             Pytanie = new PytanieRepository(_db);
             Odpowiedz = new OdpowiedzRepository(_db);
             Narzedzie = new NarzedzieRepository(_db);
@@ -30,7 +30,7 @@ namespace MalaFirma.DataAccess.Repository
             ObslugaMetrologiczna = new ObslugaMetrologicznaRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
-        public IProcesRepository Proces { get; private set; }
+        public IWymaganieRepository Wymaganie { get; private set; }
         public IPytanieRepository Pytanie { get; private set; }
         public IOdpowiedzRepository Odpowiedz { get; private set; }
         public INarzedzieRepository Narzedzie { get; private set; }

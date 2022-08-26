@@ -25,9 +25,9 @@ namespace MalaFirma.DataAccess.Repository
                 objFromDb.TrescOperacji = obj.TrescOperacji;
             }
         }
-        public void AddId(Operacja obj, int idProcesu)
+        public void AddId(Operacja obj, int idWymagania)
         {
-            obj.ProcesId = idProcesu;
+            obj.WymaganieId = idWymagania;
             _db.Operacje.Add(obj);
         }
     }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.DataAccess.Repository.IRepository
 {
-    public interface IProcesRepository : IRepository<Proces>
+    public interface IWymaganieRepository : IRepository<Wymaganie>
     {
-        void Update(Proces obj);
-        void AddId(Proces obj, int id);
+        void Update(Wymaganie obj);
+        void AddId(Wymaganie obj, int id);
     }
 }

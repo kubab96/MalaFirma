@@ -23,7 +23,7 @@ namespace MalaFirma.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            ZamowienieProcesVM obj = new()
+            ZamowienieWymaganieVM obj = new()
             {
                 Zamowienie = new(),
                 Klienci = _unitOfWork.Klient.GetAll().Select(
@@ -48,17 +48,17 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(ZamowienieProcesVM obj)
+        public IActionResult Upsert(ZamowienieWymaganieVM obj)
         {
             if (ModelState.IsValid)
             {
                 if (obj.Zamowienie.Id == 0)
                 {
-                    obj.Zamowienie.StatusZamowienia = "Nie potwierdzone";
+                    obj.Zamowienie.StatusZamowienia = "Nie potwierdzone.";
                     _unitOfWork.Zamowienie.Add(obj.Zamowienie);
                     _unitOfWork.Save();
                     AddKartaProjektu(obj.Zamowienie.Id);
-                    return RedirectToAction("CreateProces", new { id = obj.Zamowienie.Id });
+                    return RedirectToAction("CreateWymaganie", new { id = obj.Zamowienie.Id });
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace MalaFirma.Controllers
                     obj.Zamowienie.KlientId = obj.Zamowienie.KlientId;
                     _unitOfWork.Zamowienie.Update(obj.Zamowienie);
                     _unitOfWork.Save();
-                    TempData["success"] = "Zamowienie zostało zedytowane";
+                    TempData["success"] = "Edycja zamowienia została wykonana.";
                     return RedirectToAction("Index");
                 }
             }
@@ -94,44 +94,44 @@ namespace MalaFirma.Controllers
             _unitOfWork.Zamowienie.Remove(obj);
             _unitOfWork.Odpowiedz.RemoveRange(obj2);
             _unitOfWork.Save();
-            TempData["error"] = "Zamówienie zostało usunięte";
+            TempData["error"] = "Zamówienie zostało usunięte.";
             return RedirectToAction("Index");
         }
 
         public ActionResult DetailsZamowienia(int? id)
         {
-            ZamowienieProcesVM model = new ZamowienieProcesVM();
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
-            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
-            model.Procesy = objProcesList;
+            IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganieList;
             return View(model);
         }
 
         #endregion
 
-        #region Procesy
-        public IActionResult CreateProces(int? id)
+        #region Wymagania
+        public IActionResult CreateWymaganie(int? id)
         {
-            ZamowienieProcesVM model = new ZamowienieProcesVM();
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
-            IEnumerable<Proces> objProcesList = _unitOfWork.Proces.GetAll().Where(x => x.ZamowienieId == id);
-            model.Procesy = objProcesList;
+            IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganieList;
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProces(IFormCollection fc, ZamowienieProcesVM obj, int id)
+        public IActionResult CreateWymaganie(IFormCollection fc, ZamowienieWymaganieVM obj, int id)
         {
             if (fc["SubmitForm"] == "Create")
             {
-                var result = _unitOfWork.Proces.GetFirstOrDefault(x => x.ZamowienieId == id);
+                var result = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.ZamowienieId == id);
                 if (result == null)
                 {
-                    TempData["error"] = "Wymagane jest dodanie przynajmniej jednego procesu";
-                    return CreateProces(id);
+                    TempData["error"] = "Wymagane jest dodanie przynajmniej jednego wymagania.";
+                    return CreateWymaganie(id);
                 }
                 else
                 {
@@ -140,32 +140,32 @@ namespace MalaFirma.Controllers
                     zamowienieFormDb.UwagiZamowienia = obj.Zamowienie.UwagiZamowienia;
                     _unitOfWork.Zamowienie.Update(zamowienieFormDb);
                     _unitOfWork.Save();
-                    TempData["success"] = "Zamówienie zostało pomyślnie dodane";
+                    TempData["success"] = "Zamówienie zostało pomyślnie dodane.";
                     return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id });
                 }
             }
 
-            if (fc["SubmitForm"] == "AddProces")
+            if (fc["SubmitForm"] == "AddWymaganie")
             {
                 var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == id);
-                obj.Proces.KartaProjektuId = kartaFormDb.Id;
-                _unitOfWork.Proces.AddId(obj.Proces, id);
+                obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
+                _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                AddPrzewodnikPracy(zamowienieId.Id, obj.Proces.Id);
+                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
                 AddSwiadectwoJakosci(zamowienieId.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
-                TempData["success"] = "Proces został pomyślnie dodany";
-                return RedirectToAction("CreateProces", "Zamowienie", new { id });
+                TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
+                return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
             }
             return View();
         }
 
-        public void AddPrzewodnikPracy(int idZamowienia, int idProcesu)
+        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
         {
             PrzewodnikPracy przewodnik = new PrzewodnikPracy();
             przewodnik.ZamowienieId = idZamowienia;
-            przewodnik.ProcesId = idProcesu;
+            przewodnik.WymaganieId = idWymagania;
             przewodnik.StatusPrzewodnika = "W trakcie";
             _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
             _unitOfWork.Save();

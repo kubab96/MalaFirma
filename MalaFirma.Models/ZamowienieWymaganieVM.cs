@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace MalaFirma.Models
 {
-    public class ZamowienieProcesVM
+    public class ZamowienieWymaganieVM
     {
 
         public Zamowienie Zamowienie { get; set; }
         [ValidateNever]
-        public IEnumerable<Proces> Procesy { get; set; }
+        public IEnumerable<Wymaganie> Wymagania { get; set; }
         [ValidateNever]
-        public Proces Proces { get; set; }
+        public Wymaganie Wymaganie { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> Klienci { get; set; }
         [ValidateNever]

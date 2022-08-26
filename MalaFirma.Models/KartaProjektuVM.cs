@@ -9,10 +9,10 @@ namespace MalaFirma.Models
 {
     public class KartaProjektuVM
     {
-        public IEnumerable<Proces> Procesy { get; set; }
+        public IEnumerable<Wymaganie> Wymagania { get; set; }
         public IEnumerable<Przeglad> Przeglady { get; set; }
         [ValidateNever]
-        public Proces Proces { get; set; }
+        public Wymaganie Wymaganie { get; set; }
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
         public Przeglad Przeglad { get; set; }
