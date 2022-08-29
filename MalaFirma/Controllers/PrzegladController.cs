@@ -77,12 +77,7 @@ namespace MalaFirma.Controllers
         {
             PrzegladVM model = new PrzegladVM();
             model.Pytania = _unitOfWork.Pytanie.GetAll();
-            //model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll();
-
             model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
-            //IEnumerable<Odpowiedz> objOdpowiedziList = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
-            //model.Odpowiedzi = objOdpowiedziList;
-            //model.Odpowiedz = _unitOfWork.Odpowiedz.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             return View(model);
         }

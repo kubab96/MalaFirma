@@ -23,7 +23,16 @@ namespace MalaFirma.DataAccess.Repository
         }
         public void AddId(Zamowienie obj)
         {
-            
+
+            if (_db.Zamowienia.FirstOrDefault() == null)
+            {
+                obj.Id = 1;
+            }
+            else
+            {
+                obj.Id = _db.Zamowienia.Max(x => x.Id + 1);
+
+            }
             _db.Zamowienia.Add(obj);
         }
     }

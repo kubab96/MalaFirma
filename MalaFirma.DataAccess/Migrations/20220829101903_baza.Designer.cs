@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220826121045_baza")]
+    [Migration("20220829101903_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Uwagi")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZakresDzialalnosci")
@@ -62,10 +61,7 @@ namespace MalaFirma.DataAccess.Migrations
             modelBuilder.Entity("MalaFirma.Models.KartaProjektu", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DodatkoweInformacje")
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +72,7 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<int?>("PrzegladId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ZamowienieId")
+                    b.Property<int>("ZamowienieId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -276,17 +272,26 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("NumerPrzewodnika")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rysunek")
+                    b.Property<string>("NumerRysunku")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StatusPrzewodnika")
+                    b.Property<string>("PlanowaneDzialania")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rysunek")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("WymaganieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("WynikPrzewodnika")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ZamowienieId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ZidentyfikowaneProblemy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -322,10 +327,24 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("NumerSwiadectwa")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PlanowaneDzialania")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WymaganieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WynikSwiadectwa")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ZamowienieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ZidentyfikowaneProblemy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WymaganieId");
 
                     b.HasIndex("ZamowienieId");
 
@@ -386,10 +405,7 @@ namespace MalaFirma.DataAccess.Migrations
             modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("DataZamowienia")
                         .HasColumnType("datetime2");
@@ -657,7 +673,9 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
                         .WithMany()
-                        .HasForeignKey("ZamowienieId");
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Przeglad");
 
@@ -744,9 +762,15 @@ namespace MalaFirma.DataAccess.Migrations
 
             modelBuilder.Entity("MalaFirma.Models.SwiadectwoJakosci", b =>
                 {
+                    b.HasOne("MalaFirma.Models.Wymaganie", "Wymaganie")
+                        .WithMany()
+                        .HasForeignKey("WymaganieId");
+
                     b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
                         .WithMany()
                         .HasForeignKey("ZamowienieId");
+
+                    b.Navigation("Wymaganie");
 
                     b.Navigation("Zamowienie");
                 });

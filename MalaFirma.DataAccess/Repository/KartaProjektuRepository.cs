@@ -23,7 +23,15 @@ namespace MalaFirma.DataAccess.Repository
         }
         public void AddId(KartaProjektu obj)
         {
+            if (_db.KartaProjektu.FirstOrDefault() == null)
+            {
+                obj.Id = 1;
+            }
+            else
+            {
+                obj.Id = _db.KartaProjektu.Max(x => x.Id + 1);
 
+            }
             _db.KartaProjektu.Add(obj);
         }
     }

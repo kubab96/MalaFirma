@@ -1,12 +1,21 @@
 ﻿@model PrzewodnikPracyVM
 @{
     ViewData["Title"] = "Index";
+    var query =
+    from wym in Model.Wymagania
+    join prze in Model.PrzewodnikiPracy on wym.Id equals prze.WymaganieId into op
+    from wymprze in op.DefaultIfEmpty()
+    select new
+    {
+        wym.Nazwa,
+        wym.Id,
+        Wynik = wymprze?.WynikPrzewodnika ?? string.Empty,
+        IdWym = wymprze?.Id
+    };
 }
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Przewodniki Pracy</h6>
@@ -19,29 +28,49 @@
                         <th>
                             Nazwa wymagania
                         </th>
+
+                        <th>
+                            Wynik przeglądu
+                        </th>
                         <th>
 
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var obj in Model.Wymagania)
+                    @foreach (var obj in query)
                     {
                         <tr>
-                            <td width="80%">
+                            <td width="30%">
                                 @obj.Nazwa
+                            </td>
+                            <td width="50%">
+                                @if (obj.Wynik == string.Empty)
+                                {
+                                    <div>-</div>
+                                }
+                                else
+                                {
+                                    @obj.Wynik
+                                }
+
                             </td>
                             <td width="20%">
                                 <a href="@Url.Action("Operacja", "PrzewodnikPracy", new { id = obj.Id })" class="btn btn-primary" role="button">Wyświetl</a>
                             </td>
-                        </tr>
 
+
+
+                        </tr>
                     }
                 </tbody>
             </table>
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            </a>
+
 
         </div>
-
 
     </div>
 </div>

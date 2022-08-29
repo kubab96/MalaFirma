@@ -11,12 +11,13 @@ namespace MalaFirma.Models
 {
     public class KartaProjektu
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public int? PrzegladId { get; set; }
         public Przeglad? Przeglad { get; set; }
-        public int? ZamowienieId { get; set; }
-        public Zamowienie? Zamowienie { get; set; }
+        public int ZamowienieId { get; set; }
+        [ValidateNever]
+        public Zamowienie Zamowienie { get; set; }
         public string? DodatkoweInformacje { get; set; }
         public string? DodatkoweUwagi { get; set; }
     }

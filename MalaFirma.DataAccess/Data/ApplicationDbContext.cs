@@ -1,4 +1,4 @@
-﻿using MalaFirma.Models;
+﻿    using MalaFirma.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,13 +24,5 @@ namespace MalaFirma.DataAccess
         public DbSet<SwiadectwoJakosci> SwiadectwoJakosci { get; set; }
         public DbSet<ObslugaMetrologiczna> ObslugaMetrologiczna { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        
-        
-
-
-
-
-
-
     }
 }

@@ -1,0 +1,40 @@
+﻿@model PrzewodnikPracy
+
+<form method="post">
+    <div class="container p-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Edycja operacji</h6>
+            </div>
+            <div class="card-body">
+                <input asp-for="Id" hidden />
+                <input asp-for="NumerPrzewodnika" hidden />
+                <input asp-for="ZamowienieId" hidden />
+                <input asp-for="WymaganieId" hidden />
+                <input asp-for="Rysunek" hidden />
+                <input asp-for="NumerRysunku" hidden />
+                <div class="mb-3">
+                    <label asp-for="WynikPrzewodnika"></label>
+                <input asp-for="WynikPrzewodnika" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ZidentyfikowaneProblemy"></label>
+                <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PlanowaneDzialania"></label>
+                <input asp-for="PlanowaneDzialania" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edytuj</button>
+               
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}

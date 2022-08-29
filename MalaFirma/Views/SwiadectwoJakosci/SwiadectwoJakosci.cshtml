@@ -1,6 +1,19 @@
 ﻿@model SwiadectwoJakosciVM
 @{
     ViewData["Title"] = "Index";
+    var query =
+    from wym in Model.Wymagania
+    join przew in Model.PrzewodnikiPracy on wym.Id equals przew.WymaganieId
+    join swia in Model.SwiadectwaJakosci on wym.Id equals swia.WymaganieId
+    select new
+    {
+        wym.Nazwa,
+        wym.Id,
+        wym.Ilosc,
+        przew.NumerRysunku,
+        swia.WynikSwiadectwa,
+        Idswia = swia?.Id
+    };
 }
 <partial name="_Notification" />
 
@@ -12,35 +25,64 @@
             <h6 class="m-0 font-weight-bold text-primary">Lista wykonanych części lub zespołów</h6>
         </div>
         <br />
-            <div class="card-body">
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                Nazwa części
-                            </th>
-                            <th>
-                                
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var obj in Model.Wymagania)
-                        {
-                            <tr>
-                                <td width="20%">
-                                    @obj.Nazwa
-                                </td>
-                                <td width="20%">
-                                    
-                                </td>
-                            </tr>
-                            
-                        }
-                    </tbody>
-                </table>
-            </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Nazwa części
+                        </th>
+                        <th>
+                            Numer rysunku
+                        </th>
+                        <th>
 
-        
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in query)
+                    {
+                        <tr>
+                            <td width="20%">
+                                @obj.Nazwa
+                            </td>
+                            <td width="20%">
+                                @if (obj.NumerRysunku == null)
+                                {
+                                    <h1>brak</h1>
+                                }
+                                else
+                                {
+                                    @obj.NumerRysunku
+                                }
+                            </td>
+                            <td width="20%">
+                                @obj.Ilosc
+                            </td>
+                            <td width="20%">
+                                @if (obj.WynikSwiadectwa == null)
+                                {
+                                    <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" class="btn btn-primary">
+                                        <i class="bi bi-shield-check"></i> Zakończ świadectwo jakości.
+                                    </a>
+                                }
+                                else
+                                {
+                                    @obj.WynikSwiadectwa
+                                }
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
 </div>

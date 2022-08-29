@@ -2,6 +2,7 @@
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MalaFirma.Controllers
 {
@@ -18,6 +19,8 @@ namespace MalaFirma.Controllers
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id);
+            model.PrzewodnikiPracy = objPrzewodnikiList;
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
 
@@ -45,7 +48,7 @@ namespace MalaFirma.Controllers
                 var uploads = Path.Combine(wwwRootPath, @"images\rysunki");
                 var extension = Path.GetExtension(file.FileName);
 
-                if(model.PrzewodnikPracy.Rysunek != null)
+                if (model.PrzewodnikPracy.Rysunek != null)
                 {
                     var oldImage = Path.Combine(wwwRootPath, model.PrzewodnikPracy.Rysunek.TrimStart('\\'));
                     if (System.IO.File.Exists(oldImage))
@@ -53,9 +56,9 @@ namespace MalaFirma.Controllers
                         System.IO.File.Delete(oldImage);
                     }
                 }
-                
 
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
@@ -71,12 +74,14 @@ namespace MalaFirma.Controllers
                         System.IO.File.Delete(oldImage);
                     }
                     model.PrzewodnikPracy.Rysunek = null;
+                    
                     _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
                     _unitOfWork.Save();
-                    TempData["success"] = "Rysunek został pomyślnie dodany.";
+                    TempData["success"] = "Rysunek został pomyślnie usunięty.";
                     return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.Id });
                 }
             }
+            model.PrzewodnikPracy.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
             _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
             _unitOfWork.Save();
             TempData["success"] = "Rysunek został pomyślnie dodany.";
@@ -95,10 +100,11 @@ namespace MalaFirma.Controllers
                     System.IO.File.Delete(oldImage);
                 }
                 obj.Rysunek = null;
+                obj.NumerRysunku = null;
                 _unitOfWork.PrzewodnikPracy.Update(obj);
                 _unitOfWork.Save();
                 ModelState.Clear();
-                TempData["success"] = "Rysunek został pomyślnie dodany.";
+                TempData["success"] = "Rysunek został pomyślnie usnięty.";
                 return RedirectToAction("Operacja", new { id = obj.Id });
             }
             return View();
@@ -162,6 +168,42 @@ namespace MalaFirma.Controllers
             ModelState.Clear();
             TempData["success"] = "Operacja została usunięta";
             return RedirectToAction("Operacja", new { id = obj.WymaganieId });
+        }
+
+        public IActionResult WynikPrzewodnikaPracy(int? idPrzewodnika)
+        {
+            if (idPrzewodnika == null || idPrzewodnika == 0)
+            {
+                return NotFound();
+            }
+            var przewodnikFormDb = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == idPrzewodnika);
+            if (przewodnikFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(przewodnikFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracy obj)
+        {
+            if (ModelState.IsValid)
+            {
+                if (obj.ZidentyfikowaneProblemy == null)
+                {
+                    obj.ZidentyfikowaneProblemy = "N/D";
+                }
+                if (obj.PlanowaneDzialania == null)
+                {
+                    obj.PlanowaneDzialania = "N/D";
+                }
+                _unitOfWork.PrzewodnikPracy.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Przewodnik został zakończony.";
+                return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+            }
+            return View(obj);
         }
 
 
