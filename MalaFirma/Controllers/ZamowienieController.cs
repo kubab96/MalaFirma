@@ -1,6 +1,7 @@
 ﻿using MalaFirma.DataAccess;
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -28,6 +29,7 @@ namespace MalaFirma.Controllers
             return View(objZamowienieList);
         }
 
+        [Authorize(Roles = "Prezes")]
         public IActionResult Upsert(int? id)
         {
             ZamowienieWymaganieVM obj = new()
