@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,10 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Wpisz wynik przeglądu.")]
         [DisplayName("Wynik przegladu")]
         public string WynikPrzegladu { get; set; }
+        public string? ZidentyfikowaneProblemy { get; set; }
+        public string? PlanowaneDzialania { get; set; }
         public int zamowienieId { get; set; }
+        [ValidateNever]
         public Zamowienie Zamowienie { get; set; } 
     }
 }

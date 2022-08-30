@@ -28,9 +28,12 @@
                     <label asp-for="Odpowiedz.WymaganeDzialania"></label>
                     <input asp-for="Odpowiedz.WymaganeDzialania" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:150px">Udziel odpowiedzi</button>
+                <button type="submit" class="btn btn-primary">Udziel odpowiedzi</button>
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+        <i class="bi bi-arrow-90deg-left"></i> Wróć
+    </a>
             </form>
-
+            
         </div>
     </div>
 </div>

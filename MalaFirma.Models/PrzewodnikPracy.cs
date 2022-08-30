@@ -15,16 +15,17 @@ namespace MalaFirma.Models
         [Key]
         public int Id { get; set; }
         public string? NumerPrzewodnika { get; set; }
-        public int? ZamowienieId { get; set; }
-        [ValidateNever]
-        public Zamowienie Zamowienie { get; set; }
-        public int? WymaganieId { get; set; }
-        [ValidateNever]
-        public Wymaganie Wymaganie { get; set; }
         public string? WynikPrzewodnika { get; set; }
         public string? ZidentyfikowaneProblemy { get; set; }
         public string? PlanowaneDzialania { get; set; }
         public string? Rysunek { get; set; }
         public string? NumerRysunku { get; set; }
+        public int ZamowienieId { get; set; }
+        [ValidateNever]
+        public Zamowienie Zamowienie { get; set; }
+        public int? WymaganieId { get; set; }
+        [ValidateNever]
+        public Wymaganie Wymaganie { get; set; }
+
     }
 }

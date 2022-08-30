@@ -7,15 +7,14 @@
 <div class="container p-3">
 
 
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4" style="margin:15px">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Karta Projektu</h6>
         </div>
-
+        <div class="card-body">
 
 
         @*Tabela wymagań*@
-
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">I. Dane wejściowe</h6>
@@ -57,45 +56,237 @@
         </div>
 
         @*Przegląd projektu*@
-        <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">II. Przegląd projektu</h6>
-            </div>
-            <div class="card-body">
+        @if (Model.Przeglady.Any())
+        {
+            <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">II. Przegląd projektu</h6>
+                </div>
+                <div class="card-body">
 
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                Wynik przeglądu
-                            </th>
-                            <th>
-                                Zindetyfikowane problemy
-                            </th>
-                            <th>
-                                Planowane działania
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var obj in Model.Przeglady)
-                        {
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
                             <tr>
-                                <td width="20%">
-                                    @obj.WynikPrzegladu
-                                </td>
-                                <td width="20%">
-                                </td>
-                                <td width="20%">
-                                    @obj.Zamowienie.UwagiZamowienia
-                                </td>
+                                <th>
+                                    Wynik przeglądu
+                                </th>
+                                <th>
+                                    Zindetyfikowane problemy
+                                </th>
+                                <th>
+                                    Planowane działania
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.Przeglady)
+                            {
+                                @if (obj.WynikPrzegladu == null)
+                                {
+                                    <tr>
+                                        <td width="100%">
+                                            Nie ukończono przeglądu
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td width="33%">
+                                            @obj.WynikPrzegladu
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.ZidentyfikowaneProblemy == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.ZidentyfikowaneProblemy
+                                            }
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.PlanowaneDzialania == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.PlanowaneDzialania
+                                            }
 
-                        }
-                    </tbody>
-                </table>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
+        }
+        else
+        {
 
-        </div>
+        }
+
+        @*Przewodnik pracy*@
+        @if (Model.Przewodniki.Any())
+        {
+            <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">III. Weryfikacja projektu</h6>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Wynik weryfikacji
+                                </th>
+                                <th>
+                                    Zindetyfikowane problemy
+                                </th>
+                                <th>
+                                    Planowane działania
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.Przewodniki)
+                            {
+                                @if (obj.WynikPrzewodnika == null)
+                                {
+                                    <tr>
+                                        <td width="33%">
+                                            @obj.Wymaganie.Nazwa - Nie ukończono.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td width="33%">
+                                            @obj.WynikPrzewodnika
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.ZidentyfikowaneProblemy == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.ZidentyfikowaneProblemy
+                                            }
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.PlanowaneDzialania == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.PlanowaneDzialania
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        }
+        else
+        {
+
+        }
+
+
+
+        @*Świadectwo jakości*@
+        @if (Model.Swiadectwa.Any())
+        {
+            <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">IV. Walidacja projektu</h6>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Wynik walidacji
+                                </th>
+                                <th>
+                                    Zindetyfikowane problemy
+                                </th>
+                                <th>
+                                    Planowane działania
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.Swiadectwa)
+                            {
+                                @if (obj.Wymaganie.Nazwa == null)
+                                {
+                                    <tr>
+                                        <td width="33%">
+                                            @obj.WynikSwiadectwa - Nie ukończono.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td width="33%">
+                                            @obj.WynikSwiadectwa
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.ZidentyfikowaneProblemy == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.ZidentyfikowaneProblemy
+                                            }
+                                        </td>
+                                        <td width="33%">
+                                            @if (obj.PlanowaneDzialania == null)
+                                            {
+                                                <h8>N/D</h8>
+                                            }
+                                            else
+                                            {
+                                                @obj.PlanowaneDzialania
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        }
+        else
+        {
+
+        }
+        <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            </a>
     </div>
+    </div>
+    
 </div>

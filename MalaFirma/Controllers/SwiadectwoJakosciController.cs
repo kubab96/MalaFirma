@@ -46,18 +46,20 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (obj.ZidentyfikowaneProblemy == null)
-                {
-                    obj.ZidentyfikowaneProblemy = "N/D";
-                }
-                if (obj.PlanowaneDzialania == null)
-                {
-                    obj.PlanowaneDzialania = "N/D";
-                }
-                _unitOfWork.SwiadectwoJakosci.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Świadectwo jakości zostało zakończone.";
-                return RedirectToAction("SwiadectwoJakosci", new { id = obj.ZamowienieId });
+
+                    if (obj.ZidentyfikowaneProblemy == null)
+                    {
+                        obj.ZidentyfikowaneProblemy = "N/D";
+                    }
+                    if (obj.PlanowaneDzialania == null)
+                    {
+                        obj.PlanowaneDzialania = "N/D";
+                    }
+                    _unitOfWork.SwiadectwoJakosci.Update(obj);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Świadectwo jakości zostało zakończone.";
+                    return RedirectToAction("SwiadectwoJakosci", new { id = obj.ZamowienieId });
+                
             }
             return View(obj);
         }

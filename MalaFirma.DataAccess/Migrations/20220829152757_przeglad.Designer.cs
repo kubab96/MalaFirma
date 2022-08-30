@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220829101903_baza")]
-    partial class baza
+    [Migration("20220829152757_przeglad")]
+    partial class przeglad
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,8 +247,14 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("PlanowaneDzialania")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WynikPrzegladu")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZidentyfikowaneProblemy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("zamowienieId")
@@ -287,7 +293,7 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("WynikPrzewodnika")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZamowienieId")
+                    b.Property<int>("ZamowienieId")
                         .HasColumnType("int");
 
                     b.Property<string>("ZidentyfikowaneProblemy")
@@ -336,7 +342,7 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("WynikSwiadectwa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZamowienieId")
+                    b.Property<int>("ZamowienieId")
                         .HasColumnType("int");
 
                     b.Property<string>("ZidentyfikowaneProblemy")
@@ -753,7 +759,9 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
                         .WithMany()
-                        .HasForeignKey("ZamowienieId");
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Wymaganie");
 
@@ -768,7 +776,9 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
                         .WithMany()
-                        .HasForeignKey("ZamowienieId");
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Wymaganie");
 

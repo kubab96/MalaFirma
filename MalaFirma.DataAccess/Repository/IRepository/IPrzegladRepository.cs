@@ -9,7 +9,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
 {
     public interface IPrzegladRepository : IRepository<Przeglad>
     {
-        void Update(Przeglad obj, int idZamowienia);
+        void Update(Przeglad obj);
         void AddId(Przeglad obj, int idZamowienia);
     }
 }

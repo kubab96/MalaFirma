@@ -31,5 +31,7 @@ namespace MalaFirma.Models
         public IEnumerable<PrzewodnikPracy> PrzewodnikiPracy { get; set; }
         [ValidateNever]
         public PrzewodnikPracy PrzewodnikPracy { get; set; }
+        [ValidateNever]
+        public Przeglad Przeglad { get; set; }
     }
 }

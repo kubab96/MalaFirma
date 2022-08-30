@@ -17,9 +17,8 @@ namespace MalaFirma.DataAccess.Repository
             _db = db;
         }
 
-        public void Update(Przeglad obj, int idZamowienia)
+        public void Update(Przeglad obj)
         {
-            obj.zamowienieId = idZamowienia;
             _db.Przeglady.Update(obj);
         }
         public void AddId(Przeglad obj, int idZamowienia)

@@ -11,6 +11,8 @@ namespace MalaFirma.Models
     {
         public IEnumerable<Wymaganie> Wymagania { get; set; }
         public IEnumerable<Przeglad> Przeglady { get; set; }
+        public IEnumerable<PrzewodnikPracy> Przewodniki { get; set; }
+        public IEnumerable<SwiadectwoJakosci> Swiadectwa { get; set; }
         [ValidateNever]
         public Wymaganie Wymaganie { get; set; }
         [ValidateNever]

@@ -4,7 +4,7 @@
     <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edycja operacji</h6>
+                <h6 class="m-0 font-weight-bold text-primary">@(Model.WynikPrzewodnika!=null?"Edycja wyniku przewodnika": "Zakończ przewodnik")</h6>
             </div>
             <div class="card-body">
                 <input asp-for="Id" hidden />
@@ -14,20 +14,28 @@
                 <input asp-for="Rysunek" hidden />
                 <input asp-for="NumerRysunku" hidden />
                 <div class="mb-3">
-                    <label asp-for="WynikPrzewodnika"></label>
-                <input asp-for="WynikPrzewodnika" class="form-control" />
+                    <label>Wynik przewodnika</label>
+                    <input asp-for="WynikPrzewodnika" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ZidentyfikowaneProblemy"></label>
-                <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                    <label>Zidentyfikowane problemy</label>
+                    <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="PlanowaneDzialania"></label>
-                <input asp-for="PlanowaneDzialania" class="form-control" />
+                    <label>Planowane działania</label>
+                    <input asp-for="PlanowaneDzialania" class="form-control" />
                 </div>
-
-                <button type="submit" class="btn btn-primary">Edytuj</button>
-               
+                @if (Model.WynikPrzewodnika != null)
+                {
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Zakończ przewodnik</button>
+                }
+                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-id="@Model.WymaganieId" class="btn btn-primary">
+                        <i class="bi bi-arrow-90deg-left"></i> Wróć do operacji
+                    </a>
             </div>
         </div>
     </div>

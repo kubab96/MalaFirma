@@ -79,6 +79,9 @@ namespace MalaFirma.Controllers
             model.Pytania = _unitOfWork.Pytanie.GetAll();
             model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == idZamowienia);
+            IEnumerable<Przeglad> objPrzegladList = _unitOfWork.Przeglad.GetAll().Where(x => x.zamowienieId == idZamowienia);
+            model.Przeglady = objPrzegladList;
             return View(model);
         }
 
@@ -162,10 +165,52 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult WynikPrzegladu(PrzegladVM obj, int idZamowienia)
         {
+            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == idZamowienia);
+            foreach (var a in objWymaganiaList)
+            {
+                AddPrzewodnikPracy(a.ZamowienieId, a.Id);
+            }
             _unitOfWork.Przeglad.AddId(obj.Przeglad, idZamowienia);
             _unitOfWork.Save();
             TempData["success"] = "Wynik przeglądu zakończył się powodzeniem";
             return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Przeglad.zamowienieId });
+        }
+
+        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
+        {
+            PrzewodnikPracy przewodnik = new PrzewodnikPracy();
+            przewodnik.ZamowienieId = idZamowienia;
+            przewodnik.WymaganieId = idWymagania;
+            _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
+            _unitOfWork.Save();
+        }
+
+        public IActionResult EditWynikPrzegladu(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var przegladFormDb = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.Id == id);
+            if (przegladFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(przegladFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditWynikPrzegladu(Przeglad obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Przeglad.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Edycja przeglądu przebiegła pomyślnie.";
+                return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.zamowienieId });
+            }
+            return View(obj);
         }
     }
 }

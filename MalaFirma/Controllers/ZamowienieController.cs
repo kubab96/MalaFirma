@@ -93,21 +93,11 @@ namespace MalaFirma.Controllers
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            //var obj2 = _unitOfWork.Odpowiedz.GetAll().Where(Odpowiedz => Odpowiedz.ZamowienieId == id);
-            //var obj3 = _unitOfWork.SwiadectwoJakosci.GetAll().Where(x => x.ZamowienieId == id);
-            //var obj4 = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id);
-            //var obj5 = _unitOfWork.KartaProjektu.GetAll().Where(x => x.ZamowienieId == id);
-            //var obj6 = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             if (obj == null)
             {
                 return NotFound();
             }
             _unitOfWork.Zamowienie.Remove(obj);
-            //_unitOfWork.Odpowiedz.RemoveRange(obj2);
-            //_unitOfWork.SwiadectwoJakosci.RemoveRange(obj3);
-            //_unitOfWork.PrzewodnikPracy.RemoveRange(obj4);
-            //_unitOfWork.KartaProjektu.RemoveRange(obj5);
-            //_unitOfWork.Wymaganie.RemoveRange(obj6);
             _unitOfWork.Save();
             TempData["error"] = "Zamówienie zostało usunięte.";
             return RedirectToAction("Index");
@@ -166,8 +156,8 @@ namespace MalaFirma.Controllers
                 obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
-                AddSwiadectwoJakosci(zamowienieId.Id, obj.Wymaganie.Id);
+                //AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
+                //AddSwiadectwoJakosci(zamowienieId.Id, obj.Wymaganie.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
@@ -176,23 +166,23 @@ namespace MalaFirma.Controllers
             return View();
         }
 
-        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
-        {
-            PrzewodnikPracy przewodnik = new PrzewodnikPracy();
-            przewodnik.ZamowienieId = idZamowienia;
-            przewodnik.WymaganieId = idWymagania;
-            _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
-            _unitOfWork.Save();
-        }
+        //public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
+        //{
+        //    PrzewodnikPracy przewodnik = new PrzewodnikPracy();
+        //    przewodnik.ZamowienieId = idZamowienia;
+        //    przewodnik.WymaganieId = idWymagania;
+        //    _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
+        //    _unitOfWork.Save();
+        //}
 
-        public void AddSwiadectwoJakosci(int idZamowienia, int idWymagania)
-        {
-            SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
-            swiadectwo.ZamowienieId = idZamowienia;
-            swiadectwo.WymaganieId = idWymagania;
-            _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
-            _unitOfWork.Save();
-        }
+        //public void AddSwiadectwoJakosci(int idZamowienia, int idWymagania)
+        //{
+        //    SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
+        //    swiadectwo.ZamowienieId = idZamowienia;
+        //    swiadectwo.WymaganieId = idWymagania;
+        //    _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
+        //    _unitOfWork.Save();
+        //}
 
         #endregion
 

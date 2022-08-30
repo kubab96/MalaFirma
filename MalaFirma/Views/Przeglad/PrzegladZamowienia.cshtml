@@ -72,10 +72,24 @@
             </table>
             @if (Model.Odpowiedzi.Count() == Model.Pytania.Count())
         {
-            <a asp-controller="Przeglad" asp-action="WynikPrzegladu" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+
+                @if (Model.Przeglady.Any())
+                {
+                    <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-shield-check"></i> Wynik przeglądu
             </a>
+                }
+                else
+                {
+                    <a asp-controller="Przeglad" asp-action="WynikPrzegladu" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-shield-check"></i> Wynik przeglądu
+                    </a>
+                    
+                }
         }
+        <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            </a>
         </div>
         
     </div>

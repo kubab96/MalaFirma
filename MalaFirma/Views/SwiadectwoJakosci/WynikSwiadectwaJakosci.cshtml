@@ -4,7 +4,7 @@
     <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edycja operacji</h6>
+                <h6 class="m-0 font-weight-bold text-primary">@(Model.WynikSwiadectwa!=null?"Edycja wyniku świadectwa": "Zakończ świadectwo")</h6>
             </div>
             <div class="card-body">
                 <input asp-for="Id" hidden />
@@ -12,20 +12,29 @@
                 <input asp-for="ZamowienieId" hidden />
                 <input asp-for="WymaganieId" hidden />
                 <div class="mb-3">
-                    <label asp-for="WynikSwiadectwa"></label>
-                <input asp-for="WynikSwiadectwa" class="form-control" />
+                    <label>Wynik świadectwa</label>
+                    <input asp-for="WynikSwiadectwa" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ZidentyfikowaneProblemy"></label>
-                <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                    <label>Zidentyfikowane problemy</label>
+                    <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="PlanowaneDzialania"></label>
-                <input asp-for="PlanowaneDzialania" class="form-control" />
+                    <label>Planowane działania</label>
+                    <input asp-for="PlanowaneDzialania" class="form-control" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Edytuj</button>
-               
+                @if (Model.WynikSwiadectwa != null)
+                {
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Zakończ świadectwo</button>
+                }
+               <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosci" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do świadectwa
+            </a>
             </div>
         </div>
     </div>

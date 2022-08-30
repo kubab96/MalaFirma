@@ -12,7 +12,8 @@
         wym.Ilosc,
         przew.NumerRysunku,
         swia.WynikSwiadectwa,
-        Idswia = swia?.Id
+        Idswia = swia?.Id,
+        Wynik = swia?.WynikSwiadectwa
     };
 }
 <partial name="_Notification" />
@@ -33,10 +34,13 @@
                             Nazwa części
                         </th>
                         <th>
+                            Ilość
+                        </th>
+                        <th>
                             Numer rysunku
                         </th>
                         <th>
-
+                            Wynik świadectwa
                         </th>
                         <th>
 
@@ -47,10 +51,13 @@
                     @foreach (var obj in query)
                     {
                         <tr>
-                            <td width="20%">
+                            <td width="40%">
                                 @obj.Nazwa
                             </td>
-                            <td width="20%">
+                            <td width="10%">
+                                @obj.Ilosc
+                            </td>
+                            <td width="10%">
                                 @if (obj.NumerRysunku == null)
                                 {
                                     <h1>brak</h1>
@@ -61,19 +68,29 @@
                                 }
                             </td>
                             <td width="20%">
-                                @obj.Ilosc
-                            </td>
-                            <td width="20%">
                                 @if (obj.WynikSwiadectwa == null)
                                 {
-                                    <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" class="btn btn-primary">
-                                        <i class="bi bi-shield-check"></i> Zakończ świadectwo jakości.
-                                    </a>
+                                    <div>-</div>
                                 }
                                 else
                                 {
                                     @obj.WynikSwiadectwa
                                 }
+                            </td>
+                            <td width="20%">
+                                @if (obj.WynikSwiadectwa == null)
+                                {
+                                    <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" class="btn btn-primary" style="width:150px">
+                                        <i class="bi bi-shield-check"></i> Zakończ
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" style="width:150px" class="btn btn-primary">
+                                        <i class="bi bi-shield-check"></i> Edytuj
+                                    </a>
+                                }
+                                
                             </td>
 
                         </tr>
@@ -81,6 +98,9 @@
                     }
                 </tbody>
             </table>
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            </a>
         </div>
 
 

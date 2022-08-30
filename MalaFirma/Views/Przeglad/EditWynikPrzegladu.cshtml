@@ -1,4 +1,4 @@
-﻿@model PrzegladVM
+﻿@model Przeglad
 
 <div class="container p-3">
 
@@ -9,22 +9,20 @@
 
         <div class="card-body">
         <form method="post">
+            <input asp-for="zamowienieId" hidden />
             <div class="mb-3">
                 <label>Wynik przeglądu</label>
-                <input asp-for="Przeglad.WynikPrzegladu" class="form-control" />
+                <input asp-for="WynikPrzegladu" class="form-control" />
             </div>
             <div class="mb-3">
                 <label>Zidentyfikowane Problemy</label>
-                <input asp-for="Przeglad.ZidentyfikowaneProblemy" class="form-control" />
+                <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
             </div>
             <div class="mb-3">
                 <label> Planowane działania</label>
-                <input asp-for="Przeglad.PlanowaneDzialania" class="form-control" />
+                <input asp-for="PlanowaneDzialania" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Zakończ przegląd</button>
-            <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
-        <i class="bi bi-arrow-90deg-left"></i> Wróć
-    </a>
         </form>
 
     </div>
