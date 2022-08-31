@@ -11,6 +11,20 @@ namespace MalaFirma.DataAccess
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>(b =>
+            {
+                //Each User can have many entries in the UserRole join table
+                b.HasMany(e => e.Roles)
+                    .WithOne()
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+        }
         public DbSet<Zamowienie> Zamowienia { get; set; }
         public DbSet<Wymaganie> Wymagania { get; set; }
         public DbSet<Pytanie> Pytania { get; set; }
