@@ -24,5 +24,6 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Kod pocztowy jest wymagany.")]
         [DisplayName("Kod pocztowy")]
         public string KodPocztowy { get; set; }
+        public List<IdentityUserRole<string>> Roles { get; set; }
     }
 }
