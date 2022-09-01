@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220901122202_baza")]
+    [Migration("20220901133007_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -388,6 +388,35 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasIndex("ZamowienieId");
 
                     b.ToTable("SwiadectwoJakosci");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Szkolenie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataSzkolenia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RodzajSzkolenia")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Temat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Uwagi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Szkolenia");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.TypNarzedzia", b =>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Szkolenie>
+@{
+    ViewData["Title"] = "Szkolenia";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Szkolenia</h6>
+        </div>
+        <br />
+        <div class="col-12 text-end">
+            <a asp-controller="Szkolenie" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
+                <i class="bi bi-plus-circle"></i> &nbsp; Dodaj szkolenie
+            </a>
+        </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Temat szkolenia
+                            </th>
+                            <th>
+                                Rodzaj
+                            </th>
+                            <th>
+                                Data szkolenia
+                            </th>
+                            <th>
+                                Uwagi
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+
+                            <tr>
+                                <td width="20%">
+                                    @obj.Temat
+                                </td>
+                                <td width="30%">
+                                    @obj.RodzajSz
+                                </td>
+                                <td width="30%">
+                                    @obj.DataSzkolenia
+                                </td>
+                                <td width="30%">
+                                    @obj.Uwagi
+                                </td>
+
+                                <td style="display: block; margin:auto">
+                                    <a asp-controller="Szkolenie" asp-action="DetailsSzkolenie" asp-route-id="@obj.Id" class="btn btn-info">
+                                        Szczególy
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+    </div>
+</div>

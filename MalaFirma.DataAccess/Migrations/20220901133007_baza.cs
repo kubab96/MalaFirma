@@ -121,6 +121,23 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Szkolenia",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Temat = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataSzkolenia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RodzajSzkolenia = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Szkolenia", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TypNarzedzia",
                 columns: table => new
                 {
@@ -648,6 +665,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "SwiadectwoJakosci");
+
+            migrationBuilder.DropTable(
+                name: "Szkolenia");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
