@@ -1,0 +1,66 @@
+﻿@model Audyt
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@(Model.Id!=0?"Edytuj audyt": "Dodaj audyt")</h6>
+        </div>
+
+
+        <div class="card-body">
+            <form method="post" asp-action="Upsert">
+                <div class="mb-3">
+                    <label asp-for="Temat"></label>
+                    <input asp-for="Temat" class="form-control" />
+                    <span asp-validation-for="Temat" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RodzajAudytu"></label>
+                    <select asp-for="RodzajAudytu" asp-items="Html.GetEnumSelectList<Rodzaj>()" class="form-select">
+                        <option disabled selected>-- Wybierz rodzaj audytu --</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Opis"></label>
+                    <input asp-for="Opis" class="form-control" />
+                    <span asp-validation-for="Opis" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DataAudytu"></label>
+                    <input class="form-control" asp-for="DataAudytu" />
+                    <span asp-validation-for="DataAudytu" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Uwagi"></label>
+                    <input asp-for="Uwagi" class="form-control" />
+                </div>
+                @if (Model.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
+                }
+                <a asp-controller="Audyt" asp-action="Index" class="btn btn-primary">Wróć</a>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

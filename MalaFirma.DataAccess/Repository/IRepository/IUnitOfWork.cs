@@ -22,6 +22,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
         IOperacjaRepository Operacja { get; }
         IObslugaMetrologicznaRepository ObslugaMetrologiczna { get; }
         ISwiadectwoJakosciRepository SwiadectwoJakosci { get; }
+        IAudytRepository Audyt { get; }
 
 
         void Save();

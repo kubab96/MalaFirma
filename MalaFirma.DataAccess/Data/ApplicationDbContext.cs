@@ -39,6 +39,7 @@ namespace MalaFirma.DataAccess
         public DbSet<Operacja> Operacje { get; set; }
         public DbSet<SwiadectwoJakosci> SwiadectwoJakosci { get; set; }
         public DbSet<ObslugaMetrologiczna> ObslugaMetrologiczna { get; set; }
+        public DbSet<Audyt> Audyty { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Audyt>
+@{
+    ViewData["Title"] = "Audyty";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Audyty</h6>
+        </div>
+        <br />
+        <div class="col-12 text-end">
+            <a asp-controller="Audyt" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
+                <i class="bi bi-plus-circle"></i> &nbsp; Dodaj audyt
+            </a>
+        </div>
+
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Temat auditu
+                            </th>
+                            <th>
+                                Data audytu
+                            </th>
+                            <th>
+                                Rodzaj
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
+                        {
+
+                            <tr>
+                                <td width="20%">
+                                    @obj.Temat
+                                </td>
+                                <td width="30%">
+                                    @obj.DataAudytu
+                                </td>
+                                <td width="30%">
+                                    @obj.RodzajAudytu
+                                </td>
+                                <td width="30%">
+                                    @obj.Status
+                                </td>
+
+                                <td style="display: block; margin:auto">
+                                    <a asp-controller="Audyt" asp-action="DetailsAudyt" asp-route-id="@obj.Id" class="btn btn-info">
+                                        Szczególy
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+    </div>
+</div>

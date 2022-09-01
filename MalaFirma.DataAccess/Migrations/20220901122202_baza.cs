@@ -56,6 +56,24 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Audyty",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Temat = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataAudytu = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RodzajAudytu = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Audyty", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Dostawcy",
                 columns: table => new
                 {
@@ -304,6 +322,8 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WynikPrzegladu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZidentyfikowaneProblemy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlanowaneDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     zamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -604,6 +624,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Audyty");
 
             migrationBuilder.DropTable(
                 name: "Dostawcy");

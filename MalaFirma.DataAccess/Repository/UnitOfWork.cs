@@ -28,6 +28,7 @@ namespace MalaFirma.DataAccess.Repository
             Operacja = new OperacjaRepository(_db);
             SwiadectwoJakosci = new SwiadectwoJakosciRepository(_db);
             ObslugaMetrologiczna = new ObslugaMetrologicznaRepository(_db);
+            Audyt = new AudytRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IWymaganieRepository Wymaganie { get; private set; }
@@ -43,6 +44,7 @@ namespace MalaFirma.DataAccess.Repository
         public IOperacjaRepository Operacja { get; private set; }
         public ISwiadectwoJakosciRepository SwiadectwoJakosci { get; private set; }
         public IObslugaMetrologicznaRepository ObslugaMetrologiczna { get; private set; }
+        public IAudytRepository Audyt { get; private set; }
         
 
         public void Save()
