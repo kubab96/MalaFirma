@@ -1,0 +1,44 @@
+﻿@model Dostawca
+
+<div class="container p-3" style="margin-bottom:-20px">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Aktualizuj datę</h6>
+        </div>
+
+
+        <div class="card-body">
+            <form method="post" asp-action="Upsert">
+
+                <input asp-for="NazwaDostawcy" hidden />
+                <input asp-for="AdresDostwacy" hidden />
+                <input asp-for="ZakresDzialalnosci" hidden />
+                <input asp-for="Uwagi" hidden />
+
+                <div class="mb-3">
+                    <label asp-for="DataZatwierdzenia"></label>
+                    <input class="form-control" asp-for="DataZatwierdzenia" />
+                    <span asp-validation-for="DataZatwierdzenia" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DataWygasniecia"></label>
+                    <input class="form-control" asp-for="DataWygasniecia" />
+                    <span asp-validation-for="DataWygasniecia" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:150px">Zatwierdź</button>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }
+

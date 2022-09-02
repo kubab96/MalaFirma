@@ -80,6 +80,33 @@ namespace MalaFirma.Controllers
             return View(dostawca);
         }
 
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var dostawcaFormDb = _unitOfWork.Dostawca.GetFirstOrDefault(x => x.Id == id);
+            if (dostawcaFormDb == null)
+            {
+                return NotFound();
+            }
+            return PartialView(dostawcaFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Dostawca obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Dostawca.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Data dostawcy została zaktualizowana.";
+                return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
+            }
+            return PartialView(obj);
+        }
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Dostawca.GetFirstOrDefault(x => x.Id == id);

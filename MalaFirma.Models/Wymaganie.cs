@@ -26,5 +26,6 @@ namespace MalaFirma.Models
         public Zamowienie Zamowienie { get; set; }
         public int? KartaProjektuId { get; set; }
         public Zamowienie KartaProjektu { get; set; }
+
     }
 }

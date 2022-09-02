@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220901133007_baza")]
+    [Migration("20220902115349_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,10 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataAudytu")
+                    b.Property<DateTime>("DataRozpoczecia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataZakonczenia")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Opis")
@@ -48,6 +51,9 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("Temat")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TerminUsuniecia")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Uwagi")
                         .HasColumnType("nvarchar(max)");
@@ -398,10 +404,13 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataSzkolenia")
+                    b.Property<DateTime>("DataRozpoczecia")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RodzajSzkolenia")
+                    b.Property<DateTime>("DataZakonczenia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RodzajSz")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")

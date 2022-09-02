@@ -55,7 +55,9 @@
             </dl>
 
 
-
+            @*<a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>*@
+             <span class="btn btn-xs btn-primary" id="@Model.Id" onclick="createModal('@Url.Action("Edit", "Dostawca", new { id = Model.Id })')">Details</span>
+         
 
             <a class="btn btn-danger delete"
                data-id="@Model.Id"
@@ -72,6 +74,26 @@
 
         </div>
 
-
+        <div class="modal" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="modelContent">
+      
     </div>
+  </div>
 </div>
+
+        @*<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="margin:20px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modelContent">
+        </div>
+    </div>
+    </div>
+</div>*@
+
+
+    <script>
+    function createModal(url){
+          $('#modelContent').load(url);
+          $('#myModal').modal('show');
+    }
+    </script>

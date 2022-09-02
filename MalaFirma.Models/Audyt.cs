@@ -15,13 +15,21 @@ namespace MalaFirma.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Temat audytu jest wymagany.")]
         public string Temat { get; set; }
-        [Required(ErrorMessage = "Data audytu jest wymagana.")]
-        [DisplayName("Data audytu")]
-        public DateTime DataAudytu { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Data rozpoczęcia audytu jest wymagana.")]
+        [DisplayName("Data rozpoczęcia")]
+        [DataType(DataType.Date)]
+        public DateTime DataRozpoczecia { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Data zakończenia audytu jest wymagana.")]
+        [DisplayName("Data zakończenia")]
+        [DataType(DataType.Date)]
+        public DateTime DataZakonczenia { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Opis audytu jest wymagany.")]
         public string Opis { get; set; }
         public string? Status { get; set; }
         public string? Uwagi { get; set; }
+        [DisplayName("Termin usunięcia niezgodności")]
+        [DataType(DataType.Date)]
+        public DateTime? TerminUsuniecia { get; set; }
 
         [Required(ErrorMessage = "Rodzaj audytu jest wymagany.")]
         [DisplayName("Rodzaj audytu")]

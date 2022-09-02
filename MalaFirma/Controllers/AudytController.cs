@@ -62,6 +62,7 @@ namespace MalaFirma.Controllers
         {
             var obj = _unitOfWork.Audyt.GetFirstOrDefault(u => u.Id == id);
             obj.Status = "Zamknięty";
+            obj.TerminUsuniecia = DateTime.Now;
             _unitOfWork.Audyt.Update(obj);
             _unitOfWork.Save();
             return RedirectToAction("DetailsAudyt", "Audyt", new { obj.Id });

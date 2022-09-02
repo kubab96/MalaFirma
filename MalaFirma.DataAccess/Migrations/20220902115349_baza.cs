@@ -62,10 +62,12 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Temat = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataAudytu = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataRozpoczecia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataZakonczenia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TerminUsuniecia = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RodzajAudytu = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -127,10 +129,11 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Temat = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataSzkolenia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataRozpoczecia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataZakonczenia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RodzajSzkolenia = table.Column<int>(type: "int", nullable: false)
+                    RodzajSz = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

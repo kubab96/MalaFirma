@@ -26,7 +26,7 @@
                                 Temat auditu
                             </th>
                             <th>
-                                Data audytu
+                                Termin
                             </th>
                             <th>
                                 Rodzaj
@@ -48,7 +48,7 @@
                                     @obj.Temat
                                 </td>
                                 <td width="30%">
-                                    @obj.DataAudytu
+                                    @obj.DataRozpoczecia.ToShortDateString() - @obj.DataZakonczenia.ToShortDateString()
                                 </td>
                                 <td width="30%">
                                     @obj.RodzajAudytu

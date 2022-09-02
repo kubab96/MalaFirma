@@ -23,9 +23,11 @@ namespace MalaFirma.Models
         [DisplayName("Zakres dzialalnosci")]
         public string ZakresDzialalnosci { get; set; }
         [DisplayName("Data zatwierdzenia")]
+        [DataType(DataType.Date)]
         public DateTime DataZatwierdzenia { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Data wygaśnięcia jest wymagana.")]
         [DisplayName("Data wygaśnięcia")]
+        [DataType(DataType.Date)]
         public DateTime DataWygasniecia { get; set; } = DateTime.Now;
         public string? Uwagi { get; set; }
     }

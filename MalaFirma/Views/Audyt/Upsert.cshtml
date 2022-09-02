@@ -28,9 +28,14 @@
                     <span asp-validation-for="Opis" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="DataAudytu"></label>
-                    <input class="form-control" asp-for="DataAudytu" />
-                    <span asp-validation-for="DataAudytu" class="text-danger"></span>
+                    <label asp-for="DataRozpoczecia"></label>
+                    <input class="form-control" asp-for="DataRozpoczecia" />
+                    <span asp-validation-for="DataRozpoczecia" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DataZakonczenia"></label>
+                    <input class="form-control" asp-for="DataZakonczenia" />
+                    <span asp-validation-for="DataZakonczenia" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Uwagi"></label>
@@ -66,5 +71,8 @@
 @section Scripts{
     @{
     <partial name="_ValidationScriptsPartial" />
+
+
     }
+    
     }

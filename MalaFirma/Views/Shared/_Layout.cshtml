@@ -27,7 +27,10 @@
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
-                        
+                        @*@if (User.IsInRole("Admin") || User.IsInRole("Pracownik"))
+                        {
+                            <h6>Dla admina</h6>
+                        }*@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Zamówienia</a>
                             <div class="dropdown-menu">

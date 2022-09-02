@@ -14,9 +14,14 @@ namespace MalaFirma.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Temat szkolenia jest wymagany.")]
         public string Temat { get; set; }
-        [Required(ErrorMessage = "Data szkolenia jest wymagana.")]
-        [DisplayName("Data szkolenia")]
-        public DateTime DataSzkolenia { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Data rozpoczęcia szkolenia jest wymagana.")]
+        [DisplayName("Data rozpoczęcia")]
+        [DataType(DataType.Date)]
+        public DateTime DataRozpoczecia { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Data zakończenia szkolenia jest wymagana.")]
+        [DisplayName("Data zakończenia")]
+        [DataType(DataType.Date)]
+        public DateTime DataZakonczenia { get; set; } = DateTime.Now;
         public string? Status { get; set; }
         public string? Uwagi { get; set; }
         [Required(ErrorMessage = "Rodzaj szkolenia jest wymagany.")]

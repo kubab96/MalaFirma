@@ -30,7 +30,10 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataAudytu")
+                    b.Property<DateTime>("DataRozpoczecia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataZakonczenia")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Opis")
@@ -46,6 +49,9 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("Temat")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TerminUsuniecia")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Uwagi")
                         .HasColumnType("nvarchar(max)");
@@ -396,7 +402,10 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataSzkolenia")
+                    b.Property<DateTime>("DataRozpoczecia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataZakonczenia")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RodzajSz")
