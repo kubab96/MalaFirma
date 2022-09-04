@@ -78,7 +78,10 @@
                                 }
                             </td>
                             <td width="20%">
-                                @if (obj.WynikSwiadectwa == null)
+                                <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                                    Szczegóły
+                                </a>
+                                @*@if (obj.WynikSwiadectwa == null)
                                 {
                                     <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" class="btn btn-primary" style="width:150px">
                                         <i class="bi bi-shield-check"></i> Zakończ
@@ -89,7 +92,7 @@
                                     <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@obj.Idswia" style="width:150px" class="btn btn-primary">
                                         <i class="bi bi-shield-check"></i> Edytuj
                                     </a>
-                                }
+                                }*@
                                 
                             </td>
 

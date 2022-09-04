@@ -24,6 +24,7 @@ namespace MalaFirma.DataAccess.Repository.IRepository
         ISwiadectwoJakosciRepository SwiadectwoJakosci { get; }
         IAudytRepository Audyt { get; }
         ISzkolenieRepository Szkolenie { get; }
+        IPrzywieszkaRepository Przywieszka { get; }
 
 
         void Save();

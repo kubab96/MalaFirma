@@ -513,6 +513,27 @@ namespace MalaFirma.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Przywieszki",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rysunek = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumerPrzywieszki = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SwiadectwoJakosciId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Przywieszki", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Przywieszki_SwiadectwoJakosci_SwiadectwoJakosciId",
+                        column: x => x.SwiadectwoJakosciId,
+                        principalTable: "SwiadectwoJakosci",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -603,6 +624,11 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Przywieszki_SwiadectwoJakosciId",
+                table: "Przywieszki",
+                column: "SwiadectwoJakosciId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SwiadectwoJakosci_WymaganieId",
                 table: "SwiadectwoJakosci",
                 column: "WymaganieId");
@@ -667,7 +693,7 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "PrzewodnikPracy");
 
             migrationBuilder.DropTable(
-                name: "SwiadectwoJakosci");
+                name: "Przywieszki");
 
             migrationBuilder.DropTable(
                 name: "Szkolenia");
@@ -688,10 +714,13 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "Pytania");
 
             migrationBuilder.DropTable(
-                name: "Wymagania");
+                name: "SwiadectwoJakosci");
 
             migrationBuilder.DropTable(
                 name: "TypNarzedzia");
+
+            migrationBuilder.DropTable(
+                name: "Wymagania");
 
             migrationBuilder.DropTable(
                 name: "Zamowienia");

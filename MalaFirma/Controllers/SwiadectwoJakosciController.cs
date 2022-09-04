@@ -1,5 +1,6 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MalaFirma.Controllers
@@ -7,9 +8,12 @@ namespace MalaFirma.Controllers
     public class SwiadectwoJakosciController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public SwiadectwoJakosciController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public SwiadectwoJakosciController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult SwiadectwoJakosci(int id)
         {
@@ -62,6 +66,113 @@ namespace MalaFirma.Controllers
                 
             }
             return View(obj);
+        }
+
+        public IActionResult SwiadectwoJakosciDetails(int id)
+        {
+            SwiadectwoJakosciVM model = new SwiadectwoJakosciVM();
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.ZamowienieId == id);
+            model.SwiadectwoJakosci = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.ZamowienieId == id);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.ZamowienieId == id);
+            IEnumerable<Operacja> objOperacjeList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == model.PrzewodnikPracy.WymaganieId);
+            model.Operacje = objOperacjeList;
+            IEnumerable<Przywieszka> objPrzywieszkiList = _unitOfWork.Przywieszka.GetAll().Where(x => x.SwiadectwoJakosciId == model.SwiadectwoJakosci.Id);
+            model.Przywieszki = objPrzywieszkiList;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SwiadectwoJakosciDetails(SwiadectwoJakosciVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
+        {
+            model.SwiadectwoJakosci = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.ZamowienieId == id);
+            var rysunek = _unitOfWork.Przywieszka.GetFirstOrDefault(x => x.Id == idRysunku);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(wwwRootPath, @"images\rysunki");
+                var extension = Path.GetExtension(file.FileName);
+
+                if (numerRysunku != null)
+                {
+                    var oldImage = Path.Combine(wwwRootPath, rysunek.Rysunek.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImage))
+                    {
+                        System.IO.File.Delete(oldImage);
+                    }
+                }
+
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                if (rysunek == null)
+                {
+                    model.Przywieszka.Rysunek = @"\images\rysunki\" + fileName + extension;
+                }
+                else
+                {
+                    rysunek.Rysunek = @"\images\rysunki\" + fileName + extension;
+                }
+            }
+            if (fc["SubmitForm"] == "Delete")
+            {
+                DeleteRysunek(idRysunku);
+                return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.Przywieszka.SwiadectwoJakosciId });
+                //if (model.Przywieszka.Rysunek != null)
+                //{
+                //    var oldImage = Path.Combine(wwwRootPath, model.Przywieszka.Rysunek.TrimStart('\\'));
+                //    if (System.IO.File.Exists(oldImage))
+                //    {
+                //        System.IO.File.Delete(oldImage);
+                //    }
+                //    model.Przywieszka.Rysunek = null;
+
+                //    _unitOfWork.Przywieszka.Update(model.Przywieszka);
+                //    _unitOfWork.Save();
+                //    TempData["success"] = "Przywieszka została pomyślnie usunięta.";
+                //    return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.Przywieszka.SwiadectwoJakosciId });
+                //}
+            }
+
+            if (rysunek == null)
+            {
+                model.Przywieszka.NumerPrzywieszki = $"{model.SwiadectwoJakosci.ZamowienieId}/{model.SwiadectwoJakosci.WymaganieId}";
+                model.Przywieszka.SwiadectwoJakosciId = id;
+                _unitOfWork.Przywieszka.Update(model.Przywieszka);
+                _unitOfWork.Save();
+                TempData["success"] = "Przywieszka została pomyślnie dodana.";
+            }
+            else
+            {
+                rysunek.NumerPrzywieszki = $"{model.SwiadectwoJakosci.ZamowienieId}/{model.SwiadectwoJakosci.WymaganieId}";
+                rysunek.SwiadectwoJakosciId = id;
+                _unitOfWork.Przywieszka.Update(rysunek);
+                _unitOfWork.Save();
+                TempData["success"] = "Przywieszka została pomyślnie zaktualizowna.";
+            }
+            return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.SwiadectwoJakosci.WymaganieId });
+        }
+
+        public IActionResult DeleteRysunek(int? id)
+        {
+            var obj = _unitOfWork.Przywieszka.GetFirstOrDefault(x => x.Id == id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (obj.Rysunek != null)
+            {
+                var oldImage = Path.Combine(wwwRootPath, obj.Rysunek.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImage))
+                {
+                    System.IO.File.Delete(oldImage);
+                }
+                _unitOfWork.Przywieszka.Remove(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Przywieszka została pomyślnie usnięta.";
+                return RedirectToAction("Operacja", new { id = obj.SwiadectwoJakosciId });
+            }
+            return View();
         }
     }
 }

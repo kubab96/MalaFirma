@@ -24,12 +24,12 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Zamowienie.RemoveRange(objZamowienieListNotExisting);
                 _unitOfWork.Save();
-            }
+            }   
 
             return View(objZamowienieList);
         }
 
-        [Authorize(Roles = "Prezes")]
+        //[Authorize(Roles = "Prezes")]
         public IActionResult Upsert(int? id)
         {
             ZamowienieWymaganieVM obj = new()

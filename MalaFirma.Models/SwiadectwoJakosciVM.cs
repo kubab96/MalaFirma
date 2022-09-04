@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,14 @@ namespace MalaFirma.Models
         public Wymaganie Wymaganie { get; set; }
         [ValidateNever]
         public IEnumerable<PrzewodnikPracy> PrzewodnikiPracy { get; set; }
+        [ValidateNever]
+        public PrzewodnikPracy PrzewodnikPracy { get; set; }
+        [ValidateNever]
+        public IEnumerable<Operacja> Operacje { get; set; }
+        [ValidateNever]
+        public IEnumerable<Przywieszka> Przywieszki { get; set; }
+        [ValidateNever]
+        public Przywieszka Przywieszka { get; set; }
+        public IFormFile Rysunek { get; set; }
     }
 }

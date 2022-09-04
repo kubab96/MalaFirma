@@ -1,0 +1,207 @@
+﻿@model SwiadectwoJakosciVM
+@{
+    ViewData["Title"] = "Index";
+
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Świadectwo jakości dla @Model.Wymaganie.Nazwa</h6>
+        </div>
+        <br />
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Zamowienie.Nazwa)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PrzewodnikPracy.NumerPrzewodnika)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PrzewodnikPracy.NumerPrzewodnika)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PrzewodnikPracy.NumerRysunku)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PrzewodnikPracy.NumerRysunku)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Wymaganie.Nazwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Wymaganie.Nazwa)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Wymaganie.Ilosc)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Wymaganie.Ilosc)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                </dd>
+            </dl>
+
+
+            @*Tabela wykonanych operacji*@
+            <div class="card shadow mb-4" style="margin:15px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Wykonane operację</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    TrescOperacji
+                                </th>
+                                <th>
+                                    DataWykonania
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.Operacje)
+                            {
+                                <tr>
+                                    <td width="20%">
+                                        @obj.TrescOperacji
+                                    </td>
+                                    <td width="20%">
+                                        @obj.DataWykonania
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            @*Tabela przywieszek*@
+            @{
+                var idPrzyw = 0;
+            }
+            <div class="card shadow mb-4" style="margin:15px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Przywieszki</h6>
+                </div>
+                <div class="card-body">
+
+            <form method="post" asp-action="SwiadectwoJakosciDetails" enctype="multipart/form-data">
+                <input asp-for="Przywieszka.Rysunek" hidden />
+                    <input type="file" id="formFile" name="file" class="form-control" />
+                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+
+                        <div class="card-body">
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Rysunek
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in Model.Przywieszki)
+                            {
+                                <tr>
+                                    <td width="20%">
+                                        <img src="@obj.Rysunek" width="50%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                                    </td>
+                                    <td width="20%">
+                                        
+                                        <input type="file" id="Edit @idPrzyw" name="file" class="form-control" />
+                                        <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                                       <div><div>
+                                        <a class="btn btn-danger delete" style="margin-top:15px; margin-bottom:15px"
+                                       data-id="@obj.Id"
+                                       data-controller="SwiadectwoJakosci"
+                                       data-action="DeleteRysunek"
+                                       data-body-message="Czy napewno chcesz usunąć tą przywieszkę?">
+                                            <i class="bi bi-trash3-fill"></i> Usuń
+                                        </a>
+                                                    </div>
+                                                </div>
+                                    </td>
+
+                                </tr>
+                                idPrzyw += 1;
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+
+            </form>
+                </div>
+            </div>
+            @if (Model.SwiadectwoJakosci.WynikSwiadectwa == null)
+            {
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-primary" style="width:150px">
+                    <i class="bi bi-shield-check"></i> Zakończ
+                </a>
+            }
+            else
+            {
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" style="width:150px" class="btn btn-primary">
+                    <i class="bi bi-shield-check"></i> Edytuj
+                </a>
+            }
+
+        </div>
+    </div>
+
+
+
+    @section Scripts{
+        @{
+
+        }
+        <script>
+
+            function ValidateInput() {
+                if (document.getElementById("formFile").value == "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Wystąpił błąd',
+                        footer: 'Nie załadowano rysunku.',
+                    });
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <script>
+            function ValidateEdit(id) {
+
+                if (document.getElementById("Edit " + id).value == "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Wystąpił błąd',
+                        footer: 'Nie załadowano rysunku.',
+                    });
+                    return false;
+                }
+                return true;
+
+            }
+        </script>
+
+
+
+    }

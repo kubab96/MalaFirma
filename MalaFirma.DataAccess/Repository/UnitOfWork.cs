@@ -30,6 +30,7 @@ namespace MalaFirma.DataAccess.Repository
             ObslugaMetrologiczna = new ObslugaMetrologicznaRepository(_db);
             Audyt = new AudytRepository(_db);
             Szkolenie = new SzkolenieRepository(_db);
+            Przywieszka = new PrzywieszkaRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IWymaganieRepository Wymaganie { get; private set; }
@@ -47,6 +48,7 @@ namespace MalaFirma.DataAccess.Repository
         public IObslugaMetrologicznaRepository ObslugaMetrologiczna { get; private set; }
         public IAudytRepository Audyt { get; private set; }
         public ISzkolenieRepository Szkolenie { get; private set; }
+        public IPrzywieszkaRepository Przywieszka { get; private set; }
 
         public void Save()
         {

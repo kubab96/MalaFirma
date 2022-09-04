@@ -61,6 +61,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\rysunki\" />
+    <Folder Include="wwwroot\images\rysunki\" />
   </ItemGroup>
 
   <ItemGroup>

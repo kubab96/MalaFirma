@@ -345,6 +345,30 @@ namespace MalaFirma.DataAccess.Migrations
                     b.ToTable("PrzewodnikPracy");
                 });
 
+            modelBuilder.Entity("MalaFirma.Models.Przywieszka", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NumerPrzywieszki")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rysunek")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SwiadectwoJakosciId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SwiadectwoJakosciId");
+
+                    b.ToTable("Przywieszki");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Pytanie", b =>
                 {
                     b.Property<int>("Id")
@@ -835,6 +859,17 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Navigation("Wymaganie");
 
                     b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Przywieszka", b =>
+                {
+                    b.HasOne("MalaFirma.Models.SwiadectwoJakosci", "SwiadectwoJakosci")
+                        .WithMany()
+                        .HasForeignKey("SwiadectwoJakosciId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SwiadectwoJakosci");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.SwiadectwoJakosci", b =>
