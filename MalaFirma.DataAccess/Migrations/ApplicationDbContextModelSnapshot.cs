@@ -501,6 +501,39 @@ namespace MalaFirma.DataAccess.Migrations
                     b.ToTable("Wymagania");
                 });
 
+            modelBuilder.Entity("MalaFirma.Models.ZadowolenieKlienta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CzasRealizacji")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Jakosc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KlientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Uwagi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ZamowienieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KlientId");
+
+                    b.HasIndex("ZamowienieId");
+
+                    b.ToTable("ZadowolenieKlientow");
+                });
+
             modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
                 {
                     b.Property<int>("Id")
@@ -902,6 +935,23 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("KartaProjektu");
+
+                    b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.ZadowolenieKlienta", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Klient", "Klient")
+                        .WithMany()
+                        .HasForeignKey("KlientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
+                        .WithMany()
+                        .HasForeignKey("ZamowienieId");
+
+                    b.Navigation("Klient");
 
                     b.Navigation("Zamowienie");
                 });

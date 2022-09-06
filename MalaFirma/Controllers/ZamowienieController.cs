@@ -24,7 +24,7 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Zamowienie.RemoveRange(objZamowienieListNotExisting);
                 _unitOfWork.Save();
-            }   
+            }
 
             return View(objZamowienieList);
         }
@@ -77,7 +77,7 @@ namespace MalaFirma.Controllers
                     _unitOfWork.Zamowienie.Update(obj.Zamowienie);
                     _unitOfWork.Save();
                     TempData["success"] = "Edycja zamowienia została wykonana.";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("DetailsZamowienia", "Zamowienie", new { obj.Zamowienie.Id });
                 }
             }
             return View(obj);
@@ -110,6 +110,9 @@ namespace MalaFirma.Controllers
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
+            //model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == model.Zamowienie.Id);
+            //IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id).Where(c => c.WynikPrzewodnika != null);
+            //model.PrzewodnikiPracy = objPrzewodnikiList;
             IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganieList;
             return View(model);
@@ -158,7 +161,7 @@ namespace MalaFirma.Controllers
                 obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                //AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
+                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
                 //AddSwiadectwoJakosci(zamowienieId.Id, obj.Wymaganie.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
@@ -168,14 +171,100 @@ namespace MalaFirma.Controllers
             return View();
         }
 
-        //public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
-        //{
-        //    PrzewodnikPracy przewodnik = new PrzewodnikPracy();
-        //    przewodnik.ZamowienieId = idZamowienia;
-        //    przewodnik.WymaganieId = idWymagania;
-        //    _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
-        //    _unitOfWork.Save();
-        //}
+        public ActionResult Wymagania(int? id)
+        {
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganieList;
+            return View(model);
+        }
+
+        public IActionResult EditWymaganie(int? wymaganieId, int? id, int? editId)
+        {
+            if (wymaganieId == null || wymaganieId == 0)
+            {
+                return NotFound();
+            }
+            var wymaganieFormDb = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == wymaganieId);
+            ViewBag.EditId = editId;
+            if (wymaganieFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(wymaganieFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditWymaganie(Wymaganie obj, int? id)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Wymaganie.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Edycja wymagania przebiegła pomyślnie";
+                int x = Convert.ToInt32(TempData["Data1"]);
+                if (x == 0)
+                {
+                    return RedirectToAction("Wymagania", "Zamowienie", new { id });
+                }
+                else
+                {
+                    return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
+                }
+            }
+            return View(obj);
+        }
+
+        public IActionResult AddWymaganie(int? idZamowienia)
+        {
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddWymaganie(ZamowienieWymaganieVM obj, int idZamowienia)
+        {
+            if (ModelState.IsValid)
+            {
+                var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
+                obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
+                _unitOfWork.Wymaganie.AddId(obj.Wymaganie, idZamowienia);
+                var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
+                _unitOfWork.Save();
+                TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
+                return RedirectToAction("Wymagania", "Zamowienie", new { id=idZamowienia });
+            }
+            return View(obj);
+        }
+
+        public IActionResult DeleteWymaganie(int? id)
+        {
+            
+            var obj = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.Wymaganie.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Wymaganie zostało usunięte";
+            id = obj.ZamowienieId;
+            return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
+        }
+
+        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
+        {
+            PrzewodnikPracy przewodnik = new PrzewodnikPracy();
+            przewodnik.ZamowienieId = idZamowienia;
+            przewodnik.WymaganieId = idWymagania;
+            _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
+            _unitOfWork.Save();
+        }
 
         //public void AddSwiadectwoJakosci(int idZamowienia, int idWymagania)
         //{
@@ -252,6 +341,42 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Klient został usunięty";
             return RedirectToAction("Klient");
+        }
+
+        public IActionResult ZadowolenieKlienta(int? idZamowienia)
+        {
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
+            model.ZadowolenieKlienta = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
+            if(model.ZadowolenieKlienta == null)
+            {
+                return RedirectToAction("CreateZadowolenie", "Zamowienie", new { idZamowienia });
+            }
+            model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.ZadowolenieKlienta.KlientId);
+            return View(model);
+        }
+
+        public IActionResult CreateZadowolenie(int idZamowienia)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateZadowolenie(ZamowienieWymaganieVM obj, int idZamowienia)
+        {
+            obj.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            obj.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == obj.Zamowienie.KlientId);
+            obj.ZadowolenieKlienta.ZamowienieId = idZamowienia;
+            obj.ZadowolenieKlienta.Zamowienie = obj.Zamowienie;
+            obj.ZadowolenieKlienta.KlientId = obj.Klient.Id;
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
+                _unitOfWork.Save();
+                TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
+                return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia });
+            }
+            return View(obj);
         }
     }
 }

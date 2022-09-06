@@ -1,0 +1,46 @@
+﻿@model Wymaganie
+@{
+    TempData["Data1"] = ViewBag.EditId;
+}
+<form method="post">
+    <div class="col-xl-12">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
+            </div>
+            <div class="card-body">
+                <input asp-for="ZamowienieId" hidden />
+                <input asp-for="KartaProjektuId" hidden />
+                <input name='edit' value='@ViewBag.EditId' />
+                <div class="mb-3">
+                    <label asp-for="Nazwa"></label>
+                    <input asp-for="Nazwa" class="form-control" />
+                    <span asp-validation-for="Nazwa" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Ilosc"></label>
+                    <input asp-for="Ilosc" class="form-control" value="1" />
+                    <span asp-validation-for="Ilosc" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Material"></label>
+                    <input asp-for="Material" class="form-control" />
+                    <span asp-validation-for="Material" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Opis"></label>
+                    <input asp-for="Opis" class="form-control" />
+                    <span asp-validation-for="Opis" class="text-danger"></span>
+                </div>
+                <button type="submit" name="SubmitForm" value="EditWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-info">Edytuj</button>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

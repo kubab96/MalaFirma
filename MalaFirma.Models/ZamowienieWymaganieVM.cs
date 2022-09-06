@@ -13,7 +13,7 @@ namespace MalaFirma.Models
 {
     public class ZamowienieWymaganieVM
     {
-
+        [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
         [ValidateNever]
         public IEnumerable<Wymaganie> Wymagania { get; set; }
@@ -33,5 +33,7 @@ namespace MalaFirma.Models
         public PrzewodnikPracy PrzewodnikPracy { get; set; }
         [ValidateNever]
         public Przeglad Przeglad { get; set; }
+        [ValidateNever]
+        public ZadowolenieKlienta ZadowolenieKlienta { get; set; }
     }
 }

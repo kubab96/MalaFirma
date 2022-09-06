@@ -386,6 +386,34 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ZadowolenieKlientow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CzasRealizacji = table.Column<int>(type: "int", nullable: false),
+                    Jakosc = table.Column<int>(type: "int", nullable: false),
+                    Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZamowienieId = table.Column<int>(type: "int", nullable: true),
+                    KlientId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZadowolenieKlientow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ZadowolenieKlientow_Klient_KlientId",
+                        column: x => x.KlientId,
+                        principalTable: "Klient",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ZadowolenieKlientow_Zamowienia_ZamowienieId",
+                        column: x => x.ZamowienieId,
+                        principalTable: "Zamowienia",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ObslugaMetrologiczna",
                 columns: table => new
                 {
@@ -649,6 +677,16 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ZadowolenieKlientow_KlientId",
+                table: "ZadowolenieKlientow",
+                column: "KlientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ZadowolenieKlientow_ZamowienieId",
+                table: "ZadowolenieKlientow",
+                column: "ZamowienieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Zamowienia_KlientId",
                 table: "Zamowienia",
                 column: "KlientId");
@@ -697,6 +735,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Szkolenia");
+
+            migrationBuilder.DropTable(
+                name: "ZadowolenieKlientow");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

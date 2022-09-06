@@ -1,0 +1,43 @@
+﻿@model ZamowienieWymaganieVM
+@{
+    
+}
+<form method="post">
+    <div class="col-xl-12">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label asp-for="Wymaganie.Nazwa"></label>
+                    <input asp-for="Wymaganie.Nazwa" class="form-control" />
+                    <span asp-validation-for="Wymaganie.Nazwa" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Wymaganie.Ilosc"></label>
+                    <input asp-for="Wymaganie.Ilosc" class="form-control" value="1" />
+                    <span asp-validation-for="Wymaganie.Ilosc" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Wymaganie.Material"></label>
+                    <input asp-for="Wymaganie.Material" class="form-control" />
+                    <span asp-validation-for="Wymaganie.Material" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Wymaganie.Opis"></label>
+                    <input asp-for="Wymaganie.Opis" class="form-control" />
+                    <span asp-validation-for="Wymaganie.Opis" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

@@ -5,103 +5,136 @@
 <div class="container p-3">
 
 
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4" style="margin:15px">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Dane zamówienia</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Zamówienie - @Model.Zamowienie.Nazwa</h6>
         </div>
         <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.Nazwa)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Zamowienie.DataZamowienia)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Zamowienie.DataZamowienia)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.NazwaKlienta)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.NazwaKlienta)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.Kraj)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.Kraj)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.Miasto)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.Miasto)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.UlicaNumer)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.UlicaNumer)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Klient.KodPocztowy)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Klient.KodPocztowy)
-                </dd>
-            </dl>
 
-        </div>
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Wymagania</h6>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nazwa</th>
-                        <th>Wymaganie</th>
 
-                    </tr>
-                    @foreach (var obj in Model.Wymagania)
-                    {
-                        <tr>
-                            <td width="30%">@obj.Nazwa</td>
-                            <td width="70%">@obj.Opis</td>
-                        </tr>
-                    }
-            </table>
+            @*Szczególy zamówienia*@
+            <div class="card shadow mb-4" style="margin:15px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Szczegóły zamówienia</h6>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Zamowienie.Nazwa)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Zamowienie.Nazwa)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Zamowienie.DataZamowienia)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Zamowienie.DataZamowienia)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Klient.NazwaKlienta)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Klient.NazwaKlienta)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Klient.Kraj)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Klient.Kraj)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Klient.Miasto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Klient.Miasto)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Klient.UlicaNumer)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Klient.UlicaNumer)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Klient.KodPocztowy)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Klient.KodPocztowy)
+                        </dd>
+                    </dl>
+                    <a asp-controller="Zamowienie" asp-action="Upsert" asp-route-id="@Model.Zamowienie.Id" class="btn btn-warning">
+                        <i class="bi bi-pencil-square"></i> Edytuj
+                    </a>
+                    <a class="btn btn-danger delete"
+                       data-id="@Model.Zamowienie.Id"
+                       data-controller="Zamowienie"
+                       data-action="Delete"
+                       data-body-message="Czy napewno chcesz usunąć to zamówienie?">
+                        <i class="bi bi-trash3-fill"></i> Usuń
+                    </a>
+                </div>
+            </div>
 
+
+            @*Wymagania*@
+
+            <div class="card shadow mb-4" style="margin:15px">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Wymagania objęte w zamówieniu</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nazwa</th>
+                                <th>Wymaganie</th>
+
+                            </tr>
+                            @foreach (var obj in Model.Wymagania)
+                            {
+                                <tr>
+                                    <td width="30%">@obj.Nazwa</td>
+                                    <td width="70%">@obj.Opis</td>
+                                </tr>
+                            }
+                    </table>
+                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                        Zarządzaj wymaganiami
+                    </a>
+                </div>
+            </div>
+            <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>
+            <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-question-circle"></i> Przegląd zamówienia
+            </a>
+            <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
+            <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
+            @*@if (@Model.Przeglad == null)
+            {
+                <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
+            }
+            else
+            {
+                <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
+            }
+            @if (@Model.PrzewodnikiPracy == null)
+            {
+               <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
+            }
+            else
+            {
+                <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button">Świadectwo jakości</a>
+            }*@
+
+            
+            <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-question-circle"></i> Zadowolenie Klienta
+            </a>
         </div>
     </div>
-    <a asp-controller="Zamowienie" asp-action="CreateWymaganie" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-        Dodaj wymaganie
-    </a>
-    <a asp-controller="Zamowienie" asp-action="Upsert" asp-route-id="@Model.Zamowienie.Id" class="btn btn-warning">
-        <i class="bi bi-pencil-square"></i> Edytuj
-    </a>
-    <a class="btn btn-danger delete"
-       data-id="@Model.Zamowienie.Id"
-       data-controller="Zamowienie"
-       data-action="Delete"
-       data-body-message="Czy napewno chcesz usunąć to zamówienie?">
-        <i class="bi bi-trash3-fill"></i> Usuń
-    </a>
-    <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
-        <i class="bi bi-question-circle"></i> Przegląd zamówienia
-    </a>
-
-    <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>
-    <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
-     <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
-</div>

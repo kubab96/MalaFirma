@@ -1,0 +1,50 @@
+﻿@model ZamowienieWymaganieVM
+@{
+    ViewData["Title"] = "Zadowolenie klienta";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Dostawca</h6>
+        </div>
+        <br />
+
+        <div class="card-body">
+
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ZadowolenieKlienta.Jakosc)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ZadowolenieKlienta.Jakosc)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ZadowolenieKlienta.CzasRealizacji)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ZadowolenieKlienta.CzasRealizacji)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ZadowolenieKlienta.Zamowienie.Nazwa)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ZadowolenieKlienta.Zamowienie.Nazwa)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ZadowolenieKlienta.Klient.NazwaKlienta)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ZadowolenieKlienta.Klient.NazwaKlienta)
+                </dd>
+            </dl>
+
+
+        </div>
+
+
+    </div>
+</div>

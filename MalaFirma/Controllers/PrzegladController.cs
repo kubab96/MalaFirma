@@ -165,25 +165,25 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult WynikPrzegladu(PrzegladVM obj, int idZamowienia)
         {
-            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == idZamowienia);
-            foreach (var a in objWymaganiaList)
-            {
-                AddPrzewodnikPracy(a.ZamowienieId, a.Id);
-            }
+            //IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == idZamowienia);
+            //foreach (var a in objWymaganiaList)
+            //{
+            //    AddPrzewodnikPracy(a.ZamowienieId, a.Id);
+            //}
             _unitOfWork.Przeglad.AddId(obj.Przeglad, idZamowienia);
             _unitOfWork.Save();
             TempData["success"] = "Wynik przeglądu zakończył się powodzeniem";
             return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Przeglad.zamowienieId });
         }
 
-        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
-        {
-            PrzewodnikPracy przewodnik = new PrzewodnikPracy();
-            przewodnik.ZamowienieId = idZamowienia;
-            przewodnik.WymaganieId = idWymagania;
-            _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
-            _unitOfWork.Save();
-        }
+        //public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
+        //{
+        //    PrzewodnikPracy przewodnik = new PrzewodnikPracy();
+        //    przewodnik.ZamowienieId = idZamowienia;
+        //    przewodnik.WymaganieId = idWymagania;
+        //    _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
+        //    _unitOfWork.Save();
+        //}
 
         public IActionResult EditWynikPrzegladu(int? id)
         {

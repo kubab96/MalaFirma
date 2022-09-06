@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +24,10 @@ namespace MalaFirma.Models
         [DisplayName("Materiał")]
         public string? Material { get; set; }
         public int ZamowienieId { get; set; }
+        [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
         public int? KartaProjektuId { get; set; }
+        [ValidateNever]
         public Zamowienie KartaProjektu { get; set; }
 
     }

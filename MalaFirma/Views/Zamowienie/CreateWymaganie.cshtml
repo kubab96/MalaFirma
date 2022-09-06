@@ -1,7 +1,9 @@
 ﻿@model ZamowienieWymaganieVM
-
+@{
 <partial name="_Notification" />
 
+    int edit = 3;
+};
 <div class="container p-3">
     @if (Model.Wymagania.Any())
     {
@@ -10,18 +12,33 @@
                 <h6 class="m-0 font-weight-bold text-primary">Wymagania do zamówienia</h6>
             </div>
             <div class="card-body">
+                <a href="#section1">Go Section 1</a>
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Nazwa</th>
-                            <th>Wymaganie</th>
+                            <th>Nazwa wymagania</th>
+                            <th>Ilość</th>
+                            <th></th>
 
                         </tr>
                         @foreach (var obj in Model.Wymagania)
                         {
                             <tr>
-                                <td width="30%">@obj.Nazwa</td>
-                                <td width="70%">@obj.Opis</td>
+                                <td width="65%">@obj.Nazwa</td>
+                                <td width="10%">@obj.Ilosc</td>
+                                <td width="40%">
+                                    <a asp-controller="Zamowienie" asp-action="EditWymaganie" asp-route-wymaganieId="@obj.Id" asp-route-id="@obj.ZamowienieId" asp-route-KartaProjektuId="@obj.KartaProjektuId" asp-route-editId="@edit" class="btn btn-info">
+                                        <i class="bi bi-pencil-square"></i> Edytuj
+                                    </a>
+                                    <a class="btn btn-danger delete"
+                               data-id="@obj.Id"
+                               data-controller="Zamowienie"
+                               data-action="DeleteWymaganie"
+                               data-body-message="Czy napewno chcesz usunąć to wymaganie?">
+                                        <i class="bi bi-trash3-fill"></i> Usuń
+                                    </a>
+                                </td>
+
                             </tr>
                         }
                 </table>
@@ -67,12 +84,11 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label asp-for="Zamowienie.UwagiZamowienia"></label>
-                        <input asp-for="Zamowienie.UwagiZamowienia" class="form-control" />
+                        <label>Uwagi do zamówienia</label>
+                        <textarea asp-for="Zamowienie.UwagiZamowienia" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                         <span asp-validation-for="Zamowienie.UwagiZamowienia" class="text-danger"></span>
                     </div>
-
-                    <button type="submit" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary">Zakończ</button>
+                    <button type="submit" id="section1" name="SubmitForm" value="Create" formnovalidate class="btn btn-info">Zakończ zamówienie</button>
                 </div>
             </div>
         </div>
@@ -89,4 +105,19 @@
     @{
     <partial name="_ValidationScriptsPartial" />
     }
-}
+    <script>
+
+        $(function () {
+            $('a[href*=#]:not([href=#])').click(function () {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.substr(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            });
+        });
+    </script>
+    }
