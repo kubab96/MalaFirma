@@ -14,7 +14,7 @@
         <br />
 
         <div class="col-12 text-end">
-            <a asp-controller="PrzewodnikPracy" asp-action="AddOperacja" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-primary" style="margin-right:25px">
+            <a asp-controller="PrzewodnikPracy" asp-action="AddOperacja" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-success" style="margin-right:25px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz operację
             </a>
         </div>
@@ -69,7 +69,7 @@
                 <input asp-for="PrzewodnikPracy.Rysunek" hidden />
                 <div class="mb-3">
                     <input type="file" id="formFile" name="file" class="form-control" />
-                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
                     <div style="display: inline">
                         <div style="display: inline">
                     @if (Model.PrzewodnikPracy.Rysunek != null){
@@ -92,20 +92,23 @@
             </form>
             @if (Model.PrzewodnikPracy.WynikPrzewodnika != null)
                 {
-                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-primary">
+                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-danger">
                 <i class="bi bi-shield-check"></i> Edytuj przewodnik
                 </a>
                     
             }
             else
             {
-                <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-primary">
+                <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-danger">
                 <i class="bi bi-shield-check"></i> Zakończ przewodnik
                 </a>
             }
             <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.ZamowienieId" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika
             </a>
+@*            <a asp-controller="PrzewodnikPracy" asp-action="Rysunek" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
+                <i class="bi bi-shield-check"></i> Rysunek
+            </a>*@
         </div>
         
 

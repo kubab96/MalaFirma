@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,11 @@ namespace MalaFirma.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required(ErrorMessage = "Ocena czasu realizacji jest wymagana.")]
+        [DisplayName("Czas realizacji")]
         public int CzasRealizacji { get; set; }
+        [Required(ErrorMessage = "Ocena jakości realizacji jest wymagana.")]
+        [DisplayName("Jakość realizacji")]
         public int Jakosc { get; set; }
         public string Uwagi { get; set; }
         

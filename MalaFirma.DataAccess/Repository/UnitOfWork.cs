@@ -32,6 +32,7 @@ namespace MalaFirma.DataAccess.Repository
             Szkolenie = new SzkolenieRepository(_db);
             Przywieszka = new PrzywieszkaRepository(_db);
             ZadowolenieKlienta = new ZadowolenieKlientaRepository(_db);
+            RysunekPrzewodnika = new RysunekPrzewodnikaRepository(_db);
         }
         public IZamowienieRepository Zamowienie { get; private set; }
         public IWymaganieRepository Wymaganie { get; private set; }
@@ -51,6 +52,7 @@ namespace MalaFirma.DataAccess.Repository
         public ISzkolenieRepository Szkolenie { get; private set; }
         public IPrzywieszkaRepository Przywieszka { get; private set; }
         public IZadowolenieKlientaRepository ZadowolenieKlienta { get; private set; }
+        public IRysunekPrzewodnikaRepository RysunekPrzewodnika { get; private set; }
 
         public void Save()
         {

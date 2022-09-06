@@ -1,0 +1,48 @@
+﻿@model PrzewodnikPracyVM
+@{
+    ViewData["Title"] = "Index";
+}
+<partial name="_Notification" />
+
+
+<form method="post" asp-action="Rysunek" enctype="multipart/form-data">
+    <input asp-for="RysunekPrzewodnika.Rysunek" hidden />
+    <div class="mb-3">
+        <input type="file" id="formFile" name="file" class="form-control" />
+        <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+        <div style="display: inline">
+            <div style="display: inline">
+                
+                <br />
+
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+@section Scripts{
+    @{
+
+    }
+    <script>
+
+        function ValidateInput() {
+            if (document.getElementById("formFile").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Wystąpił błąd',
+                    footer: 'Nie załadowano rysunku.',
+                });
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
+
+}

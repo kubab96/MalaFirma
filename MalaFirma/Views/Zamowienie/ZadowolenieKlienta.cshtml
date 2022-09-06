@@ -9,7 +9,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Dostawca</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Zadowolenie klienta</h6>
         </div>
         <br />
 
@@ -42,7 +42,12 @@
                 </dd>
             </dl>
 
-
+            <a asp-controller="Zamowienie" asp-action="EditZadowolenie" asp-route-id="@Model.ZadowolenieKlienta.Id" class="btn btn-info">
+                <i class="bi bi-pencil-square"></i> Edytuj
+            </a>
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.ZadowolenieKlienta.ZamowienieId" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            </a>
         </div>
 
 

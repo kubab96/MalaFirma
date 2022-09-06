@@ -1,0 +1,33 @@
+﻿@model ZadowolenieKlienta
+
+
+<form method="post">
+    <div class="container p-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Zadowolenie klienta</h6>
+            </div>
+            <div class="card-body">
+                <input asp-for="ZamowienieId" hidden />
+                <input asp-for="KlientId" hidden />
+                <div class="mb-3">
+                    <label asp-for="Jakosc"></label>
+                    <input asp-for="Jakosc" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CzasRealizacji"></label>
+                    <input asp-for="CzasRealizacji" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Uwagi"></label>
+                    <input asp-for="Uwagi" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-info">Edytuj</button>
+                <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.ZamowienieId" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
+            </a>
+            </div>
+        </div>
+
+    </div>
+</form>

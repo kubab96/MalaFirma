@@ -44,5 +44,7 @@ namespace MalaFirma.DataAccess
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Przywieszka> Przywieszki { get; set; }
         public DbSet<ZadowolenieKlienta> ZadowolenieKlientow { get; set; }
+        public DbSet<RysunekPrzewodnika> RysunekPrzewodnikow { get; set; }
+        
     }
 }

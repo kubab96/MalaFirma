@@ -34,11 +34,13 @@ namespace MalaFirma.Controllers
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
             IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == id);
             model.Operacje = objOperacjaList;
+            IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);
+            model.RysunekPrzewodnikow = objRysunekList;
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Operacja(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc)
+        public IActionResult Operacja(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
         {
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -83,6 +85,54 @@ namespace MalaFirma.Controllers
             }
             model.PrzewodnikPracy.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
             _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
+            _unitOfWork.Save();
+            TempData["success"] = "Rysunek został pomyślnie dodany.";
+            return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.WymaganieId });
+        }
+
+        public IActionResult Rysunek(int id)
+        {
+            PrzewodnikPracyVM model = new PrzewodnikPracyVM();
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
+            model.RysunekPrzewodnika = _unitOfWork.RysunekPrzewodnika.GetFirstOrDefault(x => x.WymaganieId == id);
+            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == id);
+            model.Operacje = objOperacjaList;
+            IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);
+            model.RysunekPrzewodnikow = objRysunekList;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Rysunek(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
+        {
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(wwwRootPath, @"images\rysunki");
+                var extension = Path.GetExtension(file.FileName);
+
+                if (model.RysunekPrzewodnika.Rysunek != null)
+                {
+                    var oldImage = Path.Combine(wwwRootPath, model.RysunekPrzewodnika.Rysunek.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImage))
+                    {
+                        System.IO.File.Delete(oldImage);
+                    }
+                }
+
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                model.RysunekPrzewodnika.Rysunek = @"\images\rysunki\" + fileName + extension;
+            }
+            model.RysunekPrzewodnika.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
+            model.RysunekPrzewodnika.WymaganieId = (int)model.PrzewodnikPracy.WymaganieId;
+            _unitOfWork.RysunekPrzewodnika.AddId(model.RysunekPrzewodnika);
             _unitOfWork.Save();
             TempData["success"] = "Rysunek został pomyślnie dodany.";
             return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.WymaganieId });

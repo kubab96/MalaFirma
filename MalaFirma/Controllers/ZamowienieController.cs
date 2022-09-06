@@ -357,7 +357,9 @@ namespace MalaFirma.Controllers
 
         public IActionResult CreateZadowolenie(int idZamowienia)
         {
-            return View();
+            ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
+            return View(model);
         }
 
         [HttpPost]
@@ -375,6 +377,34 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Save();
                 TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
                 return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia });
+            }
+            return View(obj);
+        }
+
+        public IActionResult EditZadowolenie(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var zadowolenieFormDb = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.Id == id);
+            if (zadowolenieFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(zadowolenieFormDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditZadowolenie(ZadowolenieKlienta obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.ZadowolenieKlienta.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
+                return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia = obj.ZamowienieId });
             }
             return View(obj);
         }
