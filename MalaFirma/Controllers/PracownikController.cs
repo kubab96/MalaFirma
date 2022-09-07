@@ -112,5 +112,30 @@ namespace MalaFirma.Controllers
                 return View(model);
             }
         }
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Użytkownik o podanym identyfikatorze nie istnieje!";
+                return View();
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            
+            return View("Index");
+        }
     }
 }
