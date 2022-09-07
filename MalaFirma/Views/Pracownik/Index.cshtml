@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<UzytkownicyVM>  
-<partial name="_Notification" />
 
 <div class="container p-3">
 
@@ -10,9 +9,7 @@
         </div>
         <br />
         <div class="col-12 text-end">
-            <a asp-controller="Dostawca" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
-                <i class="bi bi-plus-circle"></i> &nbsp; Dodaj pracownika
-            </a>
+
         </div>
 
             <div class="card-body">
@@ -53,15 +50,11 @@
                                 <td width="25%">
                                     @obj.Role
                                 </td>
-
-                                <td style="display: block; margin:auto">
-
-                                   
-                                    <a asp-controller="Dostawca" asp-action="DetailsDostawca" asp-route-id="" class="btn btn-info">
-                                        Szczególy
-                                    </a>
-                                    
-                                </td>
+                            <td width="25%">
+                                <a asp-controller="Pracownik" asp-action="EditUser" asp-route-id="@obj.Id" class="btn btn-info ">
+                                    <i class="bi bi-pencil-square"></i> e
+                                </a>
+                            </td>
                             </tr>
                             
                         }

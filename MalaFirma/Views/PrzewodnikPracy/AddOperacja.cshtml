@@ -9,11 +9,11 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label asp-for="Operacja.TrescOperacji"></label>
+                    <label>Treść operacji</label>
                     <input asp-for="Operacja.TrescOperacji" class="form-control" />
                 </div>
                 <button type="submit" class="btn btn-primary">Dodaj</button>
-                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
+                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info">
                 <i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika
             </a>
             </div>

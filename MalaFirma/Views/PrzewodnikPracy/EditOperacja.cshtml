@@ -8,11 +8,15 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label asp-for="TrescOperacji"></label>
+                    <label>Treść operacji</label>
                     <input asp-for="TrescOperacji" class="form-control" />
                 </div>
+                <div class="mb-3">
+                    <label>Data wykonania</label>
+                    <input asp-for="DataWykonania" class="form-control" />
+                </div>
 
-                <button type="submit" class="btn btn-primary">Edytuj</button>
+                <button type="submit" class="btn btn-info">Edytuj</button>
                 <a href="@Url.Action("Operacja", "PrzewodnikPracy", new { id = Model.WymaganieId })" class="btn btn-primary" role="button"><i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika</a>
             </div>
         </div>

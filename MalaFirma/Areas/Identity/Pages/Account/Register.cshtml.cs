@@ -28,19 +28,19 @@ namespace MalaFirma.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager)
@@ -83,18 +83,18 @@ namespace MalaFirma.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [Display(Name = "Email / Username")]
+            [Required(ErrorMessage = "Nazwa użytkownika jest wymagana.")]
+            [Display(Name = "Nazwa użytkownika")]
             public string Email { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Hasło jest wymagane.")]
+            [StringLength(100, ErrorMessage = "{0} musi zawierać minimum {2}, a maksymalnie {1} znaków.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
             /// <summary>
@@ -102,8 +102,8 @@ namespace MalaFirma.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Potwierdź hasło")]
+            [Compare("Password", ErrorMessage = "Podane hasła nie pasują do siebie.")]
             public string ConfirmPassword { get; set; }
 
 
@@ -111,6 +111,7 @@ namespace MalaFirma.Areas.Identity.Pages.Account
             public string Imie { get; set; }
             [Required(ErrorMessage = "Nazwisko jest wymagane.")]
             public string Nazwisko { get; set; }
+            [Required(ErrorMessage = "Kraj jest wymagany.")]
             public string Kraj { get; set; }
             [Required(ErrorMessage = "Miasto klienta jest wymagane.")]
             public string Miasto { get; set; }
@@ -120,6 +121,8 @@ namespace MalaFirma.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Kod pocztowy jest wymagany.")]
             [DisplayName("Kod pocztowy")]
             public string KodPocztowy { get; set; }
+            [Required(ErrorMessage = "Rola użytkownika jest wymagana.")]
+            [DisplayName("Rola")]
             public string? Role { get; set; }
 
             [ValidateNever]
@@ -170,7 +173,7 @@ namespace MalaFirma.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Zarejestrowano nowego pracownika.");
 
                     if (Input.Role == null)
                     {
@@ -191,7 +194,7 @@ namespace MalaFirma.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.Email, "Potwierdź e-mail",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -222,19 +225,19 @@ namespace MalaFirma.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

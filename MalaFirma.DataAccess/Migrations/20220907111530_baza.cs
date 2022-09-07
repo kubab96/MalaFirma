@@ -28,13 +28,12 @@ namespace MalaFirma.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Imie = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nazwisko = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kraj = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Miasto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UlicaNumer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    KodPocztowy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Imie = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nazwisko = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Kraj = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Miasto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UlicaNumer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KodPocztowy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -513,6 +512,27 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RysunekPrzewodnikow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rysunek = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumerRysunku = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WymaganieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RysunekPrzewodnikow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RysunekPrzewodnikow_Wymagania_WymaganieId",
+                        column: x => x.WymaganieId,
+                        principalTable: "Wymagania",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SwiadectwoJakosci",
                 columns: table => new
                 {
@@ -657,6 +677,11 @@ namespace MalaFirma.DataAccess.Migrations
                 column: "SwiadectwoJakosciId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RysunekPrzewodnikow_WymaganieId",
+                table: "RysunekPrzewodnikow",
+                column: "WymaganieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SwiadectwoJakosci_WymaganieId",
                 table: "SwiadectwoJakosci",
                 column: "WymaganieId");
@@ -732,6 +757,9 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Przywieszki");
+
+            migrationBuilder.DropTable(
+                name: "RysunekPrzewodnikow");
 
             migrationBuilder.DropTable(
                 name: "Szkolenia");

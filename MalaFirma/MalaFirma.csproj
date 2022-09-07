@@ -19,20 +19,16 @@
 
   <ItemGroup>
     <Compile Include="Areas\Identity\Pages\Account\AccessDenied.cshtml.cs" />
-    <Compile Include="Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs" />
     <Compile Include="Areas\Identity\Pages\Account\Login.cshtml.cs" />
     <Compile Include="Areas\Identity\Pages\Account\Logout.cshtml.cs" />
     <Compile Include="Areas\Identity\Pages\Account\Register.cshtml.cs" />
-    <Compile Include="Areas\Identity\Pages\Account\ResetPassword.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
-    <None Include="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
-    <None Include="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
     <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />

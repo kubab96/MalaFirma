@@ -10,6 +10,7 @@ namespace MalaFirma.Models
 {
     public class UzytkownicyVM
     {
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Role { get; set; }
         public string Imie { get; set; }

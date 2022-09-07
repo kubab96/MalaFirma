@@ -1,0 +1,58 @@
+﻿@model EditUserVM
+
+
+<div class="container p-3">
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Edytuj dane pracownika</h6>
+        </div>
+
+
+        <div class="card-body">
+            <form method="post">
+
+
+                    <input asp-for="Id" class="form-control" hidden/>
+
+                <div class="mb-3">
+                    <label>Nazwa użytkownika</label>
+                    <input asp-for="UserName" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Imię</label>
+                    <input asp-for="Imie" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Nazwisko</label>
+                    <input asp-for="Nazwisko" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Kraj</label>
+                    <input asp-for="Kraj" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Miasto</label>
+                    <input asp-for="Miasto" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Ulica oraz numer</label>
+                    <input asp-for="UlicaNumer" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Kod pocztowy</label>
+                    <input asp-for="KodPocztowy" class="form-control" />
+                </div>
+
+                @if(Model.Roles.Any()){
+                    foreach(var role in Model.Roles){
+                        <h5>@role</h5>
+                    }
+                }
+                <button type="submit" class="btn btn-info">Edytuj</button>
+                <a asp-controller="Pacownik" asp-action="Index" class="btn btn-primary">Wróć</a>
+            </form>
+        </div>
+    </div>
+</div>
