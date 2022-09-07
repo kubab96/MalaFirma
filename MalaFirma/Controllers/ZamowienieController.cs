@@ -55,6 +55,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ZamowienieWymaganieVM obj)
@@ -81,6 +82,23 @@ namespace MalaFirma.Controllers
                 }
             }
             return View(obj);
+        }
+
+        public void ZakonczZamowienieMethod(int? id)
+        {
+            var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            obj.StatusZamowienia = "Zakończono";
+            _unitOfWork.Zamowienie.Update(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Zamówienie zostało zakończone!";
+            RedirectToAction("Index").ExecuteResult(this.ControllerContext);
+        }
+        
+        public IActionResult ZakonczZamowienie(int? id)
+        {
+            var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
+            ZakonczZamowienieMethod(id);
+            return RedirectToAction("Index");
         }
 
         public void AddKartaProjektu(int id)

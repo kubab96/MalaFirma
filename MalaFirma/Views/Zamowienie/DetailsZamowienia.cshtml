@@ -136,5 +136,8 @@
             <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Zadowolenie Klienta
             </a>
+            <a asp-controller="Zamowienie" asp-action="ZakonczZamowienie" asp-route-id="@Model.Zamowienie.Id" class="btn btn-danger">
+                 Zakończ zamówienie
+            </a>
         </div>
     </div>
