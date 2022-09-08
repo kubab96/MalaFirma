@@ -1,4 +1,5 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
+﻿using MalaFirma.DataAccess;
+using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace MalaFirma.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public PrzewodnikPracyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly ApplicationDbContext _db;
+        public PrzewodnikPracyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _db = db;
         }
         public IActionResult PrzewodnikPracy(int id)
         {
@@ -23,6 +26,7 @@ namespace MalaFirma.Controllers
             model.PrzewodnikiPracy = objPrzewodnikiList;
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
+            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
 
             return View(model);
         }
@@ -177,7 +181,7 @@ namespace MalaFirma.Controllers
             return RedirectToAction("Operacja", new { id = idWymagania });
         }
 
-        public IActionResult EditOperacja(int? id)
+        public IActionResult EditOperacja(int? id, int idWymagania)
         {
             if (id == null || id == 0)
             {
@@ -197,11 +201,31 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Operacja.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Edycja operacji przebiegła pomyślnie";
-                return RedirectToAction("Operacja", new { id = idWymagania });
-
+                //var lastOperacja = _db.Operacje.LastOrDefault(s => s.WymaganieId == idWymagania);
+                var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
+                         .FirstOrDefault(s => s.WymaganieId == idWymagania);
+                if (lastOperacja != null) { 
+                DateTime data = lastOperacja.DataWykonania;
+                if (obj.DataWykonania < data)
+                {
+                    TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatniej operacji.";
+                    return View(obj);
+                }
+                else
+                {
+                    _unitOfWork.Operacja.Update(obj);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Edycja operacji przebiegła pomyślnie";
+                    return RedirectToAction("Operacja", new { id = idWymagania });
+                }
+                }
+                else
+                {
+                    _unitOfWork.Operacja.Update(obj);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Edycja operacji przebiegła pomyślnie";
+                    return RedirectToAction("Operacja", new { id = idWymagania });
+                }
             }
             return View(obj);
         }
@@ -242,18 +266,48 @@ namespace MalaFirma.Controllers
             {
                 if (wynik == null)
                 {
+                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.WymaganieId == obj.WymaganieId);
+                    if(operacje == null)
+                    {
+                        TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
+                        return View(obj);
+                    }
+                    else { 
                     AddSwiadectwoJakosci(obj.ZamowienieId, obj.WymaganieId);
+                    obj.DataZakonczeniaPrzewodnika = DateTime.Now;
                     _unitOfWork.PrzewodnikPracy.Update(obj);
                     _unitOfWork.Save();
                     TempData["success"] = "Przewodnik został zakończony.";
                     return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                    }
                 }
                 else
                 {
-                    _unitOfWork.PrzewodnikPracy.Update(obj);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Przewodnik został zakończony.";
-                    return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                    var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
+                         .FirstOrDefault(s => s.WymaganieId == obj.WymaganieId);
+                    if (lastOperacja != null)
+                    {
+                        DateTime data = lastOperacja.DataWykonania;
+                        if (obj.DataZakonczeniaPrzewodnika < data)
+                        {
+                            TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatnio wykonanej operacji.";
+                            return View(obj);
+                        }
+                        else
+                        {
+                            _unitOfWork.PrzewodnikPracy.Update(obj);
+                            _unitOfWork.Save();
+                            TempData["success"] = "Przewodnik został zaktualizowany.";
+                            return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                        }
+                    }
+                    else
+                    {
+                        _unitOfWork.PrzewodnikPracy.Update(obj);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Przewodnik został zaktualizowany.";
+                        return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                    }
                 }
             }
             return View(obj);

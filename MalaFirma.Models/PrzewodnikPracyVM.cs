@@ -27,6 +27,8 @@ namespace MalaFirma.Models
         [ValidateNever]
         public RysunekPrzewodnika RysunekPrzewodnika { get; set; }
         [ValidateNever]
+        public Przeglad Przeglad { get; set; }
+        [ValidateNever]
         public IEnumerable<RysunekPrzewodnika> RysunekPrzewodnikow { get; set; }
         [ValidateNever]
         public IFormFile Rysunek { get; set; }

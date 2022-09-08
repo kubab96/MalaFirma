@@ -18,6 +18,9 @@ namespace MalaFirma.Models
         public string WynikPrzegladu { get; set; }
         public string? ZidentyfikowaneProblemy { get; set; }
         public string? PlanowaneDzialania { get; set; }
+        [DisplayName("Data przeglądu")]
+        [DataType(DataType.DateTime)]
+        public DateTime DataPrzegladu { get; set; } = DateTime.Now;
         public int zamowienieId { get; set; }
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; } 

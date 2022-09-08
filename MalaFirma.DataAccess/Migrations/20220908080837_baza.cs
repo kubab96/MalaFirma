@@ -343,6 +343,7 @@ namespace MalaFirma.DataAccess.Migrations
                     WynikPrzegladu = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZidentyfikowaneProblemy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlanowaneDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataPrzegladu = table.Column<DateTime>(type: "datetime2", nullable: false),
                     zamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -488,6 +489,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumerPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WynikPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataZakonczeniaPrzewodnika = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ZidentyfikowaneProblemy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlanowaneDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rysunek = table.Column<string>(type: "nvarchar(max)", nullable: true),

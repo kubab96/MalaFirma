@@ -14,6 +14,12 @@
                     <label asp-for="Zamowienie.Nazwa"></label>
                     <input asp-for="Zamowienie.Nazwa" class="form-control" />
                 </div>
+                @if(Model.Zamowienie.Id != 0){
+                <div class="mb-3">
+                    <label asp-for="Zamowienie.DataZamowienia"></label>
+                    <input asp-for="Zamowienie.DataZamowienia" class="form-control" />
+                </div>
+                }
                 <div class="mb-3">
                     <label>Klient</label>
                     <select asp-for="Zamowienie.KlientId" asp-items="@Model.Klienci" class="form-select">

@@ -1,5 +1,9 @@
 ﻿@model Przeglad
+@{
+    <partial name="_Notification" />
 
+
+};
 <div class="container p-3">
 
     <div class="card shadow mb-4">
@@ -10,6 +14,7 @@
         <div class="card-body">
         <form method="post">
             <input asp-for="zamowienieId" hidden />
+            <input asp-for="Id" hidden/>
             <div class="mb-3">
                 <label>Wynik przeglądu</label>
                 <input asp-for="WynikPrzegladu" class="form-control" />
@@ -19,8 +24,8 @@
                 <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
             </div>
             <div class="mb-3">
-                <label> Planowane działania</label>
-                <input asp-for="PlanowaneDzialania" class="form-control" />
+                <label>Data przeglądu</label>
+                <input asp-for="DataPrzegladu" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Zakończ przegląd</button>
         </form>

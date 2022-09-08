@@ -373,6 +373,9 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataPrzegladu")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PlanowaneDzialania")
                         .HasColumnType("nvarchar(max)");
 
@@ -400,6 +403,9 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataZakonczeniaPrzewodnika")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NumerPrzewodnika")
                         .HasColumnType("nvarchar(max)");

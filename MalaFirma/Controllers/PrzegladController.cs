@@ -205,10 +205,18 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
+                var zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == obj.zamowienieId);
+                if(obj.DataPrzegladu < zamowienie.DataZamowienia)
+                {
+                    TempData["error"] = "Nie można wprowadzić daty dalszej niż data zamówienia.";
+                    return View(obj);
+                }
+                else { 
                 _unitOfWork.Przeglad.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Edycja przeglądu przebiegła pomyślnie.";
                 return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.zamowienieId });
+                }
             }
             return View(obj);
         }
