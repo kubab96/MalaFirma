@@ -52,6 +52,10 @@ namespace MalaFirma.Controllers
             {
                 string fileName = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(wwwRootPath, @"images\rysunki");
+                if (!Directory.Exists(uploads))
+                {
+                    Directory.CreateDirectory(uploads);
+                }
                 var extension = Path.GetExtension(file.FileName);
 
                 if (model.PrzewodnikPracy.Rysunek != null)
@@ -116,6 +120,10 @@ namespace MalaFirma.Controllers
             {
                 string fileName = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(wwwRootPath, @"images\rysunki");
+                if (!Directory.Exists(uploads))
+                {
+                    Directory.CreateDirectory(uploads);
+                }
                 var extension = Path.GetExtension(file.FileName);
 
                 if (model.RysunekPrzewodnika.Rysunek != null)
@@ -239,7 +247,6 @@ namespace MalaFirma.Controllers
             }
             _unitOfWork.Operacja.Remove(obj);
             _unitOfWork.Save();
-            ModelState.Clear();
             TempData["success"] = "Operacja została usunięta";
             return RedirectToAction("Operacja", new { id = obj.WymaganieId });
         }

@@ -56,11 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\rysunki\" />
-    <Folder Include="wwwroot\images\rysunki\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Views\Shared\Error.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
