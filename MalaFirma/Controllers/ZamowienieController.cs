@@ -68,6 +68,7 @@ namespace MalaFirma.Controllers
                     _unitOfWork.Zamowienie.AddId(obj.Zamowienie);
                     _unitOfWork.Save();
                     AddKartaProjektu(obj.Zamowienie.Id);
+                    AddPrzeglad(obj.Zamowienie.Id);
                     return RedirectToAction("CreateWymaganie", new { id = obj.Zamowienie.Id });
                 }
                 else
@@ -82,6 +83,14 @@ namespace MalaFirma.Controllers
                 }
             }
             return View(obj);
+        }
+
+        public void AddPrzeglad(int zamowienieId)
+        {
+            Przeglad obj = new Przeglad();
+            obj.WynikPrzegladu = "Nie wykonano";
+            _unitOfWork.Przeglad.AddId(obj, zamowienieId);
+            _unitOfWork.Save();
         }
 
         public void ZakonczZamowienieMethod(int? id)

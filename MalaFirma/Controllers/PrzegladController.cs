@@ -77,9 +77,9 @@ namespace MalaFirma.Controllers
         {
             PrzegladVM model = new PrzegladVM();
             model.Pytania = _unitOfWork.Pytanie.GetAll();
-            model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.ZamowienieId == idZamowienia);
-            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == idZamowienia);
+            model.Odpowiedzi = _unitOfWork.Odpowiedz.GetAll().Where(x => x.PrzegladId == model.Przeglad.Id);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             IEnumerable<Przeglad> objPrzegladList = _unitOfWork.Przeglad.GetAll().Where(x => x.zamowienieId == idZamowienia);
             model.Przeglady = objPrzegladList;
             return View(model);
@@ -97,11 +97,13 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddOdpowiedz(PrzegladVM obj, int idPytania, int idZamowienia)
         {
-            _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, idPytania, idZamowienia);
+            int idzam = idZamowienia;
+            var obj2 = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == idZamowienia);
+            _unitOfWork.Odpowiedz.AddId(obj.Odpowiedz, idPytania, obj2.Id);
             _unitOfWork.Save();
             CheckStatus(idZamowienia);
             TempData["success"] = "Przegląd pytania zakończył się powodzeniem";
-            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
+            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = idzam });
         }
 
         public IActionResult EditOdpowiedz(int? idOdpowiedzi, int idPytania)
@@ -122,15 +124,17 @@ namespace MalaFirma.Controllers
         public IActionResult EditOdpowiedz(PrzegladVM obj, int idOdpowiedzi, int idPytania, int idZamowienia)
         {
             obj.Odpowiedz.Id = idOdpowiedzi;
-            _unitOfWork.Odpowiedz.Update(obj.Odpowiedz, idPytania, idZamowienia);
+            var obj2 = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == idZamowienia);
+            _unitOfWork.Odpowiedz.Update(obj.Odpowiedz, idPytania, obj2.Id);
             _unitOfWork.Save();
             CheckStatus(idZamowienia);
             TempData["success"] = "Edycja pytania przeglądowego zakończyła się powodzeniem";
-            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Odpowiedz.ZamowienieId });
+            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = idZamowienia });
         }
         public void CheckStatus(int? idZamowienia)
         {
-            var obj2 = _unitOfWork.Odpowiedz.GetAll().Where(Odpowiedz => Odpowiedz.ZamowienieId == idZamowienia);
+            var obj = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == idZamowienia);
+            var obj2 = _unitOfWork.Odpowiedz.GetAll().Where(Odpowiedz => Odpowiedz.PrzegladId == obj.Id);
             var obj3 = _unitOfWork.Pytanie.GetAll();
             var obj4 = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             int licznik = 0;
@@ -154,26 +158,37 @@ namespace MalaFirma.Controllers
             else { }
         }
 
-        public IActionResult WynikPrzegladu(int? idZamowienia)
+        public IActionResult AddWynikPrzegladu(int? id)
         {
-            PrzegladVM model = new PrzegladVM();
-            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
-            return View(model);
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var przegladFormDb = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.Id == id);
+            if (przegladFormDb.WynikPrzegladu == "Nie wykonano")
+            {
+                przegladFormDb.WynikPrzegladu = "";
+                przegladFormDb.DataPrzegladu = DateTime.Now;
+            }
+            if (przegladFormDb == null)
+            {
+                return NotFound();
+            }
+            return View(przegladFormDb);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult WynikPrzegladu(PrzegladVM obj, int idZamowienia)
+        public IActionResult AddWynikPrzegladu(Przeglad obj)
         {
-            //IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == idZamowienia);
-            //foreach (var a in objWymaganiaList)
-            //{
-            //    AddPrzewodnikPracy(a.ZamowienieId, a.Id);
-            //}
-            _unitOfWork.Przeglad.AddId(obj.Przeglad, idZamowienia);
-            _unitOfWork.Save();
-            TempData["success"] = "Wynik przeglądu zakończył się powodzeniem";
-            return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.Przeglad.zamowienieId });
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Przeglad.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Zakończono przegląd.";
+                return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.zamowienieId });
+            }
+            return View(obj);
         }
 
         //public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
@@ -192,6 +207,11 @@ namespace MalaFirma.Controllers
                 return NotFound();
             }
             var przegladFormDb = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.Id == id);
+            if (przegladFormDb.WynikPrzegladu == "Nie wykonano")
+            {
+                przegladFormDb.WynikPrzegladu = "";
+                przegladFormDb.DataPrzegladu = DateTime.Now;
+            }
             if (przegladFormDb == null)
             {
                 return NotFound();
@@ -206,16 +226,17 @@ namespace MalaFirma.Controllers
             if (ModelState.IsValid)
             {
                 var zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == obj.zamowienieId);
-                if(obj.DataPrzegladu < zamowienie.DataZamowienia)
+                if (obj.DataPrzegladu < zamowienie.DataZamowienia)
                 {
                     TempData["error"] = "Nie można wprowadzić daty dalszej niż data zamówienia.";
                     return View(obj);
                 }
-                else { 
-                _unitOfWork.Przeglad.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Edycja przeglądu przebiegła pomyślnie.";
-                return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.zamowienieId });
+                else
+                {
+                    _unitOfWork.Przeglad.Update(obj);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Edycja przeglądu przebiegła pomyślnie.";
+                    return RedirectToAction("PrzegladZamowienia", new { idZamowienia = obj.zamowienieId });
                 }
             }
             return View(obj);

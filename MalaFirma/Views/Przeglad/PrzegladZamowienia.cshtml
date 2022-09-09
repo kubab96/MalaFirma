@@ -55,13 +55,13 @@
                             <td>
                                 @if (obj.Odpow == string.Empty)
                                 {
-                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-primary">
+                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-info">
                                         <i class="bi bi-pencil-square"></i> Odpowiedz
                                     </a>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.IdOdp" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-primary">
+                                    <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.IdOdp" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-warning">
                                         <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
                                 }
@@ -73,17 +73,17 @@
             @if (Model.Odpowiedzi.Count() == Model.Pytania.Count())
         {
 
-                @if (Model.Przeglady.Any())
+                @if (Model.Przeglad.WynikPrzegladu != "Nie wykonano")
                 {
-                    <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
-                <i class="bi bi-shield-check"></i> Wynik przeglądu
+                    <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-success">
+                <i class="bi bi-shield-check"></i> Przegląd został zakończony - edycja
             </a>
                 }
                 else
                 {
-                    <a asp-controller="Przeglad" asp-action="WynikPrzegladu" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+                    <a asp-controller="Przeglad" asp-action="AddWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-info">
                 <i class="bi bi-shield-check"></i> Wynik przeglądu
-                    </a>
+            </a>
                     
                 }
         }

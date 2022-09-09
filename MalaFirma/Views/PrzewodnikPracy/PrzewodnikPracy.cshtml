@@ -20,7 +20,7 @@
         </div>
         <br />
         <div class="card-body">
-            @if (@Model.Przeglad == null)
+            @if (@Model.Przeglad.WynikPrzegladu == "Nie wykonano")
             {
                 <p>Nie ukończono przeglądu zamówienia.</p>
             }

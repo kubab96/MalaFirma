@@ -21,7 +21,7 @@ namespace MalaFirma.Models
         public string? WymaganeDzialania { get; set; }
         public int PytanieId { get; set;}
         public Pytanie Pytanie { get; set; }
-        public int ZamowienieId { get; set; }
-        public Zamowienie Zamowienie { get; set; }
+        public int PrzegladId { get; set; }
+        public Przeglad Przeglad { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace MalaFirma.DataAccess.Repository
             _db = db;
         }
 
-        public void Update(Odpowiedz obj, int idPytania, int idZamowienia)
+        public void Update(Odpowiedz obj, int idPytania, int idPrzegladu)
         {
             obj.PytanieId = idPytania;
-            obj.ZamowienieId = idZamowienia;
+            obj.PrzegladId = idPrzegladu;
             if (obj.Wartosc == false)
             {
                 obj.Status = "Nie";
@@ -31,10 +31,10 @@ namespace MalaFirma.DataAccess.Repository
             }
             _db.Odpowiedzi.Update(obj);
         }
-        public void AddId(Odpowiedz obj, int idPytania, int idZamowienia)
+        public void AddId(Odpowiedz obj, int idPytania, int idPrzegladu)
         {
             obj.PytanieId = idPytania;
-            obj.ZamowienieId = idZamowienia;
+            obj.PrzegladId = idPrzegladu;
             if (obj.Wartosc == false)
             {
                 obj.Status = "Nie";

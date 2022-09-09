@@ -23,11 +23,18 @@
                 <label>Zidentyfikowane Problemy</label>
                 <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
             </div>
+                <div class="mb-3">
+                    <label>Planowane Działania</label>
+                    <input asp-for="PlanowaneDzialania" class="form-control" />
+                </div>
             <div class="mb-3">
                 <label>Data przeglądu</label>
                 <input asp-for="DataPrzegladu" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary">Zakończ przegląd</button>
+            <button type="submit" class="btn btn-primary">Edytuj przegląd</button>
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-primary">
+                    <i class="bi bi-arrow-90deg-left"></i> Wróć
+                </a>
         </form>
 
     </div>

@@ -315,6 +315,9 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataPrzegladu")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PrzegladId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PytanieId")
                         .HasColumnType("int");
 
@@ -328,14 +331,11 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("WymaganeDzialania")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ZamowienieId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PytanieId");
+                    b.HasIndex("PrzegladId");
 
-                    b.HasIndex("ZamowienieId");
+                    b.HasIndex("PytanieId");
 
                     b.ToTable("Odpowiedzi");
                 });
@@ -855,21 +855,21 @@ namespace MalaFirma.DataAccess.Migrations
 
             modelBuilder.Entity("MalaFirma.Models.Odpowiedz", b =>
                 {
+                    b.HasOne("MalaFirma.Models.Przeglad", "Przeglad")
+                        .WithMany()
+                        .HasForeignKey("PrzegladId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MalaFirma.Models.Pytanie", "Pytanie")
                         .WithMany()
                         .HasForeignKey("PytanieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MalaFirma.Models.Zamowienie", "Zamowienie")
-                        .WithMany()
-                        .HasForeignKey("ZamowienieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Przeglad");
 
                     b.Navigation("Pytanie");
-
-                    b.Navigation("Zamowienie");
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Operacja", b =>
