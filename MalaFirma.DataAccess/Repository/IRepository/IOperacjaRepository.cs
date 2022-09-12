@@ -10,6 +10,6 @@ namespace MalaFirma.DataAccess.Repository.IRepository
     public interface IOperacjaRepository : IRepository<Operacja>
     {
         void Update(Operacja obj);
-        void AddId(Operacja obj, int idProcesu);
+        void AddId(Operacja obj);
     }
 }

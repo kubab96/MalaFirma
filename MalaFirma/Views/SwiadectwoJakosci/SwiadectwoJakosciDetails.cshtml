@@ -57,17 +57,17 @@
             @*Tabela wykonanych operacji*@
             <div class="card shadow mb-4" style="margin:15px">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Wykonane operację</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Wykonane operacje</h6>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>
-                                    TrescOperacji
+                                    Treść operacji
                                 </th>
                                 <th>
-                                    DataWykonania
+                                    Data wykonania
                                 </th>
                             </tr>
                         </thead>
@@ -103,14 +103,14 @@
             <form method="post" asp-action="SwiadectwoJakosciDetails" enctype="multipart/form-data">
                 <input asp-for="Przywieszka.Rysunek" hidden />
                     <input type="file" id="formFile" name="file" class="form-control" />
-                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
 
                         <div class="card-body">
                     <table class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>
-                                    Rysunek
+                                    Przywieszka
                                 </th>
                                 <th>
 
@@ -128,7 +128,7 @@
                                         
                                         <input type="file" id="Edit @idPrzyw" name="file" class="form-control" />
                                         <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
-                                       <div><div>
+                                       
                                         <a class="btn btn-danger delete" style="margin-top:15px; margin-bottom:15px"
                                        data-id="@obj.Id"
                                        data-controller="SwiadectwoJakosci"
@@ -136,8 +136,7 @@
                                        data-body-message="Czy napewno chcesz usunąć tą przywieszkę?">
                                             <i class="bi bi-trash3-fill"></i> Usuń
                                         </a>
-                                                    </div>
-                                                </div>
+                                                    
                                     </td>
 
                                 </tr>
@@ -152,20 +151,22 @@
             </div>
             @if (Model.SwiadectwoJakosci.WynikSwiadectwa == null)
             {
-                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-primary" style="width:150px">
-                    <i class="bi bi-shield-check"></i> Zakończ
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-info">
+                    <i class="bi bi-shield-check"></i> Zakończ świadectwo jakości
                 </a>
             }
             else
             {
-                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" style="width:150px" class="btn btn-primary">
-                    <i class="bi bi-shield-check"></i> Edytuj
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-success">
+                    <i class="bi bi-shield-check"></i> Zakończono świadectwo jakości
                 </a>
             }
-
+            <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosci" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                    Powrót
+                </a>
         </div>
     </div>
-
+</div>
 
 
     @section Scripts{

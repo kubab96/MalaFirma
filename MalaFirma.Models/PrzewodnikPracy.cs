@@ -24,9 +24,6 @@ namespace MalaFirma.Models
         public string? PlanowaneDzialania { get; set; }
         public string? Rysunek { get; set; }
         public string? NumerRysunku { get; set; }
-        public int ZamowienieId { get; set; }
-        [ValidateNever]
-        public Zamowienie Zamowienie { get; set; }
         public int? WymaganieId { get; set; }
         [ValidateNever]
         public Wymaganie Wymaganie { get; set; }

@@ -11,7 +11,6 @@
             <div class="card-body">
                 <input asp-for="Id" hidden />
                 <input asp-for="NumerPrzewodnika" hidden />
-                <input asp-for="ZamowienieId" hidden />
                 <input asp-for="WymaganieId" hidden />
                 <input asp-for="Rysunek" hidden />
                 <input asp-for="NumerRysunku" hidden />
@@ -42,8 +41,8 @@
                 {
                     <button type="submit" class="btn btn-info">Zakończ przewodnik</button>
                 }
-                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-id="@Model.WymaganieId" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Wróć do operacji
+                <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.Id" class="btn btn-primary">
+                    <i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika
                 </a>
             </div>
         </div>

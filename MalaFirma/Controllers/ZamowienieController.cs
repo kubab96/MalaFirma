@@ -102,7 +102,7 @@ namespace MalaFirma.Controllers
             TempData["success"] = "Zamówienie zostało zakończone!";
             RedirectToAction("Index").ExecuteResult(this.ControllerContext);
         }
-        
+
         public IActionResult ZakonczZamowienie(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
@@ -122,9 +122,25 @@ namespace MalaFirma.Controllers
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            if (obj == null)
+            var obj2 = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            foreach (var item in obj2)
             {
-                return NotFound();
+                var obj3 = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == item.Id);
+                if (obj3 != null)
+                {
+                    _unitOfWork.PrzewodnikPracy.Remove(obj3);
+                    _unitOfWork.Save();
+                }
+            }
+            foreach (var item in obj2)
+            {
+                var obj4 = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.WymaganieId == item.Id);
+                if (obj4 != null)
+                {
+
+                    _unitOfWork.SwiadectwoJakosci.Remove(obj4);
+                    _unitOfWork.Save();
+                }
             }
             _unitOfWork.Zamowienie.Remove(obj);
             _unitOfWork.Save();
@@ -137,11 +153,10 @@ namespace MalaFirma.Controllers
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
-            //model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == model.Zamowienie.Id);
-            //IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id).Where(c => c.WynikPrzewodnika != null);
-            //model.PrzewodnikiPracy = objPrzewodnikiList;
-            IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
-            model.Wymagania = objWymaganieList;
+            IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            model.Wymagania = objWymaganiaList;
+            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
+            model.PrzewodnikiPracy = objPrzewodnikiList;
             return View(model);
         }
 
@@ -184,11 +199,9 @@ namespace MalaFirma.Controllers
 
             if (fc["SubmitForm"] == "AddWymaganie")
             {
-                var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == id);
-                obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
+                AddPrzewodnikPracy(obj.Wymaganie.Id);
                 //AddSwiadectwoJakosci(zamowienieId.Id, obj.Wymaganie.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
@@ -257,21 +270,19 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                var kartaFormDb = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
-                obj.Wymaganie.KartaProjektuId = kartaFormDb.Id;
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, idZamowienia);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
-                AddPrzewodnikPracy(zamowienieId.Id, obj.Wymaganie.Id);
+                AddPrzewodnikPracy(obj.Wymaganie.Id);
                 _unitOfWork.Save();
                 TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
-                return RedirectToAction("Wymagania", "Zamowienie", new { id=idZamowienia });
+                return RedirectToAction("Wymagania", "Zamowienie", new { id = idZamowienia });
             }
             return View(obj);
         }
 
         public IActionResult DeleteWymaganie(int? id)
         {
-            
+
             var obj = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
             {
@@ -284,10 +295,9 @@ namespace MalaFirma.Controllers
             return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
         }
 
-        public void AddPrzewodnikPracy(int idZamowienia, int idWymagania)
+        public void AddPrzewodnikPracy(int idWymagania)
         {
             PrzewodnikPracy przewodnik = new PrzewodnikPracy();
-            przewodnik.ZamowienieId = idZamowienia;
             przewodnik.WymaganieId = idWymagania;
             _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
             _unitOfWork.Save();
@@ -374,7 +384,7 @@ namespace MalaFirma.Controllers
         {
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
             model.ZadowolenieKlienta = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == idZamowienia);
-            if(model.ZadowolenieKlienta == null)
+            if (model.ZadowolenieKlienta == null)
             {
                 return RedirectToAction("CreateZadowolenie", "Zamowienie", new { idZamowienia });
             }

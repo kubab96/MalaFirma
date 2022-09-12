@@ -1,6 +1,19 @@
 ﻿@model ZamowienieWymaganieVM
-
+@{
+    var query =
+        from wym in Model.Wymagania
+        join prze in Model.PrzewodnikiPracy on wym.Id equals prze.WymaganieId
+        select new
+        {
+            wym.Nazwa,
+            wym.Id,
+            prze.WynikPrzewodnika,
+            IdPrze = prze?.Id
+        };
+}
 <partial name="_Notification" />
+
+
 
 <div class="container p-3">
 
@@ -29,6 +42,10 @@
                             @Html.DisplayNameFor(model => model.Zamowienie.UwagiZamowienia)
                         </dt>
                         <dd class="col-sm-10">
+                            @if (Model.Zamowienie.UwagiZamowienia == null)
+                            {
+                                <b>Brak</b>
+                            }
                             @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
                         </dd>
                         <dt class="col-sm-2">
@@ -93,14 +110,17 @@
                         <thead>
                             <tr>
                                 <th>Nazwa</th>
-                                <th>Wymaganie</th>
-
+                                <th></th>
                             </tr>
-                            @foreach (var obj in Model.Wymagania)
+                            @foreach (var obj in query)
                             {
                                 <tr>
-                                    <td width="30%">@obj.Nazwa</td>
-                                    <td width="70%">@obj.Opis</td>
+                                    <td width="90%">@obj.Nazwa</td>
+                                    <td>
+                                        <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
+                                            Wyświetl
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                     </table>
@@ -113,31 +133,33 @@
             <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Przegląd zamówienia
             </a>
-            <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
+            <a asp-controller="PrzewodnikPracy" asp-action="ListaPrzewodnikowPracy" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-tools"></i> Przewodnik Pracy
+            </a>
             <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
             @*@if (@Model.Przeglad == null)
-            {
+                {
                 <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
-            }
-            else
-            {
+                }
+                else
+                {
                 <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
-            }
-            @if (@Model.PrzewodnikiPracy == null)
-            {
-               <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
-            }
-            else
-            {
+                }
+                @if (@Model.PrzewodnikiPracy == null)
+                {
+                <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
+                }
+                else
+                {
                 <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button">Świadectwo jakości</a>
-            }*@
+                }*@
 
-            
+
             <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Zadowolenie Klienta
             </a>
             <a asp-controller="Zamowienie" asp-action="ZakonczZamowienie" asp-route-id="@Model.Zamowienie.Id" class="btn btn-danger">
-                 Zakończ zamówienie
+                Zakończ zamówienie
             </a>
         </div>
     </div>

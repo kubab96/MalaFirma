@@ -26,9 +26,6 @@ namespace MalaFirma.Models
         public int ZamowienieId { get; set; }
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
-        public int? KartaProjektuId { get; set; }
-        [ValidateNever]
-        public Zamowienie KartaProjektu { get; set; }
 
     }
 }

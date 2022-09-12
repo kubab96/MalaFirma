@@ -11,9 +11,10 @@
                 <div class="mb-3">
                     <label>Treść operacji</label>
                     <input asp-for="Operacja.TrescOperacji" class="form-control" />
+                    <span asp-validation-for="Operacja.TrescOperacji" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-info">Dodaj</button>
-                <a asp-controller="PrzewodnikPracy" asp-action="Operacja" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
+                <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika
             </a>
             </div>
@@ -22,3 +23,8 @@
     </div>
 </form>
 
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

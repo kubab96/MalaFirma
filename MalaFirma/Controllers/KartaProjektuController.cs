@@ -20,10 +20,11 @@ namespace MalaFirma.Controllers
             model.Przeglady = objPrzegladList;
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
-            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id);
+            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
             model.Przewodniki = objPrzewodnikiList;
-            IEnumerable<SwiadectwoJakosci> objSwiadectwaList = _unitOfWork.SwiadectwoJakosci.GetAll().Where(x => x.ZamowienieId == id);
+            IEnumerable<SwiadectwoJakosci> objSwiadectwaList = _unitOfWork.SwiadectwoJakosci.GetAll();
             model.Swiadectwa = objSwiadectwaList;
+
             return View(model);
         }
     }

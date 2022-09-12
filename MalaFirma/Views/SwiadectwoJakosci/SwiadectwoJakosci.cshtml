@@ -12,6 +12,7 @@
         wym.Ilosc,
         przew.NumerRysunku,
         swia.WynikSwiadectwa,
+        Idwym = wym?.Id,
         Idswia = swia?.Id,
         Wynik = swia?.WynikSwiadectwa
     };
@@ -66,7 +67,7 @@
                             <td width="10%">
                                 @if (obj.NumerRysunku == null)
                                 {
-                                    <h1>brak</h1>
+                                    <b>brak</b>
                                 }
                                 else
                                 {
@@ -84,7 +85,7 @@
                                 }
                             </td>
                             <td width="20%">
-                                <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                                <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@obj.Idwym" class="btn btn-info">
                                     Szczegóły
                                 </a>
                                 @*@if (obj.WynikSwiadectwa == null)

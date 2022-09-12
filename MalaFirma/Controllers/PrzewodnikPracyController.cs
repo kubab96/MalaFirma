@@ -18,25 +18,28 @@ namespace MalaFirma.Controllers
             _webHostEnvironment = webHostEnvironment;
             _db = db;
         }
-        public IActionResult PrzewodnikPracy(int id)
+        public IActionResult ListaPrzewodnikowPracy(int id)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll().Where(x => x.ZamowienieId == id);
-            model.PrzewodnikiPracy = objPrzewodnikiList;
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
+            IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
+            model.PrzewodnikiPracy = objPrzewodnikiList;
+
+
             model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
 
             return View(model);
         }
 
-        public IActionResult Operacja(int id)
+        public IActionResult PrzewodnikPracy(int id)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
-            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
-            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
-            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == id);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == model.PrzewodnikPracy.WymaganieId);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == model.Wymaganie.ZamowienieId);
+            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.PrzewodnikPracyId == model.PrzewodnikPracy.Id);
             model.Operacje = objOperacjaList;
             IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);
             model.RysunekPrzewodnikow = objRysunekList;
@@ -44,9 +47,9 @@ namespace MalaFirma.Controllers
         }
 
         [HttpPost]
-        public IActionResult Operacja(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
+        public IActionResult PrzewodnikPracy(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
         {
-            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             if (file != null)
             {
@@ -74,37 +77,21 @@ namespace MalaFirma.Controllers
                 }
                 model.PrzewodnikPracy.Rysunek = @"\images\rysunki\" + fileName + extension;
             }
-            if (fc["SubmitForm"] == "Delete")
-            {
-                if (model.PrzewodnikPracy.Rysunek != null)
-                {
-                    var oldImage = Path.Combine(wwwRootPath, model.PrzewodnikPracy.Rysunek.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImage))
-                    {
-                        System.IO.File.Delete(oldImage);
-                    }
-                    model.PrzewodnikPracy.Rysunek = null;
-
-                    _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Rysunek został pomyślnie usunięty.";
-                    return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.WymaganieId });
-                }
-            }
-            model.PrzewodnikPracy.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
+            model.PrzewodnikPracy.NumerRysunku = $"/{model.PrzewodnikPracy.WymaganieId}";
+            //model.PrzewodnikPracy.NumerRysunku = $"{model.Zamowienie.Id}/{model.PrzewodnikPracy.WymaganieId}";
             _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
             _unitOfWork.Save();
             TempData["success"] = "Rysunek został pomyślnie dodany.";
-            return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.WymaganieId });
+            return RedirectToAction("PrzewodnikPracy", new { id = model.PrzewodnikPracy.Id });
         }
 
         public IActionResult Rysunek(int id)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
             model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
-            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == model.Wymaganie.Id);
             model.RysunekPrzewodnika = _unitOfWork.RysunekPrzewodnika.GetFirstOrDefault(x => x.WymaganieId == id);
-            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.WymaganieId == id);
+            IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.Id == id);
             model.Operacje = objOperacjaList;
             IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);
             model.RysunekPrzewodnikow = objRysunekList;
@@ -142,7 +129,8 @@ namespace MalaFirma.Controllers
                 }
                 model.RysunekPrzewodnika.Rysunek = @"\images\rysunki\" + fileName + extension;
             }
-            model.RysunekPrzewodnika.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
+            //model.RysunekPrzewodnika.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
+            model.RysunekPrzewodnika.NumerRysunku = $"/{model.PrzewodnikPracy.WymaganieId}";
             model.RysunekPrzewodnika.WymaganieId = (int)model.PrzewodnikPracy.WymaganieId;
             _unitOfWork.RysunekPrzewodnika.AddId(model.RysunekPrzewodnika);
             _unitOfWork.Save();
@@ -167,29 +155,34 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Rysunek został pomyślnie usnięty.";
-                return RedirectToAction("Operacja", new { id = obj.WymaganieId });
+                return RedirectToAction("PrzewodnikPracy", new { id = obj.Id });
             }
             return View();
         }
 
-        public IActionResult AddOperacja(int? idWymagania)
+        public IActionResult AddOperacja(int idPrzewodnika)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
-            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == idWymagania);
+            model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == idPrzewodnika);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddOperacja(PrzewodnikPracyVM obj, int idWymagania)
+        public IActionResult AddOperacja(PrzewodnikPracyVM obj, int idPrzewodnika)
         {
-            _unitOfWork.Operacja.AddId(obj.Operacja, idWymagania);
-            _unitOfWork.Save();
-            TempData["success"] = "Operacja została pomyślnie dodana";
-            return RedirectToAction("Operacja", new { id = idWymagania });
+            obj.Operacja.PrzewodnikPracyId = idPrzewodnika;
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Operacja.AddId(obj.Operacja);
+                _unitOfWork.Save();
+                TempData["success"] = "Operacja została pomyślnie dodana";
+                return RedirectToAction("PrzewodnikPracy", new { id = idPrzewodnika });
+            }
+            return RedirectToAction("AddOperacja", new { idPrzewodnika = idPrzewodnika });
         }
 
-        public IActionResult EditOperacja(int? id, int idWymagania)
+        public IActionResult EditOperacja(int? id)
         {
             if (id == null || id == 0)
             {
@@ -205,35 +198,14 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditOperacja(Operacja obj, int idWymagania)
+        public IActionResult EditOperacja(Operacja obj)
         {
             if (ModelState.IsValid)
             {
-                //var lastOperacja = _db.Operacje.LastOrDefault(s => s.WymaganieId == idWymagania);
-                var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
-                         .FirstOrDefault(s => s.WymaganieId == idWymagania);
-                if (lastOperacja != null) { 
-                DateTime data = lastOperacja.DataWykonania;
-                if (obj.DataWykonania < data)
-                {
-                    TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatniej operacji.";
-                    return View(obj);
-                }
-                else
-                {
-                    _unitOfWork.Operacja.Update(obj);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Edycja operacji przebiegła pomyślnie";
-                    return RedirectToAction("Operacja", new { id = idWymagania });
-                }
-                }
-                else
-                {
-                    _unitOfWork.Operacja.Update(obj);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Edycja operacji przebiegła pomyślnie";
-                    return RedirectToAction("Operacja", new { id = idWymagania });
-                }
+                _unitOfWork.Operacja.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Edycja operacji przebiegła pomyślnie";
+                return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracyId });
             }
             return View(obj);
         }
@@ -248,7 +220,7 @@ namespace MalaFirma.Controllers
             _unitOfWork.Operacja.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = "Operacja została usunięta";
-            return RedirectToAction("Operacja", new { id = obj.WymaganieId });
+            return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracyId });
         }
 
         public IActionResult WynikPrzewodnikaPracy(int? idPrzewodnika, string? wynik)
@@ -273,25 +245,26 @@ namespace MalaFirma.Controllers
             {
                 if (wynik == null)
                 {
-                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.WymaganieId == obj.WymaganieId);
-                    if(operacje == null)
+                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == obj.Id);
+                    if (operacje == null)
                     {
                         TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
                         return View(obj);
                     }
-                    else { 
-                    AddSwiadectwoJakosci(obj.ZamowienieId, obj.WymaganieId);
-                    obj.DataZakonczeniaPrzewodnika = DateTime.Now;
-                    _unitOfWork.PrzewodnikPracy.Update(obj);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Przewodnik został zakończony.";
-                    return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                    else
+                    {
+                        AddSwiadectwoJakosci(obj.WymaganieId);
+                        obj.DataZakonczeniaPrzewodnika = DateTime.Now;
+                        _unitOfWork.PrzewodnikPracy.Update(obj);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Przewodnik został zakończony.";
+                        return RedirectToAction("PrzewodnikPracy", new { id = operacje.PrzewodnikPracyId });
                     }
                 }
                 else
                 {
                     var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
-                         .FirstOrDefault(s => s.WymaganieId == obj.WymaganieId);
+                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == obj.Id);
                     if (lastOperacja != null)
                     {
                         DateTime data = lastOperacja.DataWykonania;
@@ -305,7 +278,7 @@ namespace MalaFirma.Controllers
                             _unitOfWork.PrzewodnikPracy.Update(obj);
                             _unitOfWork.Save();
                             TempData["success"] = "Przewodnik został zaktualizowany.";
-                            return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                            return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });
                         }
                     }
                     else
@@ -313,17 +286,16 @@ namespace MalaFirma.Controllers
                         _unitOfWork.PrzewodnikPracy.Update(obj);
                         _unitOfWork.Save();
                         TempData["success"] = "Przewodnik został zaktualizowany.";
-                        return RedirectToAction("PrzewodnikPracy", new { id = obj.ZamowienieId });
+                        return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });
                     }
                 }
             }
             return View(obj);
         }
 
-        public void AddSwiadectwoJakosci(int? idZamowienia, int? idWymagania)
+        public void AddSwiadectwoJakosci(int? idWymagania)
         {
             SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
-            swiadectwo.ZamowienieId = (int)idZamowienia;
             swiadectwo.WymaganieId = idWymagania;
             _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
             _unitOfWork.Save();

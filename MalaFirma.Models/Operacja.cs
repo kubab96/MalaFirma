@@ -14,8 +14,8 @@ namespace MalaFirma.Models
         public int Id { get; set; }
         public string TrescOperacji { get; set; }
         public DateTime DataWykonania { get; set; } = DateTime.Now;
-        public int WymaganieId { get; set; }
+        public int PrzewodnikPracyId { get; set; }
         [ValidateNever]
-        public Wymaganie Wymaganie { get; set; }
+        public PrzewodnikPracy PrzewodnikPracy { get; set; }
     }
 }
