@@ -16,10 +16,8 @@
 
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4" style="margin:15px">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Zamówienie - @Model.Zamowienie.Nazwa</h6>
         </div>
         <div class="card-body">
@@ -115,10 +113,10 @@
                             @foreach (var obj in query)
                             {
                                 <tr>
-                                    <td width="90%">@obj.Nazwa</td>
+                                    <td width="75%">@obj.Nazwa</td>
                                     <td>
                                         <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
-                                            Wyświetl
+                                            <i class="bi bi-tools"></i> Przewodnik pracy
                                         </a>
                                     </td>
                                 </tr>
@@ -133,28 +131,11 @@
             <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Przegląd zamówienia
             </a>
-            <a asp-controller="PrzewodnikPracy" asp-action="ListaPrzewodnikowPracy" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+            @*<a asp-controller="PrzewodnikPracy" asp-action="ListaPrzewodnikowPracy" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-tools"></i> Przewodnik Pracy
             </a>
-            <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
-            @*@if (@Model.Przeglad == null)
-                {
-                <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
-                }
-                else
-                {
-                <a href="@Url.Action("PrzewodnikPracy", "PrzewodnikPracy", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-tools"></i> Przewodnik Pracy</a>
-                }
-                @if (@Model.PrzewodnikiPracy == null)
-                {
-                <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>
-                }
-                else
-                {
-                <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary disabled" role="button">Świadectwo jakości</a>
-                }*@
-
-
+            <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>*@
+            
             <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Zadowolenie Klienta
             </a>

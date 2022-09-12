@@ -220,13 +220,13 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
-        public IActionResult EditWymaganie(int? wymaganieId, int? id, int? editId)
+        public IActionResult EditWymaganie(int? id, int? editId)
         {
-            if (wymaganieId == null || wymaganieId == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var wymaganieFormDb = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == wymaganieId);
+            var wymaganieFormDb = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == id);
             ViewBag.EditId = editId;
             if (wymaganieFormDb == null)
             {
@@ -237,7 +237,7 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditWymaganie(Wymaganie obj, int? id)
+        public IActionResult EditWymaganie(Wymaganie obj)
         {
             if (ModelState.IsValid)
             {
@@ -247,11 +247,11 @@ namespace MalaFirma.Controllers
                 int x = Convert.ToInt32(TempData["Data1"]);
                 if (x == 0)
                 {
-                    return RedirectToAction("Wymagania", "Zamowienie", new { id });
+                    return RedirectToAction("Wymagania", "Zamowienie", new { id =  obj.ZamowienieId });
                 }
                 else
                 {
-                    return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
+                    return RedirectToAction("CreateWymaganie", "Zamowienie", new { id = obj.ZamowienieId });
                 }
             }
             return View(obj);

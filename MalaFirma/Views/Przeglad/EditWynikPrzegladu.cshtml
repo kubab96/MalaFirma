@@ -5,9 +5,8 @@
 
 };
 <div class="container p-3">
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Wynik przeglądu</h6>
         </div>
 
@@ -31,7 +30,7 @@
                 <label>Data przeglądu</label>
                 <input asp-for="DataPrzegladu" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary">Edytuj przegląd</button>
+            <button type="submit" class="btn btn-info">Edytuj przegląd</button>
                 <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-primary">
                     <i class="bi bi-arrow-90deg-left"></i> Wróć
                 </a>

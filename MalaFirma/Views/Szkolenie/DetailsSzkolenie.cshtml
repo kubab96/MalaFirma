@@ -5,10 +5,8 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Szkolenie</h6>
         </div>
         <br />
@@ -32,13 +30,13 @@
                     @Html.DisplayNameFor(model => model.DataRozpoczecia)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.DataRozpoczecia.ToShortDateString())
+                    @Html.DisplayFor(model => model.DataRozpoczecia)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.DataZakonczenia)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.DataZakonczenia.ToShortDateString())
+                    @Html.DisplayFor(model => model.DataZakonczenia)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Uwagi)
@@ -58,6 +56,7 @@
 
 
             <a class="btn btn-danger delete"
+             style="margin-right:5px; float:right;"
                data-id="@Model.Id"
                data-controller="Szkolenie"
                data-action="Delete"
@@ -65,17 +64,17 @@
                data-body-message="Czy napewno chcesz usunąć teo szkolenie?">
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
-            <a asp-controller="Szkolenie" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-info">
+            <a asp-controller="Szkolenie" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning"  style="margin-right:5px; float:right;">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
             <a asp-controller="Szkolenie" asp-action="EndSzkolenie" asp-route-id="@Model.Id" id="btn" class="btn btn-info" hidden>
                 <i class="bi bi-pencil-square"></i> Zakończ
             </a>
-            <a asp-controller="Szkolenie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Wróć do szkoleń</a>
+            <a asp-controller="Szkolenie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
 
 
              <input type="file" id="formFile" name="file" class="form-control" hidden/>
-                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()"  style="margin-right:5px; float:right;">Zakończ</button>
         </div>
 
 

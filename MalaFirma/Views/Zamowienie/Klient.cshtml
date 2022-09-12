@@ -6,15 +6,13 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Klienci</h6>
         </div>
         <br />
         <div class="col-12 text-end">
-            <a asp-controller="Zamowienie" asp-action="CreateKlient" class="btn btn-primary" style="margin-right:25px">
+            <a asp-controller="Zamowienie" asp-action="CreateKlient" class="btn btn-success" style="margin-right:25px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz klienta
             </a>
         </div>
@@ -61,14 +59,16 @@
                                 <td width="10%">
                                     @obj.Miasto
                                 </td>
-                                <td width="15%">
+                                <td width="17%">
                                     @obj.UlicaNumer
                                 </td>
-                                <td width="10%">
+                                <td width="15%">
                                     @obj.KodPocztowy
                                 </td>
                                 <td style="display: block; margin:auto">
-
+                                    <a asp-controller="Zamowienie" asp-action="EditKlient" asp-route-id="@obj.Id" class="btn btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edytuj
+                                    </a>
                                     
                                     <a class="btn btn-danger delete"
                                data-id="@obj.Id"
@@ -77,9 +77,7 @@
                                data-body-message="Czy napewno chcesz usunąć tego klienta?">
                                         <i class="bi bi-trash3-fill"></i> Usuń
                                     </a>
-                                    <a asp-controller="Zamowienie" asp-action="EditKlient" asp-route-id="@obj.Id" class="btn btn-info" style="width:40%; ">
-                                        <i class="bi bi-pencil-square"></i> Edytuj
-                                    </a>
+                                    
                                 </td>
                             </tr>
                         }

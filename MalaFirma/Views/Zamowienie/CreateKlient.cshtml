@@ -1,10 +1,10 @@
 ﻿@model Klient
+<partial name="_Notification" />
 
 <form method="post">
-    <div class="container p-3">
-        <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header py-3">
+<div class="container p-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
                 </div>
                 <div class="card-body">
@@ -34,14 +34,13 @@
                         <span asp-validation-for="KodPocztowy" class="text-danger"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Utwórz</button>
+                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Utwórz</button>
                 <a asp-controller="Zamowienie" asp-action="Klient" class="btn btn-primary">
-                    Wróć do listy klientów
+                    <i class="bi bi-arrow-90deg-left"></i> Powrót
                 </a>
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
 @section Scripts{

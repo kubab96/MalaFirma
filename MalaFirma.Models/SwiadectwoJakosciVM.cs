@@ -30,6 +30,7 @@ namespace MalaFirma.Models
         public IEnumerable<Przywieszka> Przywieszki { get; set; }
         [ValidateNever]
         public Przywieszka Przywieszka { get; set; }
+        public Przeglad Przeglad { get; set; }
         public IFormFile Rysunek { get; set; }
     }
 }

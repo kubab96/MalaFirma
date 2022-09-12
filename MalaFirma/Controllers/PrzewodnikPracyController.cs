@@ -223,29 +223,31 @@ namespace MalaFirma.Controllers
             return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracyId });
         }
 
-        public IActionResult WynikPrzewodnikaPracy(int? idPrzewodnika, string? wynik)
+        public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracyVM obj, int? idPrzewodnika, string? wynik)
         {
             if (idPrzewodnika == null || idPrzewodnika == 0)
             {
                 return NotFound();
             }
-            var przewodnikFormDb = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == idPrzewodnika);
-            if (przewodnikFormDb == null)
+            obj.SwiadectwoJakosci = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.WymaganieId == idPrzewodnika);
+            obj.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == idPrzewodnika);
+            if (obj.PrzewodnikPracy == null)
             {
                 return NotFound();
             }
-            return View(przewodnikFormDb);
+            return View(obj);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracy obj, string? wynik)
+        public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracyVM obj, string? wynik)
         {
             if (ModelState.IsValid)
             {
+                
                 if (wynik == null)
                 {
-                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == obj.Id);
+                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == obj.PrzewodnikPracy.Id);
                     if (operacje == null)
                     {
                         TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
@@ -254,8 +256,8 @@ namespace MalaFirma.Controllers
                     else
                     {
                         //AddSwiadectwoJakosci(obj.WymaganieId);
-                        obj.DataZakonczeniaPrzewodnika = DateTime.Now;
-                        _unitOfWork.PrzewodnikPracy.Update(obj);
+                        obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika = DateTime.Now;
+                        _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                         _unitOfWork.Save();
                         TempData["success"] = "Przewodnik został zakończony.";
                         return RedirectToAction("PrzewodnikPracy", new { id = operacje.PrzewodnikPracyId });
@@ -264,18 +266,18 @@ namespace MalaFirma.Controllers
                 else
                 {
                     var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
-                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == obj.Id);
+                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == obj.PrzewodnikPracy.Id);
                     if (lastOperacja != null)
                     {
                         DateTime data = lastOperacja.DataWykonania;
-                        if (obj.DataZakonczeniaPrzewodnika < data)
+                        if (obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika < data)
                         {
                             TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatnio wykonanej operacji.";
                             return View(obj);
                         }
                         else
                         {
-                            _unitOfWork.PrzewodnikPracy.Update(obj);
+                            _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                             _unitOfWork.Save();
                             TempData["success"] = "Przewodnik został zaktualizowany.";
                             return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });
@@ -283,7 +285,7 @@ namespace MalaFirma.Controllers
                     }
                     else
                     {
-                        _unitOfWork.PrzewodnikPracy.Update(obj);
+                        _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                         _unitOfWork.Save();
                         TempData["success"] = "Przewodnik został zaktualizowany.";
                         return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });

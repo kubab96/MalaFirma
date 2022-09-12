@@ -1,9 +1,8 @@
 ﻿@model PrzegladVM
 
 <div class="container p-3">
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Przegląd zamówieia</h6>
         </div>
 
@@ -28,7 +27,10 @@
                     <label asp-for="Odpowiedz.WymaganeDzialania"></label>
                     <input asp-for="Odpowiedz.WymaganeDzialania" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:150px">Udziel odpowiedzi</button>
+                <button type="submit" class="btn btn-info">Udziel odpowiedzi</button>
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+                    <i class="bi bi-arrow-90deg-left"></i> Wróć
+                </a>
             </form>
 
         </div>

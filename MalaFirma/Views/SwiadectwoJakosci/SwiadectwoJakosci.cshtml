@@ -20,17 +20,15 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Lista wykonanych części lub zespołów</h6>
         </div>
         <br />
         <div class="card-body">
-            @if (!Model.SwiadectwaJakosci.Any())
+            @if (@Model.Przeglad.WynikPrzegladu == "Nie wykonano")
             {
-                <p>Nie ukończono przewodnika pracy dla danego wymagania.</p>
+                <p>Nie ukończono przeglądu zamówienia.</p>
             }
             else
             {

@@ -16,10 +16,8 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Przegląd zamówieia</h6>
         </div>
         <br />
@@ -36,10 +34,10 @@
                     @foreach (var obj in query)
                     {
                         <tr>
-                            <td width="80%">
+                            <td width="65%">
                                 @obj.Nazwa
                             </td>
-                            <td width="10%">
+                            <td width="15%">
                                 @if (obj.Odpow == string.Empty)
                                 {
                                      <div>-</div>
@@ -55,13 +53,13 @@
                             <td>
                                 @if (obj.Odpow == string.Empty)
                                 {
-                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-info">
+                                    <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-info" style="width:165px">
                                         <i class="bi bi-pencil-square"></i> Odpowiedz
                                     </a>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.IdOdp" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-warning">
+                                    <a asp-controller="Przeglad" asp-action="EditOdpowiedz" asp-route-idOdpowiedzi="@obj.IdOdp" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-warning" style="width:165px">
                                         <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
                                 }
@@ -76,7 +74,7 @@
                 @if (Model.Przeglad.WynikPrzegladu != "Nie wykonano")
                 {
                     <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-success">
-                <i class="bi bi-shield-check"></i> Przegląd został zakończony - edycja
+                <i class="bi bi-shield-check"></i> Przegląd został zakończony
             </a>
                 }
                 else

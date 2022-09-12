@@ -25,6 +25,7 @@ namespace MalaFirma.Controllers
             model.SwiadectwaJakosci = objSwiadectwaList;
             IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
             model.PrzewodnikiPracy = objPrzewodnikiList;
+            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == model.Zamowienie.Id);
 
             return View(model);
         }
@@ -50,8 +51,14 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                    if (obj.ZidentyfikowaneProblemy == null)
+                var przewodnikId = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == obj.WymaganieId);
+                var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == przewodnikId.Id);
+                if (operacje == null)
+                {
+                    TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
+                    return View(obj);
+                }
+                if (obj.ZidentyfikowaneProblemy == null)
                     {
                         obj.ZidentyfikowaneProblemy = "N/D";
                     }

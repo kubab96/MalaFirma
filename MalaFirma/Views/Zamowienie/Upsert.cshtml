@@ -1,8 +1,9 @@
 ﻿@model ZamowienieWymaganieVM
+<partial name="_Notification" />
 
 <div class="container p-3">
-    <div class="card mb-4">
-        <div class="card-header">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">@(Model.Zamowienie.Id != 0 ? "Edytuj zamówienie" : "Dodaj zamówienie")</h6>
         </div>
         <div class="card-body">
@@ -36,7 +37,10 @@
                 }
                 @if (Model.Zamowienie.Id != 0)
                 {
-                    <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
+                    <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
+            </a>
+                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
                 }
                 else
                 {

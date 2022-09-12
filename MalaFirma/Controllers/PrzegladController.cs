@@ -106,7 +106,7 @@ namespace MalaFirma.Controllers
             return RedirectToAction("PrzegladZamowienia", new { idZamowienia = idzam });
         }
 
-        public IActionResult EditOdpowiedz(int? idOdpowiedzi, int idPytania)
+        public IActionResult EditOdpowiedz(int? idOdpowiedzi, int idPytania, int idZamowienia)
         {
 
             if (idOdpowiedzi == null || idOdpowiedzi == 0)
@@ -116,6 +116,7 @@ namespace MalaFirma.Controllers
             PrzegladVM model = new PrzegladVM();
             model.Odpowiedz = _unitOfWork.Odpowiedz.GetFirstOrDefault(x => x.Id == idOdpowiedzi);
             model.Pytanie = _unitOfWork.Pytanie.GetFirstOrDefault(x => x.Id == idPytania);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             return View(model);
         }
 

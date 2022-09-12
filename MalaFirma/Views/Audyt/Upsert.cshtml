@@ -1,10 +1,8 @@
 ﻿@model Audyt
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">@(Model.Id!=0?"Edytuj audyt": "Dodaj audyt")</h6>
         </div>
 
@@ -50,8 +48,9 @@
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-primary" style="width:150px">Dodaj</button>
-                    <a asp-controller="Audyt" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Wróć</a>
+                    <a asp-controller="Audyt" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-info" style="width:150px; float:right">Dodaj</button>
+                    
                 }
                 
             </form>

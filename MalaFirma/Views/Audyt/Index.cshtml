@@ -5,25 +5,31 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-
-
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4" style="margin:15px">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Audyty</h6>
         </div>
-        <br />
-        <div class="col-12 text-end">
-            <a asp-controller="Audyt" asp-action="Upsert" class="btn btn-primary" style="margin-right:25px">
+
+
+
+        <div class="card-body">
+            <a asp-controller="Audyt" asp-action="Upsert" class="btn btn-success" style="margin-bottom:15px; float:right">
                 <i class="bi bi-plus-circle"></i> &nbsp; Dodaj audyt
             </a>
-        </div>
-
-            <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div>
+                    <br>
+                <b>Brak audytów.</b>
+                </div>
+            }
+            else
+            {
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>
-                                Temat auditu
+                                Temat audytu
                             </th>
                             <th>
                                 Termin
@@ -35,7 +41,7 @@
                                 Status
                             </th>
                             <th>
-                                
+
                             </th>
                         </tr>
                     </thead>
@@ -57,18 +63,19 @@
                                     @obj.Status
                                 </td>
 
-                                <td style="display: block; margin:auto">
+                                <td>
                                     <a asp-controller="Audyt" asp-action="DetailsAudyt" asp-route-id="@obj.Id" class="btn btn-info">
                                         Szczególy
                                     </a>
-                                    
+
                                 </td>
                             </tr>
-                            
+
                         }
                     </tbody>
                 </table>
-            </div>
-        
+            }
+        </div>
+
     </div>
 </div>
