@@ -202,7 +202,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
                 AddPrzewodnikPracy(obj.Wymaganie.Id);
-                //AddSwiadectwoJakosci(zamowienieId.Id, obj.Wymaganie.Id);
+                AddSwiadectwoJakosci(obj.Wymaganie.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
                 TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
@@ -303,14 +303,13 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
         }
 
-        //public void AddSwiadectwoJakosci(int idZamowienia, int idWymagania)
-        //{
-        //    SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
-        //    swiadectwo.ZamowienieId = idZamowienia;
-        //    swiadectwo.WymaganieId = idWymagania;
-        //    _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
-        //    _unitOfWork.Save();
-        //}
+        public void AddSwiadectwoJakosci(int idWymagania)
+        {
+            SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
+            swiadectwo.WymaganieId = idWymagania;
+            _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
+            _unitOfWork.Save();
+        }
 
         #endregion
 

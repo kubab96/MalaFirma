@@ -253,7 +253,7 @@ namespace MalaFirma.Controllers
                     }
                     else
                     {
-                        AddSwiadectwoJakosci(obj.WymaganieId);
+                        //AddSwiadectwoJakosci(obj.WymaganieId);
                         obj.DataZakonczeniaPrzewodnika = DateTime.Now;
                         _unitOfWork.PrzewodnikPracy.Update(obj);
                         _unitOfWork.Save();
@@ -293,13 +293,13 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
-        public void AddSwiadectwoJakosci(int? idWymagania)
-        {
-            SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
-            swiadectwo.WymaganieId = idWymagania;
-            _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
-            _unitOfWork.Save();
-        }
+        //public void AddSwiadectwoJakosci(int? idWymagania)
+        //{
+        //    SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
+        //    swiadectwo.WymaganieId = idWymagania;
+        //    _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
+        //    _unitOfWork.Save();
+        //}
 
     }
 }
