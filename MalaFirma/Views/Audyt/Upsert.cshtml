@@ -19,6 +19,7 @@
                     <select asp-for="RodzajAudytu" asp-items="Html.GetEnumSelectList<Rodzaj>()" class="form-select">
                         <option disabled selected>-- Wybierz rodzaj audytu --</option>
                     </select>
+                    <span asp-validation-for="RodzajAudytu" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Opis"></label>
@@ -43,7 +44,7 @@
                 {
                     <button type="submit" class="btn btn-primary" style="width:150px">Edytuj</button>
                     <a asp-controller="Audyt" asp-action="DetailsAudyt" asp-route-id="@Model.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Wróć
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
             </a>
                 }
                 else

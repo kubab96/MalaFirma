@@ -24,8 +24,10 @@ namespace MalaFirma.Controllers
 
         public ActionResult DetailsNarzedzie(int? id)
         {
-            var narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
-            return View(narzedzie);
+            NarzedzieTypVM model = new NarzedzieTypVM();
+            model.Narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
+            model.TypNarzedzia = _unitOfWork.TypNarzedzia.GetFirstOrDefault(x => x.Id == model.Narzedzie.TypNarzedziaId);
+            return View(model);
         }
 
         public IActionResult Upsert(int? id)
@@ -61,10 +63,6 @@ namespace MalaFirma.Controllers
 
             if (obj.Narzedzie.Id == 0)
             {
-                int numer = 1;
-                var liczbaNarzedzi = _unitOfWork.Narzedzie.GetAll().Count();
-                int numerIdentyfikacyjny = numer + liczbaNarzedzi;
-                obj.Narzedzie.NumerIdentyfikacyjny = "FM/" + numerIdentyfikacyjny;
                 _unitOfWork.Narzedzie.Add(obj.Narzedzie);
                 _unitOfWork.Save();
                 if (obj.Narzedzie.ObslugaMetrologiczna == true)

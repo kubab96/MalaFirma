@@ -16,6 +16,7 @@
                 <div class="mb-3">
                     <label>Wynik świadectwa</label>
                     <input asp-for="WynikSwiadectwa" class="form-control" />
+                    <span asp-validation-for="WynikSwiadectwa" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label>Zidentyfikowane problemy</label>
@@ -25,14 +26,23 @@
                     <label>Planowane działania</label>
                     <input asp-for="PlanowaneDzialania" class="form-control" />
                 </div>
-
-                @if (Model.WynikSwiadectwa != null)
+                @if (Model.WynikSwiadectwa != "")
                 {
-                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                  <div class="mb-3">
+                    <label asp-for="DataZakonczeniaSwiadectwa"></label>
+                    <input asp-for="DataZakonczeniaSwiadectwa" class="form-control" />
+                    <span asp-validation-for="DataZakonczeniaSwiadectwa" class="text-danger"></span>
+                </div>  
+                }
+
+                @if (Model.WynikSwiadectwa == "")
+                {
+                    
+                    <button type="submit" class="btn btn-primary">Zakończ świadectwo</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-primary">Zakończ świadectwo</button>
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
                 }
                <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Id" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Wróć do świadectwa

@@ -61,6 +61,11 @@
                         <span asp-validation-for="Wymaganie.Nazwa" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                        <label asp-for="Wymaganie.Opis"></label>
+                        <input asp-for="Wymaganie.Opis" class="form-control" />
+                        <span asp-validation-for="Wymaganie.Opis" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label asp-for="Wymaganie.Ilosc"></label>
                         <input asp-for="Wymaganie.Ilosc" class="form-control" value="1" />
                         <span asp-validation-for="Wymaganie.Ilosc" class="text-danger"></span>
@@ -70,11 +75,7 @@
                         <input asp-for="Wymaganie.Material" class="form-control" />
                         <span asp-validation-for="Wymaganie.Material" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="Wymaganie.Opis"></label>
-                        <input asp-for="Wymaganie.Opis" class="form-control" />
-                        <span asp-validation-for="Wymaganie.Opis" class="text-danger"></span>
-                    </div>
+                    
                     <button type="submit" name="SubmitForm" value="AddWymaganie" class="btn btn-primary">Dodaj wymaganie</button>
 
                 </div>

@@ -20,7 +20,9 @@ namespace MalaFirma.Models
         [DisplayName("Jakość realizacji")]
         public int Jakosc { get; set; }
         public string Uwagi { get; set; }
-        
+        [DisplayName("Data zakończenia zadowolenia")]
+        [DataType(DataType.DateTime)]
+        public DateTime DataZakonczeniaZadowolenia { get; set; }
         public int? ZamowienieId { get; set; }
 
         [ValidateNever]

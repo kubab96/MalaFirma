@@ -299,6 +299,7 @@ namespace MalaFirma.Controllers
         {
             PrzewodnikPracy przewodnik = new PrzewodnikPracy();
             przewodnik.WymaganieId = idWymagania;
+            przewodnik.WynikPrzewodnika = "";
             _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
             _unitOfWork.Save();
         }
@@ -307,6 +308,7 @@ namespace MalaFirma.Controllers
         {
             SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
             swiadectwo.WymaganieId = idWymagania;
+            swiadectwo.WynikSwiadectwa = "";
             _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
             _unitOfWork.Save();
         }
@@ -421,6 +423,7 @@ namespace MalaFirma.Controllers
             obj.ZadowolenieKlienta.ZamowienieId = idZamowienia;
             obj.ZadowolenieKlienta.Zamowienie = obj.Zamowienie;
             obj.ZadowolenieKlienta.KlientId = obj.Klient.Id;
+            obj.ZadowolenieKlienta.DataZakonczeniaZadowolenia = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
@@ -431,7 +434,7 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
-        public IActionResult EditZadowolenie(int? id)
+        public IActionResult EditZadowolenie(int? id, int? zamowienieId)
         {
             if (id == null || id == 0)
             {
@@ -447,13 +450,24 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditZadowolenie(ZadowolenieKlienta obj)
+        public IActionResult EditZadowolenie(ZadowolenieKlienta obj, int? zamowienieId)
         {
             if (ModelState.IsValid)
             {
+                IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == zamowienieId);
+                foreach(var item in objWymaganieList)
+                {
+                    var objPrzewodnik = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == item.Id);
+                    if(obj.DataZakonczeniaZadowolenia < objPrzewodnik.DataZakonczeniaPrzewodnika)
+                    {
+                        TempData["error"] = "Nie można wprowadzić daty dalszej niż data zakończonego przewodnika";
+                        return View(obj);
+                    }
+                }
+                
                 _unitOfWork.ZadowolenieKlienta.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
+                TempData["success"] = "Zadowolenie klienta zostało pomyślnie zaktualizowane";
                 return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia = obj.ZamowienieId });
             }
             return View(obj);

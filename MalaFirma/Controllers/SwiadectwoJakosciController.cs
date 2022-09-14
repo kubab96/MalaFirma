@@ -1,4 +1,5 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
+﻿using MalaFirma.DataAccess;
+using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,13 @@ namespace MalaFirma.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _db;
 
-        public SwiadectwoJakosciController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        public SwiadectwoJakosciController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _db = db;
         }
         public IActionResult SwiadectwoJakosci(int id)
         {
@@ -47,30 +50,69 @@ namespace MalaFirma.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult WynikSwiadectwaJakosci(SwiadectwoJakosci obj)
+        public IActionResult WynikSwiadectwaJakosci(SwiadectwoJakosci obj, string? wynik)
         {
             if (ModelState.IsValid)
             {
                 var przewodnikId = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == obj.WymaganieId);
                 var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == przewodnikId.Id);
-                if (operacje == null)
+                if (wynik == null)
                 {
-                    TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
-                    return View(obj);
+                    if (operacje == null)
+                    {
+                        TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem świadectwa";
+                        return RedirectToAction("PrzewodnikPracy", "PrzewodnikPracy", new { id = przewodnikId.Id });
+                    }
+                    else
+                    {
+                        if (obj.ZidentyfikowaneProblemy == null)
+                        {
+                            obj.ZidentyfikowaneProblemy = "N/D";
+                        }
+                        if (obj.PlanowaneDzialania == null)
+                        {
+                            obj.PlanowaneDzialania = "N/D";
+                        }
+                        obj.DataZakonczeniaSwiadectwa = DateTime.Now;
+                        _unitOfWork.SwiadectwoJakosci.Update(obj);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Świadectwo jakości zostało zaktualizowane";
+                        return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
+                    }
                 }
-                if (obj.ZidentyfikowaneProblemy == null)
+                else
+                {
+                    var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
+                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == przewodnikId.Id);
+                    if (lastOperacja != null)
                     {
-                        obj.ZidentyfikowaneProblemy = "N/D";
+                        DateTime data = lastOperacja.DataWykonania;
+                        if (obj.DataZakonczeniaSwiadectwa < data)
+                        {
+                            TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatnio wykonanej operacji";
+                            return View(obj);
+                        }
+                        else
+                        {
+                            _unitOfWork.SwiadectwoJakosci.Update(obj);
+                            _unitOfWork.Save();
+                            TempData["success"] = "Świadectwo jakości zostało zakończone";
+                            return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
+                        }
                     }
-                    if (obj.PlanowaneDzialania == null)
+                    else
                     {
-                        obj.PlanowaneDzialania = "N/D";
+                        _unitOfWork.SwiadectwoJakosci.Update(obj);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Świadectwo jakości zostało zakończone";
+                        return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
                     }
-                    _unitOfWork.SwiadectwoJakosci.Update(obj);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Świadectwo jakości zostało zakończone.";
-                    return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
-                
+                }
+
+
+
+
+
             }
             return View(obj);
         }
@@ -151,7 +193,7 @@ namespace MalaFirma.Controllers
                 model.Przywieszka.SwiadectwoJakosciId = id;
                 _unitOfWork.Przywieszka.Update(model.Przywieszka);
                 _unitOfWork.Save();
-                TempData["success"] = "Przywieszka została pomyślnie dodana.";
+                TempData["success"] = "Przywieszka została pomyślnie dodana";
             }
             else
             {
@@ -160,7 +202,7 @@ namespace MalaFirma.Controllers
                 rysunek.SwiadectwoJakosciId = id;
                 _unitOfWork.Przywieszka.Update(rysunek);
                 _unitOfWork.Save();
-                TempData["success"] = "Przywieszka została pomyślnie zaktualizowna.";
+                TempData["success"] = "Przywieszka została pomyślnie zaktualizowna";
             }
             return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.SwiadectwoJakosci.WymaganieId });
         }
@@ -178,7 +220,7 @@ namespace MalaFirma.Controllers
                 }
                 _unitOfWork.Przywieszka.Remove(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Przywieszka została pomyślnie usnięta.";
+                TempData["success"] = "Przywieszka została pomyślnie usnięta";
                 return RedirectToAction("Operacja", new { id = obj.SwiadectwoJakosciId });
             }
             return View();

@@ -25,7 +25,6 @@ namespace MalaFirma.DataAccess.Repository
                 objFromDb.Nazwa = obj.Nazwa;
                 objFromDb.NumerFabryczny = obj.NumerFabryczny;
                 objFromDb.ObslugaMetrologiczna = obj.ObslugaMetrologiczna;
-                objFromDb.Status = obj.Status;
                 objFromDb.NumerFabryczny = obj.NumerFabryczny;
                 objFromDb.TypNarzedziaId = obj.TypNarzedziaId;
             }

@@ -5,8 +5,8 @@
 
 };
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Wynik przeglądu</h6>
         </div>
 
@@ -17,6 +17,7 @@
                 <div class="mb-3">
                     <label>Wynik przeglądu</label>
                     <input asp-for="WynikPrzegladu" class="form-control" />
+                    <span asp-validation-for="WynikPrzegladu" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label>Zidentyfikowane Problemy</label>
@@ -26,11 +27,12 @@
                     <label>Planowane Działania</label>
                     <input asp-for="PlanowaneDzialania" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-primary">Zakończ przegląd</button>
+                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Zakończ przegląd</button>
                 <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Wróć
+                    <i class="bi bi-arrow-90deg-left"></i> Powrót
                 </a>
             </form>
 
         </div>
     </div>
+</div>

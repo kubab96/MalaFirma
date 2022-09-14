@@ -39,6 +39,7 @@ namespace MalaFirma.Controllers
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
             model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == model.PrzewodnikPracy.WymaganieId);
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == model.Wymaganie.ZamowienieId);
+            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == model.Wymaganie.ZamowienieId);
             IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.PrzewodnikPracyId == model.PrzewodnikPracy.Id);
             model.Operacje = objOperacjaList;
             IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);
@@ -242,14 +243,13 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                var swiadectwo = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.WymaganieId == obj.PrzewodnikPracy.WymaganieId);
                 if (wynik == null)
                 {
-                    var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == obj.PrzewodnikPracy.Id);
-                    if (operacje == null)
+                    if (swiadectwo.WynikSwiadectwa == "")
                     {
-                        TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem przewodnika.";
-                        return View(obj);
+                        TempData["error"] = "Przed zakończeniem przewodnika należy zakończyć świadectwo jakości";
+                        return RedirectToAction("SwiadectwoJakosciDetails", "SwiadectwoJakosci", new { id = swiadectwo.WymaganieId });
                     }
                     else
                     {
@@ -258,36 +258,24 @@ namespace MalaFirma.Controllers
                         _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                         _unitOfWork.Save();
                         TempData["success"] = "Przewodnik został zakończony.";
-                        return RedirectToAction("PrzewodnikPracy", new { id = operacje.PrzewodnikPracyId });
+                        return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
                     }
                 }
                 else
                 {
-                    var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
-                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == obj.PrzewodnikPracy.Id);
-                    if (lastOperacja != null)
-                    {
-                        DateTime data = lastOperacja.DataWykonania;
-                        if (obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika < data)
+                        if (obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika < swiadectwo.DataZakonczeniaSwiadectwa)
                         {
-                            TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatnio wykonanej operacji.";
+                            TempData["error"] = "Nie można wprowadzić daty dalszej, niż data wykonanego świadectwa jakości";
                             return View(obj);
                         }
                         else
                         {
                             _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                             _unitOfWork.Save();
-                            TempData["success"] = "Przewodnik został zaktualizowany.";
-                            return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });
+                            TempData["success"] = "Przewodnik został zaktualizowany";
+                            return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
                         }
-                    }
-                    else
-                    {
-                        _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
-                        _unitOfWork.Save();
-                        TempData["success"] = "Przewodnik został zaktualizowany.";
-                        return RedirectToAction("PrzewodnikPracy", new { id = lastOperacja.PrzewodnikPracyId });
-                    }
+                    
                 }
             }
             return View(obj);

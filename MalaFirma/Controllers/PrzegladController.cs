@@ -26,9 +26,16 @@ namespace MalaFirma.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Pytanie(PytanieVM obj)
         {
-            _unitOfWork.Pytanie.AddId(obj.Pytanie);
-            _unitOfWork.Save();
-            TempData["success"] = "Pytanie zostało pomyślnie dodane";
+            try
+            {
+                _unitOfWork.Pytanie.AddId(obj.Pytanie);
+                _unitOfWork.Save();
+                TempData["success"] = "Pytanie zostało pomyślnie dodane";
+            }
+            catch
+            {
+                TempData["error"] = "Podaj nazwę pytania";
+            }
             return RedirectToAction("Pytanie");
         }
 

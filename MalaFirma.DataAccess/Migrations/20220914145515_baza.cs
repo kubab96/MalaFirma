@@ -265,7 +265,7 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataZamowienia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KlientId = table.Column<int>(type: "int", nullable: true),
+                    KlientId = table.Column<int>(type: "int", nullable: false),
                     UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -276,7 +276,8 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_Zamowienia_Klient_KlientId",
                         column: x => x.KlientId,
                         principalTable: "Klient",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,10 +287,8 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumerIdentyfikacyjny = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumerFabryczny = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ObslugaMetrologiczna = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TypNarzedziaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -333,7 +332,7 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ilosc = table.Column<int>(type: "int", nullable: true),
+                    Ilosc = table.Column<int>(type: "int", nullable: false),
                     Material = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZamowienieId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -357,6 +356,7 @@ namespace MalaFirma.DataAccess.Migrations
                     CzasRealizacji = table.Column<int>(type: "int", nullable: false),
                     Jakosc = table.Column<int>(type: "int", nullable: false),
                     Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataZakonczeniaZadowolenia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ZamowienieId = table.Column<int>(type: "int", nullable: true),
                     KlientId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -460,13 +460,13 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumerPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WynikPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WynikPrzewodnika = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataZakonczeniaPrzewodnika = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ZidentyfikowaneProblemy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlanowaneDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rysunek = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumerRysunku = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WymaganieId = table.Column<int>(type: "int", nullable: true)
+                    WymaganieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -475,7 +475,8 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_PrzewodnikPracy_Wymagania_WymaganieId",
                         column: x => x.WymaganieId,
                         principalTable: "Wymagania",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -506,10 +507,11 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumerSwiadectwa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WynikSwiadectwa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WynikSwiadectwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZidentyfikowaneProblemy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlanowaneDzialania = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WymaganieId = table.Column<int>(type: "int", nullable: true)
+                    DataZakonczeniaSwiadectwa = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WymaganieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -518,7 +520,8 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_SwiadectwoJakosci_Wymagania_WymaganieId",
                         column: x => x.WymaganieId,
                         principalTable: "Wymagania",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -562,6 +565,21 @@ namespace MalaFirma.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "50c1e2e4-0e6f-471d-9df2-d003383e902c", "Admin", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Imie", "KodPocztowy", "Kraj", "LockoutEnabled", "LockoutEnd", "Miasto", "Nazwisko", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UlicaNumer", "UserName" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "5c381adc-ef87-42f8-aff7-6442abb01077", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEFGjaMtj3M0oddZos5ULdcNw43QEecKYfZi2NXfABfVeSZawMnmgW75tLUjCERPJtQ==", null, false, "", false, "", "admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "a18be9c0-aa65-4af8-bd17-00bd9344e575" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

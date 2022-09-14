@@ -16,7 +16,9 @@ namespace MalaFirma.Models
         [Key]
         public int Id { get; set; }
         public string? NumerPrzewodnika { get; set; }
-        public string? WynikPrzewodnika { get; set; }
+        [DisplayName("Wynik przewodnika")]
+        [Required(ErrorMessage = "Wynik przewodnika jest wymagany")]
+        public string WynikPrzewodnika { get; set; }
         [DisplayName("Data zakończenia przewodnika")]
         [DataType(DataType.DateTime)]
         public DateTime DataZakonczeniaPrzewodnika { get; set; }
@@ -24,7 +26,7 @@ namespace MalaFirma.Models
         public string? PlanowaneDzialania { get; set; }
         public string? Rysunek { get; set; }
         public string? NumerRysunku { get; set; }
-        public int? WymaganieId { get; set; }
+        public int WymaganieId { get; set; }
         [ValidateNever]
         public Wymaganie Wymaganie { get; set; }
 

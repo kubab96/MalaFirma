@@ -12,10 +12,12 @@
                 <div class="mb-3">
                     <label asp-for="Narzedzie.Nazwa"></label>
                     <input asp-for="Narzedzie.Nazwa" class="form-control" />
+                    <span asp-validation-for="Narzedzie.Nazwa" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Narzedzie.NumerFabryczny"></label>
                     <input asp-for="Narzedzie.NumerFabryczny" class="form-control" />
+                    <span asp-validation-for="Narzedzie.NumerFabryczny" class="text-danger"></span>
                 </div>
                 
                 
@@ -24,25 +26,23 @@
                     <select asp-for="Narzedzie.TypNarzedziaId" asp-items="@Model.TypNarzedzi" class="form-select">
                         <option disabled selected>-- Wybierz typ narzędzia --</option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Narzedzie.Status"></label>
-                    <input asp-for="Narzedzie.Status" class="form-control" />
+                    <span asp-validation-for="Narzedzie.TypNarzedziaId" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" onclick="Show()" id="ObslugaMetrologiczna" asp-for="Narzedzie.ObslugaMetrologiczna">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Obsluga Metrologiczna</label>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Obsługa Metrologiczna</label>
                     </div>
                 </div>
 
                 <div id="obsluga" style="display:none" class="mb-3">
 
                     <div class="mb-3">
-                        <label>Data ważności</label>
+                        <label>Data ważności obsługi metrologicznej</label>
                         <input asp-for="ObslugaMetrologiczna.DataWaznosci" class="form-control" />
+                        <span asp-validation-for="ObslugaMetrologiczna.DataWaznosci" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -67,7 +67,7 @@
 
     @section Scripts{
     @{
-
+        <partial name="_ValidationScriptsPartial" />
         <script type="text/javascript">
             function Show() {
 

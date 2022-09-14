@@ -8,7 +8,7 @@
 
         <div class="card-body">
             <div class="mb-3">
-                <label asp-for="Pytanie.Nazwa"></label>
+                <label>Nazwa pytania</label>
                 <input asp-for="Pytanie.Nazwa" class="form-control" />
             </div>
 
@@ -16,8 +16,8 @@
 
             <form method="post">
 
-
-                <div class="form-check form-switch">
+                <label>Odpowiedź</label>
+                <div class="form-check form-switch" style="margin-bottom:10px;">
                         <input class="form-check-input" type="checkbox" onclick="Show()" id="ObslugaMetrologiczna" asp-for="Odpowiedz.Wartosc">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Nie/Tak</label>
                     </div>
@@ -27,9 +27,9 @@
                     <label asp-for="Odpowiedz.WymaganeDzialania"></label>
                     <input asp-for="Odpowiedz.WymaganeDzialania" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-info">Udziel odpowiedzi</button>
+                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Udziel odpowiedzi</button>
                 <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Wróć
+                    <i class="bi bi-arrow-90deg-left"></i> Powrót
                 </a>
             </form>
 

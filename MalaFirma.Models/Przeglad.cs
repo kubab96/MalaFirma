@@ -13,7 +13,7 @@ namespace MalaFirma.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Wpisz wynik przeglądu.")]
+        [Required(ErrorMessage = "Wynik przeglądu jest wymagany")]
         [DisplayName("Wynik przegladu")]
         public string WynikPrzegladu { get; set; }
         public string? ZidentyfikowaneProblemy { get; set; }

@@ -109,6 +109,28 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5c381adc-ef87-42f8-aff7-6442abb01077",
+                            EmailConfirmed = true,
+                            Imie = "Admin",
+                            KodPocztowy = "",
+                            Kraj = "",
+                            LockoutEnabled = false,
+                            Miasto = "",
+                            Nazwisko = "",
+                            NormalizedUserName = "admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFGjaMtj3M0oddZos5ULdcNw43QEecKYfZi2NXfABfVeSZawMnmgW75tLUjCERPJtQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UlicaNumer = "",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Audyt", b =>
@@ -259,16 +281,8 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumerIdentyfikacyjny")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("ObslugaMetrologiczna")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypNarzedziaId")
                         .HasColumnType("int");
@@ -419,10 +433,11 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<string>("Rysunek")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WymaganieId")
+                    b.Property<int>("WymaganieId")
                         .HasColumnType("int");
 
                     b.Property<string>("WynikPrzewodnika")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZidentyfikowaneProblemy")
@@ -505,16 +520,20 @@ namespace MalaFirma.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DataZakonczeniaSwiadectwa")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("NumerSwiadectwa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlanowaneDzialania")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WymaganieId")
+                    b.Property<int>("WymaganieId")
                         .HasColumnType("int");
 
                     b.Property<string>("WynikSwiadectwa")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZidentyfikowaneProblemy")
@@ -582,6 +601,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("Ilosc")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Material")
@@ -616,6 +636,9 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<int>("CzasRealizacji")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DataZakonczeniaZadowolenia")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Jakosc")
                         .HasColumnType("int");
 
@@ -647,6 +670,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("KlientId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Nazwa")
@@ -691,6 +715,15 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            ConcurrencyStamp = "50c1e2e4-0e6f-471d-9df2-d003383e902c",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -778,6 +811,13 @@ namespace MalaFirma.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            RoleId = "a18be9c0-aa65-4af8-bd17-00bd9344e575"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -883,7 +923,9 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     b.HasOne("MalaFirma.Models.Wymaganie", "Wymaganie")
                         .WithMany()
-                        .HasForeignKey("WymaganieId");
+                        .HasForeignKey("WymaganieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Wymaganie");
                 });
@@ -914,7 +956,9 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     b.HasOne("MalaFirma.Models.Wymaganie", "Wymaganie")
                         .WithMany()
-                        .HasForeignKey("WymaganieId");
+                        .HasForeignKey("WymaganieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Wymaganie");
                 });
@@ -951,7 +995,9 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     b.HasOne("MalaFirma.Models.Klient", "Klient")
                         .WithMany()
-                        .HasForeignKey("KlientId");
+                        .HasForeignKey("KlientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Klient");
                 });

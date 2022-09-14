@@ -73,13 +73,13 @@
 
                 @if (Model.Przeglad.WynikPrzegladu != "Nie wykonano")
                 {
-                    <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-success">
+                    <a asp-controller="Przeglad" asp-action="EditWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-success" style="margin-right:5px; float:right;">
                 <i class="bi bi-shield-check"></i> Przegląd został zakończony
             </a>
                 }
                 else
                 {
-                    <a asp-controller="Przeglad" asp-action="AddWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-info">
+                    <a asp-controller="Przeglad" asp-action="AddWynikPrzegladu" asp-route-id="@Model.Przeglad.Id" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
                 <i class="bi bi-shield-check"></i> Wynik przeglądu
             </a>
                     

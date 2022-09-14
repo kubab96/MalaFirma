@@ -5,36 +5,38 @@
 
 };
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Wynik przeglądu</h6>
         </div>
 
         <div class="card-body">
-        <form method="post">
-            <input asp-for="zamowienieId" hidden />
-            <input asp-for="Id" hidden/>
-            <div class="mb-3">
-                <label>Wynik przeglądu</label>
-                <input asp-for="WynikPrzegladu" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label>Zidentyfikowane Problemy</label>
-                <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
-            </div>
+            <form method="post">
+                <input asp-for="zamowienieId" hidden />
+                <input asp-for="Id" hidden />
+                <div class="mb-3">
+                    <label>Wynik przeglądu</label>
+                    <input asp-for="WynikPrzegladu" class="form-control" />
+                    <span asp-validation-for="WynikPrzegladu" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Zidentyfikowane Problemy</label>
+                    <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                </div>
                 <div class="mb-3">
                     <label>Planowane Działania</label>
                     <input asp-for="PlanowaneDzialania" class="form-control" />
                 </div>
-            <div class="mb-3">
-                <label>Data przeglądu</label>
-                <input asp-for="DataPrzegladu" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-info">Edytuj przegląd</button>
+                <div class="mb-3">
+                    <label>Data przeglądu</label>
+                    <input asp-for="DataPrzegladu" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj przegląd</button>
                 <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Wróć
+                    <i class="bi bi-arrow-90deg-left"></i> Powrót
                 </a>
-        </form>
+            </form>
 
+        </div>
     </div>
 </div>

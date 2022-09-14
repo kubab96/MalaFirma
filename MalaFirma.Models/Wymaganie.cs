@@ -19,6 +19,7 @@ namespace MalaFirma.Models
         public string Nazwa { get; set; }
         [Required(ErrorMessage = "Opis wymagania do wykonania jest wymagany.")]
         public string Opis { get; set; }
+        [Required(ErrorMessage = "Wymagane jest podanie ilości.")]
         [DisplayName("Ilość")]
         public int? Ilosc { get; set; }
         [DisplayName("Materiał")]

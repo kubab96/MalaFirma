@@ -51,7 +51,14 @@
                                     @obj.NumerFabryczny
                                 </td>
                                 <td width="25%">
-                                    @obj.ObslugaMetrologiczna
+                                @if(@obj.ObslugaMetrologiczna == true)
+                                {
+                                    <b>Tak</b>
+                                }
+                                else
+                                {
+                                  <b>Nie</b> 
+                                }
                                 </td>
 
                                 <td style="display: block; margin:auto">

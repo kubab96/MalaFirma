@@ -40,11 +40,11 @@
                 </dd>
             </dl>
 
-            <a asp-controller="Zamowienie" asp-action="EditZadowolenie" asp-route-id="@Model.ZadowolenieKlienta.Id" class="btn btn-info">
+            <a asp-controller="Zamowienie" asp-action="EditZadowolenie" asp-route-id="@Model.ZadowolenieKlienta.Id" asp-route-zamowienieId="@Model.ZadowolenieKlienta.ZamowienieId" class="btn btn-warning" style="margin-right:5px; float:right;">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
             <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.ZadowolenieKlienta.ZamowienieId" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
             </a>
         </div>
 

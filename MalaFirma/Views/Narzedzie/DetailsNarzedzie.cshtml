@@ -1,4 +1,4 @@
-﻿@model Narzedzie
+﻿@model NarzedzieTypVM
 @{
     ViewData["Title"] = "Narzędzie";
 }
@@ -7,7 +7,7 @@
 <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">@Model.Nazwa</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@Model.Narzedzie.Nazwa</h6>
         </div>
         <br />
 
@@ -15,40 +15,35 @@
 
             <dl class="row">
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Nazwa)
+                    @Html.DisplayNameFor(model => model.Narzedzie.Nazwa)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Nazwa)
+                    @Html.DisplayFor(model => model.Narzedzie.Nazwa)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.NumerIdentyfikacyjny)
+                    @Html.DisplayNameFor(model => model.Narzedzie.NumerFabryczny)
                 </dt>
                 <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.NumerIdentyfikacyjny)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.NumerFabryczny)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.NumerFabryczny)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.ObslugaMetrologiczna)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.ObslugaMetrologiczna)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Status)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Status)
+                    @Html.DisplayFor(model => model.Narzedzie.NumerFabryczny)
                 </dd>
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.TypNarzedzia.NazwaTypu)
                 </dt>
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.TypNarzedzia.NazwaTypu)
+                </dd>
+                <dt class="col-sm-3">
+                    Obsługa metrologiczna
+                </dt>
+                <dd class="col-sm-9">
+                    @if(Model.Narzedzie.ObslugaMetrologiczna == true)
+                                {
+                                    <b>Tak</b>
+                                }
+                                else
+                                {
+                                  <b>Nie</b> 
+                                }
                 </dd>
             </dl>
 
@@ -57,14 +52,14 @@
 
             <a class="btn btn-danger delete"
              style="margin-right:5px; float:right;"
-               data-id="@Model.Id"
+               data-id="@Model.Narzedzie.Id"
                data-controller="Narzedzie"
                data-action="Delete"
                redirectUrl="Index"
                data-body-message="Czy napewno chcesz usunąć to narzędzie?">
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
-            <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning"  style="margin-right:5px; float:right;">
+            <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@Model.Narzedzie.Id" class="btn btn-warning"  style="margin-right:5px; float:right;">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
             <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>

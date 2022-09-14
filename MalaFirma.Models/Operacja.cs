@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,8 @@ namespace MalaFirma.Models
     public class Operacja
     {
         public int Id { get; set; }
+        [DisplayName("Treść operacji")]
+        [Required(ErrorMessage = "Treść wykonanej operacji jest wymagana")]
         public string TrescOperacji { get; set; }
         public DateTime DataWykonania { get; set; } = DateTime.Now;
         public int PrzewodnikPracyId { get; set; }

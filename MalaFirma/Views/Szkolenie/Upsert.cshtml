@@ -19,6 +19,7 @@
                     <select asp-for="RodzajSz" asp-items="Html.GetEnumSelectList<RodzajSzkolenia>()" class="form-select">
                         <option disabled selected>-- Wybierz rodzaj szkolenia --</option>
                     </select>
+                    <span asp-validation-for="RodzajSz" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="DataRozpoczecia"></label>

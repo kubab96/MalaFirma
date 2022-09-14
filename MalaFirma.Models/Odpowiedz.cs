@@ -17,7 +17,7 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Data przegladu jest wymagana")]
         [DisplayName("Data przegladu")]
         public DateTime DataPrzegladu { get; set; } = DateTime.Now;
-        [DisplayName("Wymagane Dzialania")]
+        [DisplayName("Wymagane Działania")]
         public string? WymaganeDzialania { get; set; }
         public int PytanieId { get; set;}
         public Pytanie Pytanie { get; set; }

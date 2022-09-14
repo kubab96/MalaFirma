@@ -13,16 +13,23 @@
                 <div class="mb-3">
                     <label asp-for="Jakosc"></label>
                     <input asp-for="Jakosc" class="form-control" />
+                    <span asp-validation-for="Jakosc" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="CzasRealizacji"></label>
                     <input asp-for="CzasRealizacji" class="form-control" />
+                    <span asp-validation-for="CzasRealizacji" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Uwagi"></label>
                     <input asp-for="Uwagi" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-info">Edytuj</button>
+                <div class="mb-3">
+                    <label asp-for="DataZakonczeniaZadowolenia"></label>
+                    <input asp-for="DataZakonczeniaZadowolenia" class="form-control" />
+                    <span asp-validation-for="DataZakonczeniaZadowolenia" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
                 <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.ZamowienieId" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Powrót
             </a>
@@ -31,3 +38,9 @@
 
     </div>
 </form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

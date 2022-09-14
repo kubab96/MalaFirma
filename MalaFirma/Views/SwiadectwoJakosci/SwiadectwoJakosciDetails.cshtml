@@ -146,17 +146,19 @@
             </form>
                 </div>
             </div>
-            @if (Model.SwiadectwoJakosci.WynikSwiadectwa == null)
+            @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")
             {
-                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-info">
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-info">
                     <i class="bi bi-shield-check"></i> Zakończ świadectwo jakości
                 </a>
             }
             else
             {
-                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" class="btn btn-success">
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-success">
                     <i class="bi bi-shield-check"></i> Zakończono świadectwo jakości
                 </a>
+                
+                
             }
             <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
                     Powrót

@@ -13,6 +13,7 @@
                     <div class="mb-3">
                         <label asp-for="NazwaTypu"></label>
                         <input asp-for="NazwaTypu" class="form-control" />
+                        <span asp-validation-for="NazwaTypu" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
                     <a asp-controller="Narzedzie" asp-action="TypNarzedzia" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
