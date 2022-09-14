@@ -1,0 +1,21 @@
+﻿@model EditRoleVM
+
+<div class="container p-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Edytuj dane pracownika</h6>
+        </div>
+
+
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <input asp-for="Id" class="form-control" hidden/>
+                    <label>Nazwa roli</label>
+                    <input asp-for="RoleName" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-info">Edytuj</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -22,6 +22,12 @@ namespace MalaFirma.Controllers
             return View(objNarzedzieList);
         }
 
+        public ActionResult DetailsNarzedzie(int? id)
+        {
+            var narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
+            return View(narzedzie);
+        }
+
         public IActionResult Upsert(int? id)
         {
             NarzedzieTypVM obj = new()
@@ -129,6 +135,8 @@ namespace MalaFirma.Controllers
         {
             return View();
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

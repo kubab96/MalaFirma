@@ -50,12 +50,15 @@
                 @if (Model.Narzedzie.Id != 0)
                 {
                     <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
+                    <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@Model.Narzedzie.Id" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
                 }
                 else
                 {
                     <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
+                    <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
                 }
-                <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                
+                
             </form>
         </div>
     </div>

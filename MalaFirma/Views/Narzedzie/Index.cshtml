@@ -9,22 +9,18 @@
             <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Narzędzia i wyposażenie</h6>
         </div>
-        <br />
         <div class="col-12 text-end">
-            <a asp-controller="Narzedzie" asp-action="Upsert" class="btn btn-success" style="margin-right:25px">
+            <a asp-controller="Narzedzie" asp-action="Upsert" class="btn btn-success" style="margin-right:15px; margin-top:15px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Dodaj narzędzie/wyposażenie
             </a>
         </div>
 
             <div class="card-body">
-                <table class="table table-bordered table-striped" style="width:100%">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
                     <thead>
                         <tr>
                             <th>
                                 Nazwa
-                            </th>
-                            <th>
-                                Numer Identyfikacyjny
                             </th>
                             <th>
                                 Typ narzędzia
@@ -34,9 +30,6 @@
                             </th>
                             <th>
                                 Obsluga Metrologiczna
-                            </th>
-                            <th>
-                                Status
                             </th>
                             <th>
 
@@ -51,34 +44,20 @@
                                 <td width="30%">
                                     @obj.Nazwa
                                 </td>
-                                <td width="10%">
-                                    @obj.NumerIdentyfikacyjny
-                                </td>
                                 <td width="20%">
                                     @obj.TypNarzedzia.NazwaTypu
                                 </td>
-                                <td width="10%">
+                                <td width="20%">
                                     @obj.NumerFabryczny
                                 </td>
-                                <td width="5%">
+                                <td width="25%">
                                     @obj.ObslugaMetrologiczna
-                                </td>
-                                <td width="10%">
-                                    @obj.Status
                                 </td>
 
                                 <td style="display: block; margin:auto">
 
-                                    
-                                    <a class="btn btn-danger delete"
-                               data-id="@obj.Id"
-                               data-controller="Narzedzie"
-                               data-action="Delete"
-                               data-body-message="Czy napewno chcesz usunąć to narzędzie?">
-                                        <i class="bi bi-trash3-fill"></i> Usuń
-                                    </a>
-                                    <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-warning" style="width:40%; ">
-                                        <i class="bi bi-pencil-square"></i> Edytuj
+                                    <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@obj.Id" class="btn btn-info">
+                                        Szczególy
                                     </a>
                                     
                                 </td>
@@ -91,3 +70,4 @@
         
     </div>
 </div>
+

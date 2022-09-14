@@ -47,7 +47,7 @@ namespace MalaFirma.Controllers
         }
 
         [HttpPost]
-        public IActionResult PrzewodnikPracy(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
+        public IActionResult PrzewodnikPracy(PrzewodnikPracyVM model, IFormFile file, int id)
         {
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -69,7 +69,6 @@ namespace MalaFirma.Controllers
                         System.IO.File.Delete(oldImage);
                     }
                 }
-
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                 {
@@ -99,7 +98,7 @@ namespace MalaFirma.Controllers
         }
 
         [HttpPost]
-        public IActionResult Rysunek(PrzewodnikPracyVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
+        public IActionResult Rysunek(PrzewodnikPracyVM model, IFormFile file, int id)
         {
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == id);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -121,7 +120,6 @@ namespace MalaFirma.Controllers
                         System.IO.File.Delete(oldImage);
                     }
                 }
-
 
                 using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                 {

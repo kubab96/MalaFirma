@@ -9,20 +9,13 @@
             <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Zamówienia</h6>
         </div>
-        <br />
         <div class="col-12 text-end">
-            <a asp-controller="Zamowienie" asp-action="Upsert" class="btn btn-success" style="margin-right:25px">
+            <a asp-controller="Zamowienie" asp-action="Upsert" class="btn btn-success" style="margin-right:15px; margin-top:15px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz zamówienie
             </a>
         </div>
-        @if (!Model.Any())
-        {
-            <h1 class="text-center">Brak zamówień</h1>
-        }
-        else
-        {
             <div class="card-body">
-                <table class="table table-bordered table-striped" style="width:100%">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
                     <thead>
                         <tr>
                             <th>
@@ -66,6 +59,37 @@
                     </tbody>
                 </table>
             </div>
-        }
     </div>
 </div>
+
+@section Scripts{
+    
+
+    <script type="text/javascript">
+            $(document).ready( function () {
+        $('#tblData').DataTable({
+                            "language": {
+                                "sProcessing": "Przetwarzanie...",
+                                "sLengthMenu": "Pokaż _MENU_ pozycji",
+                                "sZeroRecords": "Nie znaleziono pasujących pozycji",
+                                "sInfoThousands": " ",
+                                "sInfo": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+                                "sInfoEmpty": "Pozycji 0 z 0 dostępnych",
+                                "sInfoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Szukaj:",
+                                "sUrl": "",
+                                "oPaginate": {
+                                    "sFirst": "Pierwsza",
+                                    "sPrevious": "Poprzednia",
+                                    "sNext": "Następna",
+                                    "sLast": "Ostatnia"
+                                }
+                            },
+                            "paging": true,
+                            "ordering": true,
+                            "info": false
+                        });
+    } );
+    </script>
+    }

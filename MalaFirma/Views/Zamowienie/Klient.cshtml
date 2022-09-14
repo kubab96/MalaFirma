@@ -1,29 +1,23 @@
 ﻿@model IEnumerable<Klient>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Klienci";
 }
 
 <partial name="_Notification" />
 
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Klienci</h6>
         </div>
         <br />
         <div class="col-12 text-end">
-            <a asp-controller="Zamowienie" asp-action="CreateKlient" class="btn btn-success" style="margin-right:25px">
+            <a asp-controller="Zamowienie" asp-action="CreateKlient" class="btn btn-success" style="margin-right:15px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Utwórz klienta
             </a>
         </div>
-        @if (!Model.Any())
-        {
-            <h1 class="text-center">Brak klientów</h1>
-        }
-        else
-        {
             <div class="card-body">
-                <table class="table table-bordered table-striped" style="width:100%">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
                     <thead>
                         <tr>
                             <th>
@@ -36,12 +30,6 @@
                                 Miasto
                             </th>
                             <th>
-                                Ulica oraz numer
-                            </th>
-                            <th>
-                                Kod pocztowy
-                            </th>
-                            <th>
 
                             </th>
                         </tr>
@@ -50,40 +38,59 @@
                         @foreach (var obj in Model)
                         {
                             <tr>
-                                <td width="20%">
+                                <td width="50%">
                                     @obj.NazwaKlienta
                                 </td>
-                                <td width="10%">
+                                <td width="20%">
                                     @obj.Kraj
                                 </td>
-                                <td width="10%">
+                                <td width="20%">
                                     @obj.Miasto
                                 </td>
-                                <td width="17%">
-                                    @obj.UlicaNumer
-                                </td>
-                                <td width="15%">
-                                    @obj.KodPocztowy
-                                </td>
                                 <td style="display: block; margin:auto">
-                                    <a asp-controller="Zamowienie" asp-action="EditKlient" asp-route-id="@obj.Id" class="btn btn-warning">
-                                        <i class="bi bi-pencil-square"></i> Edytuj
+                                    <a asp-controller="Zamowienie" asp-action="DetailsKlient" asp-route-id="@obj.Id" class="btn btn-info">
+                                        Szczególy
                                     </a>
-                                    
-                                    <a class="btn btn-danger delete"
-                               data-id="@obj.Id"
-                               data-controller="Zamowienie"
-                               data-action="DeleteKlient"
-                               data-body-message="Czy napewno chcesz usunąć tego klienta?">
-                                        <i class="bi bi-trash3-fill"></i> Usuń
-                                    </a>
-                                    
+
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-        }
     </div>
 </div>
+
+
+@section Scripts{
+    
+
+    <script type="text/javascript">
+            $(document).ready( function () {
+        $('#tblData').DataTable({
+                            "language": {
+                                "sProcessing": "Przetwarzanie...",
+                                "sLengthMenu": "Pokaż _MENU_ pozycji",
+                                "sZeroRecords": "Nie znaleziono pasujących pozycji",
+                                "sInfoThousands": " ",
+                                "sInfo": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+                                "sInfoEmpty": "Pozycji 0 z 0 dostępnych",
+                                "sInfoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Szukaj:",
+                                "sUrl": "",
+                                "oPaginate": {
+                                    "sFirst": "Pierwsza",
+                                    "sPrevious": "Poprzednia",
+                                    "sNext": "Następna",
+                                    "sLast": "Ostatnia"
+                                }
+                            },
+                            "paging": true,
+                            "ordering": true,
+                            "info": false
+                        });
+    } );
+    </script>
+    }
+

@@ -137,5 +137,35 @@ namespace MalaFirma.Controllers
             
             return View("Index");
         }
+
+        //public IActionResult ListRoles()
+        //{
+        //    var roles = _roleMenager.Roles;
+        //    return View(roles);
+        //}
+
+        //public async Task<IActionResult> EditRole(string id)
+        //{
+        //    var role = await _roleMenager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var model = new EditRoleVM
+        //    {
+        //        Id = role.Id,
+        //        RoleName = role.Name,
+        //    };
+
+        //    foreach(var user in _userManager.Users)
+        //    {
+        //        if(await _userManager.IsInRoleAsync(user, role.Name))
+        //        {
+        //            model.Users.Add(user.UserName);
+        //        }
+        //    }
+        //    return View(model);
+        //}
     }
 }

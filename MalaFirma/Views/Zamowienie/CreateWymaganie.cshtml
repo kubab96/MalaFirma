@@ -28,7 +28,7 @@
                                 <td width="65%">@obj.Nazwa</td>
                                 <td width="10%">@obj.Ilosc</td>
                                 <td width="40%">
-                                    <a asp-controller="Zamowienie" asp-action="EditWymaganie" asp-route-wymaganieId="@obj.Id" asp-route-id="@obj.ZamowienieId" asp-route-editId="@edit" class="btn btn-info">
+                                    <a asp-controller="Zamowienie" asp-action="EditWymaganie" asp-route-wymaganieId="@obj.Id" asp-route-id="@obj.ZamowienieId" asp-route-editId="@edit" class="btn btn-warning">
                                         <i class="bi bi-pencil-square"></i> Edytuj
                                     </a>
                                     <a class="btn btn-danger delete"
@@ -50,8 +50,8 @@
 
     <form method="post">
         <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header py-3">
+            <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
                 </div>
                 <div class="card-body">
@@ -79,8 +79,8 @@
 
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-header py-3">
+            <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Uwagi do zamówienia</h6>
                 </div>
                 <div class="card-body">

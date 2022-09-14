@@ -265,7 +265,7 @@ namespace MalaFirma.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataZamowienia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KlientId = table.Column<int>(type: "int", nullable: false),
+                    KlientId = table.Column<int>(type: "int", nullable: true),
                     UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -276,8 +276,7 @@ namespace MalaFirma.DataAccess.Migrations
                         name: "FK_Zamowienia_Klient_KlientId",
                         column: x => x.KlientId,
                         principalTable: "Klient",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

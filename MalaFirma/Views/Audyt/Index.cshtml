@@ -9,23 +9,15 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Audyty</h6>
         </div>
-
-
-
-        <div class="card-body">
-            <a asp-controller="Audyt" asp-action="Upsert" class="btn btn-success" style="margin-bottom:15px; float:right">
+        <div class="col-12 text-end">
+            <a asp-controller="Audyt" asp-action="Upsert" class="btn btn-success" style="margin-right:15px; margin-top:15px">
                 <i class="bi bi-plus-circle"></i> &nbsp; Dodaj audyt
             </a>
-            @if (!Model.Any())
-            {
-                <div>
-                    <br>
-                <b>Brak audytów.</b>
-                </div>
-            }
-            else
-            {
-                <table class="table table-bordered table-striped" style="width:100%">
+        </div>
+        <div class="card-body">
+            
+
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
                     <thead>
                         <tr>
                             <th>
@@ -74,8 +66,40 @@
                         }
                     </tbody>
                 </table>
-            }
+    
         </div>
 
     </div>
 </div>
+
+@section Scripts{
+    
+
+    <script type="text/javascript">
+            $(document).ready( function () {
+        $('#tblData').DataTable({
+                            "language": {
+                                "sProcessing": "Przetwarzanie...",
+                                "sLengthMenu": "Pokaż _MENU_ pozycji",
+                                "sZeroRecords": "Nie znaleziono pasujących pozycji",
+                                "sInfoThousands": " ",
+                                "sInfo": "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+                                "sInfoEmpty": "Pozycji 0 z 0 dostępnych",
+                                "sInfoFiltered": "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Szukaj:",
+                                "sUrl": "",
+                                "oPaginate": {
+                                    "sFirst": "Pierwsza",
+                                    "sPrevious": "Poprzednia",
+                                    "sNext": "Następna",
+                                    "sLast": "Ostatnia"
+                                }
+                            },
+                            "paging": true,
+                            "ordering": true,
+                            "info": false
+                        });
+    } );
+    </script>
+    }

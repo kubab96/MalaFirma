@@ -646,7 +646,7 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Property<DateTime>("DataZamowienia")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("KlientId")
+                    b.Property<int?>("KlientId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nazwa")
@@ -951,9 +951,7 @@ namespace MalaFirma.DataAccess.Migrations
                 {
                     b.HasOne("MalaFirma.Models.Klient", "Klient")
                         .WithMany()
-                        .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KlientId");
 
                     b.Navigation("Klient");
                 });

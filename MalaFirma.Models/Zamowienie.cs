@@ -19,7 +19,7 @@ namespace MalaFirma.Models
         public string Nazwa { get; set; }
         [DisplayName("Data zamówienia")]
         public DateTime DataZamowienia { get; set; } = DateTime.Now;  
-        public int KlientId { get; set; }
+        public int? KlientId { get; set; }
         [ValidateNever]
         public Klient Klient { get; set; }
         [DisplayName("Uwagi zamówienia")]

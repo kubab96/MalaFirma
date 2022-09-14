@@ -319,6 +319,12 @@ namespace MalaFirma.Controllers
             return View(objKlientList);
         }
 
+        public ActionResult DetailsKlient(int? id)
+        {
+            var klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == id);
+            return View(klient);
+        }
+
         public IActionResult CreateKlient()
         {
             return View();
@@ -374,7 +380,15 @@ namespace MalaFirma.Controllers
                 return NotFound();
             }
             _unitOfWork.Klient.Remove(obj);
-            _unitOfWork.Save();
+            try
+            {
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "Nie można usunąć klienta przypisanego do zamówienia";
+                return RedirectToAction("Klient");
+            }
             TempData["success"] = "Klient został usunięty";
             return RedirectToAction("Klient");
         }
