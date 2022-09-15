@@ -70,7 +70,11 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            
             @RenderBody()
+            
+            @*@Html.Partial("OstatnieZamowienia")*@
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="OstatnieZamowienia">Pracownicy</a>
         </main>
         <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">

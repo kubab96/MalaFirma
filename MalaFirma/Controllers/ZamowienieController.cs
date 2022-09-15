@@ -10,10 +10,12 @@ namespace MalaFirma.Controllers
     public class ZamowienieController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public ZamowienieController(IUnitOfWork unitOfWork)
+        public ZamowienieController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
         }
         #region Zamowienia
         public IActionResult Index()
@@ -472,5 +474,7 @@ namespace MalaFirma.Controllers
             }
             return View(obj);
         }
+
+        
     }
 }

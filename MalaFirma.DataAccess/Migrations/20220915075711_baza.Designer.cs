@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220914145515_baza")]
+    [Migration("20220915075711_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace MalaFirma.DataAccess.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5c381adc-ef87-42f8-aff7-6442abb01077",
+                            ConcurrencyStamp = "006fdeeb-0572-4798-94a2-2d363813f5f4",
                             EmailConfirmed = true,
                             Imie = "Admin",
                             KodPocztowy = "",
@@ -126,7 +126,7 @@ namespace MalaFirma.DataAccess.Migrations
                             Miasto = "",
                             Nazwisko = "",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFGjaMtj3M0oddZos5ULdcNw43QEecKYfZi2NXfABfVeSZawMnmgW75tLUjCERPJtQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIvwdap54OSZWpFfNBEv0/7Egf+6mU2RX9CzCJeO6m1L8YN1TavJNEHjhlZ9C5Tx6Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -722,7 +722,7 @@ namespace MalaFirma.DataAccess.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "50c1e2e4-0e6f-471d-9df2-d003383e902c",
+                            ConcurrencyStamp = "0eba8f18-c354-4767-8878-a36104c97754",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });

@@ -19,8 +19,6 @@
                     <input asp-for="Narzedzie.NumerFabryczny" class="form-control" />
                     <span asp-validation-for="Narzedzie.NumerFabryczny" class="text-danger"></span>
                 </div>
-                
-                
                 <div class="mb-3">
                     <label asp-for="Narzedzie.TypNarzedziaId"></label>
                     <select asp-for="Narzedzie.TypNarzedziaId" asp-items="@Model.TypNarzedzi" class="form-select">

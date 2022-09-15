@@ -569,12 +569,12 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "50c1e2e4-0e6f-471d-9df2-d003383e902c", "Admin", "Admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "0eba8f18-c354-4767-8878-a36104c97754", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Imie", "KodPocztowy", "Kraj", "LockoutEnabled", "LockoutEnd", "Miasto", "Nazwisko", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UlicaNumer", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "5c381adc-ef87-42f8-aff7-6442abb01077", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEFGjaMtj3M0oddZos5ULdcNw43QEecKYfZi2NXfABfVeSZawMnmgW75tLUjCERPJtQ==", null, false, "", false, "", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "006fdeeb-0572-4798-94a2-2d363813f5f4", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEIvwdap54OSZWpFfNBEv0/7Egf+6mU2RX9CzCJeO6m1L8YN1TavJNEHjhlZ9C5Tx6Q==", null, false, "", false, "", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
