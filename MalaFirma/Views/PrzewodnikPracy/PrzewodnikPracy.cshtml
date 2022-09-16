@@ -19,6 +19,41 @@
             else
             {
 
+                <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Szczególy wymagania</h6>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Wymaganie.Nazwa)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Wymaganie.Nazwa)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Wymaganie.Opis)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Wymaganie.Opis)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Wymaganie.Ilosc)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Wymaganie.Ilosc)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Wymaganie.Material)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Wymaganie.Material)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+
                 @*Operacje*@
                 <div class="card shadow mb-4" style="margin:15px">
                     <div class="card-header py-3">
@@ -49,23 +84,28 @@
                                     @foreach (var obj in Model.Operacje)
                                     {
                                         <tr>
-                                            <td width="50%">
+                                            <td width="60%">
                                                 @obj.TrescOperacji
                                             </td>
                                             <td width="20%">
                                                 @obj.DataWykonania
                                             </td>
-                                            <td width="30%">
-                                                <a class="btn btn-danger delete" style="float:right"
+
+                                            <td style="text-align: center">
+
+                                                <a asp-controller="PrzewodnikPracy" asp-action="EditOperacja" asp-route-id="@obj.Id" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-warning">
+                                                    <i class="bi bi-pencil-square"></i> Edytuj
+                                                </a>
+
+                                                <a class="btn btn-danger delete"
                                        data-id="@obj.Id"
                                        data-controller="PrzewodnikPracy"
                                        data-action="DeleteOperacja"
                                        data-body-message="Czy napewno chcesz usunąć tą operację?">
                                                     <i class="bi bi-trash3-fill"></i> Usuń
                                                 </a>
-                                                <a asp-controller="PrzewodnikPracy" asp-action="EditOperacja" asp-route-id="@obj.Id" asp-route-idWymagania="@Model.Wymaganie.Id" class="btn btn-warning" style="float:right; margin-right:10px;">
-                                                    <i class="bi bi-pencil-square"></i> Edytuj
-                                                </a>
+
+
 
 
 
@@ -136,19 +176,29 @@
                         <i class="bi bi-shield-check"></i> Zakończono przewodnik
                     </a>
                 }
-                <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
-                    Świadectwo jakości
-                </a>
+                @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")
+                {
+                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
+                        <i class="bi bi-clipboard2-check"></i> Świadectwo jakości
+                    </a>
                 }
-                <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Powrót
-                </a>
-                @*            <a asp-controller="PrzewodnikPracy" asp-action="Rysunek" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
-                    <i class="bi bi-shield-check"></i> Rysunek
-                    </a>*@
+                else
+                {
+                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
+                        <i class="bi bi-clipboard2-check"></i> Zakończono świadectwo jakości
+                    </a>
+                }
+
+            }
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
+            </a>
+            @*            <a asp-controller="PrzewodnikPracy" asp-action="Rysunek" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
+                <i class="bi bi-shield-check"></i> Rysunek
+                </a>*@
 
 
-            
+
         </div>
     </div>
 </div>

@@ -52,11 +52,11 @@
                     @foreach (var obj in Model.Pytania)
                     {
                         <tr>
-                            <td width="70%">
+                            <td width="77%">
                                 @obj.Nazwa
                             </td>
 
-                            <td style="display: block; margin:auto">
+                            <td style="text-align: center">
 
                                 <a asp-controller="Przeglad" asp-action="EditPytanie" asp-route-id="@obj.Id" class="btn btn-warning" style="width:40%; ">
                                     <i class="bi bi-pencil-square"></i> Edytuj

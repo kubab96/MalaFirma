@@ -42,22 +42,22 @@
                         {
 
                             <tr>
-                                <td width="20%">
+                                <td width="35%">
                                     @obj.Temat
                                 </td>
-                                <td width="30%">
+                                <td width="20%">
                                     @obj.DataRozpoczecia.ToShortDateString() - @obj.DataZakonczenia.ToShortDateString()
                                 </td>
-                                <td width="30%">
+                                <td width="15%">
                                     @obj.RodzajAudytu
                                 </td>
-                                <td width="30%">
+                                <td width="15%">
                                     @obj.Status
                                 </td>
 
-                                <td>
+                                <td style="text-align: center">
                                     <a asp-controller="Audyt" asp-action="DetailsAudyt" asp-route-id="@obj.Id" class="btn btn-info">
-                                        Szczególy
+                                         <i class="bi bi-info-circle"></i> Szczegóły
                                     </a>
 
                                 </td>

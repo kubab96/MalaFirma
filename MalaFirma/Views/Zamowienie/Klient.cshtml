@@ -38,7 +38,7 @@
                         @foreach (var obj in Model)
                         {
                             <tr>
-                                <td width="50%">
+                                <td width="45%">
                                     @obj.NazwaKlienta
                                 </td>
                                 <td width="20%">
@@ -47,9 +47,9 @@
                                 <td width="20%">
                                     @obj.Miasto
                                 </td>
-                                <td style="display: block; margin:auto">
+                                <td style="text-align: center">
                                     <a asp-controller="Zamowienie" asp-action="DetailsKlient" asp-route-id="@obj.Id" class="btn btn-info">
-                                        Szczególy
+                                        <i class="bi bi-info-circle"></i> Szczegóły
                                     </a>
 
                                 </td>

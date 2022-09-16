@@ -50,7 +50,7 @@
                             </td>
                             
 
-                            <td>
+                            <td style="text-align: center">
                                 @if (obj.Odpow == string.Empty)
                                 {
                                     <a asp-controller="Przeglad" asp-action="AddOdpowiedz" asp-route-idZamowienia="@Model.Zamowienie.Id" asp-route-idPytania="@obj.Id" class="btn btn-info" style="width:165px">

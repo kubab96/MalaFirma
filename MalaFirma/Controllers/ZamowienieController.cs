@@ -334,8 +334,8 @@ namespace MalaFirma.Controllers
             return View();
         }
 
+        [Authorize(Roles ="Menager")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateKlient(Klient obj)
         {
             if (ModelState.IsValid)

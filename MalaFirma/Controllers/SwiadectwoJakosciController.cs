@@ -54,7 +54,7 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                var przewodnikId = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == obj.WymaganieId);
+                var przewodnikId = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == obj.WymaganieId);
                 var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == przewodnikId.Id);
                 if (wynik == null)
                 {

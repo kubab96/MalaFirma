@@ -38,16 +38,16 @@
                             @if(obj.StatusZamowienia != "Nie potwierdzone")
                             {
                             <tr>
-                                <td width="40%">
+                                <td width="50%">
                                     @obj.Nazwa
                                 </td>
                                 <td width="20%">
                                     @obj.DataZamowienia
                                 </td>
-                                <td width="20%">
+                                <td width="15%">
                                     @obj.StatusZamowienia
                                 </td>
-                                <td style="display: block; margin:auto">
+                                <td style="text-align: center">
                                     <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@obj.Id" class="btn btn-info">
                                         <i class="bi bi-info-circle"></i> Szczegóły
                                     </a>

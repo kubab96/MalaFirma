@@ -7,7 +7,7 @@
     <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">@(Model.WynikSwiadectwa!=null?"Edycja wyniku świadectwa": "Zakończ świadectwo")</h6>
+                <h6 class="m-0 font-weight-bold text-primary">@(Model.WynikSwiadectwa!=""?"Edycja wyniku świadectwa": "Zakończ świadectwo")</h6>
             </div>
             <div class="card-body">
                 <input asp-for="Id" hidden />
@@ -44,7 +44,7 @@
                 {
                     <button type="submit" class="btn btn-primary">Edytuj</button>
                 }
-               <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Id" class="btn btn-primary">
+               <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.WymaganieId" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Wróć do świadectwa
             </a>
             </div>

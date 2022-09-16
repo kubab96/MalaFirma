@@ -40,6 +40,7 @@ namespace MalaFirma.Controllers
             model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == model.PrzewodnikPracy.WymaganieId);
             model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == model.Wymaganie.ZamowienieId);
             model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == model.Wymaganie.ZamowienieId);
+            model.SwiadectwoJakosci = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.WymaganieId == model.Wymaganie.Id);
             IEnumerable<Operacja> objOperacjaList = _unitOfWork.Operacja.GetAll().Where(x => x.PrzewodnikPracyId == model.PrzewodnikPracy.Id);
             model.Operacje = objOperacjaList;
             IEnumerable<RysunekPrzewodnika> objRysunekList = _unitOfWork.RysunekPrzewodnika.GetAll().Where(x => x.WymaganieId == id);

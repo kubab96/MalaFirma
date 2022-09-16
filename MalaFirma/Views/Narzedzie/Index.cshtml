@@ -26,9 +26,6 @@
                                 Typ narzędzia
                             </th>
                             <th>
-                                Numer Fabryczny
-                            </th>
-                            <th>
                                 Obsluga Metrologiczna
                             </th>
                             <th>
@@ -41,30 +38,27 @@
                         {
 
                             <tr>
-                                <td width="30%">
+                                <td width="43%">
                                     @obj.Nazwa
                                 </td>
                                 <td width="20%">
                                     @obj.TypNarzedzia.NazwaTypu
                                 </td>
-                                <td width="20%">
-                                    @obj.NumerFabryczny
-                                </td>
-                                <td width="25%">
+                                <td width="22%">
                                 @if(@obj.ObslugaMetrologiczna == true)
                                 {
-                                    <b>Tak</b>
+                                    <h7>Tak</h7>
                                 }
                                 else
                                 {
-                                  <b>Nie</b> 
+                                  <h7>Nie</h7> 
                                 }
                                 </td>
 
-                                <td style="display: block; margin:auto">
+                                <td style="text-align: center">
 
                                     <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@obj.Id" class="btn btn-info">
-                                        Szczególy
+                                        <i class="bi bi-info-circle"></i> Szczegóły
                                     </a>
                                     
                                 </td>

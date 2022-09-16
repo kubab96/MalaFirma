@@ -1,6 +1,12 @@
 ﻿@model Wymaganie
 @{
     TempData["Data1"] = ViewBag.EditId;
+    int wartosc = 0;
+    if(ViewBag.EditId != null)
+    {
+       wartosc = ViewBag.EditId; 
+    }
+    
     <partial name="_Notification" />
 }
 <form method="post">
@@ -34,9 +40,20 @@
                     <span asp-validation-for="Opis" class="text-danger"></span>
                 </div>
                 <button type="submit" name="SubmitForm" value="EditWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
-                <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
+                @if(wartosc == 0)
+                {
+                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
                 <i class="bi bi-arrow-90deg-left"></i> Powrót
-            </a>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Zamowienie" asp-action="CreateWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
+                <i class="bi bi-arrow-90deg-left"></i> Powrót
+                </a>
+                }
+                
+            
             </div>
         </div>
     </div>

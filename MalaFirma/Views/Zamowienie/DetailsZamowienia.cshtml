@@ -42,7 +42,7 @@
                         <dd class="col-sm-10">
                             @if (Model.Zamowienie.UwagiZamowienia == null)
                             {
-                                <b>Brak</b>
+                                <h7>Brak</h7>
                             }
                             @Html.DisplayFor(model => model.Zamowienie.UwagiZamowienia)
                         </dd>
@@ -113,8 +113,8 @@
                             @foreach (var obj in query)
                             {
                                 <tr>
-                                    <td width="75%">@obj.Nazwa</td>
-                                    <td>
+                                    <td width="80%">@obj.Nazwa</td>
+                                    <td style="text-align: center">
                                         <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
                                             <i class="bi bi-tools"></i> Przewodnik pracy
                                         </a>
@@ -137,7 +137,7 @@
             <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>*@
             
             <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
-                <i class="bi bi-question-circle"></i> Zadowolenie Klienta
+                <i class="bi bi-emoji-smile"></i> Zadowolenie Klienta
             </a>
             <a asp-controller="Zamowienie" asp-action="ZakonczZamowienie" asp-route-id="@Model.Zamowienie.Id" class="btn btn-danger">
                 Zakończ zamówienie

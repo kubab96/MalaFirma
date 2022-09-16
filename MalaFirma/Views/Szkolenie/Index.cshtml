@@ -29,9 +29,6 @@
                                 Termin
                             </th>
                             <th>
-                                Uwagi
-                            </th>
-                            <th>
                                 
                             </th>
                         </tr>
@@ -41,22 +38,20 @@
                         {
 
                             <tr>
-                                <td width="20%">
+                                <td width="45%">
                                     @obj.Temat
                                 </td>
-                                <td width="30%">
+                                <td width="20%">
                                     @obj.RodzajSz
                                 </td>
-                                <td width="30%">
+                                <td width="20%">
                                     @obj.DataRozpoczecia.ToShortDateString() - @obj.DataZakonczenia.ToShortDateString()
                                 </td>
-                                <td width="30%">
-                                    @obj.Uwagi
-                                </td>
 
-                                <td style="display: block; margin:auto">
+
+                                <td style="text-align: center">
                                     <a asp-controller="Szkolenie" asp-action="DetailsSzkolenie" asp-route-id="@obj.Id" class="btn btn-info">
-                                        Szczególy
+                                        <i class="bi bi-info-circle"></i> Szczegóły
                                     </a>
                                     
                                 </td>
