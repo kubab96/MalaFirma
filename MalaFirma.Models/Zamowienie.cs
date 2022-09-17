@@ -22,7 +22,7 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Wymagane jest wybranie klienta")]
         public int? KlientId { get; set; }
         [ValidateNever]
-        public Klient Klient { get; set; }
+        public IEnumerable<Klient> Klient { get; set; }
         [DisplayName("Uwagi zamówienia")]
         public string? UwagiZamowienia { get; set; }
         public string? StatusZamowienia { get; set; }

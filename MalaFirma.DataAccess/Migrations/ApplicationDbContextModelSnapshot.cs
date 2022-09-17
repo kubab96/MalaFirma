@@ -115,7 +115,7 @@ namespace MalaFirma.DataAccess.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "006fdeeb-0572-4798-94a2-2d363813f5f4",
+                            ConcurrencyStamp = "ac6f0493-ef2c-4668-a017-1c8d0fbaf8d8",
                             EmailConfirmed = true,
                             Imie = "Admin",
                             KodPocztowy = "",
@@ -124,7 +124,7 @@ namespace MalaFirma.DataAccess.Migrations
                             Miasto = "",
                             Nazwisko = "",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIvwdap54OSZWpFfNBEv0/7Egf+6mU2RX9CzCJeO6m1L8YN1TavJNEHjhlZ9C5Tx6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPE+k25ofmvvu7+J6r7nD4ctUlkMFyWLUmyVAnuOfnhHTEoDs2lKTi6F/tboUpiZ1Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -260,7 +260,12 @@ namespace MalaFirma.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ZamowienieId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ZamowienieId");
 
                     b.ToTable("Klient");
                 });
@@ -685,8 +690,6 @@ namespace MalaFirma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KlientId");
-
                     b.ToTable("Zamowienia");
                 });
 
@@ -720,7 +723,7 @@ namespace MalaFirma.DataAccess.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "0eba8f18-c354-4767-8878-a36104c97754",
+                            ConcurrencyStamp = "926fcc3c-fe87-45b3-9cc9-eb8a7b64ad7a",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });
@@ -854,6 +857,14 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Navigation("Przeglad");
 
                     b.Navigation("Zamowienie");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Klient", b =>
+                {
+                    b.HasOne("MalaFirma.Models.Zamowienie", null)
+                        .WithMany("Klient")
+                        .HasForeignKey("ZamowienieId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("MalaFirma.Models.Narzedzie", b =>
@@ -991,17 +1002,6 @@ namespace MalaFirma.DataAccess.Migrations
                     b.Navigation("Zamowienie");
                 });
 
-            modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
-                {
-                    b.HasOne("MalaFirma.Models.Klient", "Klient")
-                        .WithMany()
-                        .HasForeignKey("KlientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Klient");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1056,6 +1056,11 @@ namespace MalaFirma.DataAccess.Migrations
             modelBuilder.Entity("MalaFirma.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("MalaFirma.Models.Zamowienie", b =>
+                {
+                    b.Navigation("Klient");
                 });
 #pragma warning restore 612, 618
         }

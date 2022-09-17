@@ -93,23 +93,6 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Klient",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NazwaKlienta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Kraj = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Miasto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UlicaNumer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KodPocztowy = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Klient", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pytania",
                 columns: table => new
                 {
@@ -150,6 +133,22 @@ namespace MalaFirma.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TypNarzedzia", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Zamowienia",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataZamowienia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    KlientId = table.Column<int>(type: "int", nullable: false),
+                    UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatusZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zamowienia", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,28 +258,6 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Zamowienia",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataZamowienia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KlientId = table.Column<int>(type: "int", nullable: false),
-                    UwagiZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusZamowienia = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Zamowienia", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Zamowienia_Klient_KlientId",
-                        column: x => x.KlientId,
-                        principalTable: "Klient",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Narzedzia",
                 columns: table => new
                 {
@@ -300,6 +277,30 @@ namespace MalaFirma.DataAccess.Migrations
                         principalTable: "TypNarzedzia",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Klient",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NazwaKlienta = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Kraj = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Miasto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UlicaNumer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KodPocztowy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZamowienieId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Klient", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Klient_Zamowienia_ZamowienieId",
+                        column: x => x.ZamowienieId,
+                        principalTable: "Zamowienia",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -348,6 +349,27 @@ namespace MalaFirma.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ObslugaMetrologiczna",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataObslugi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataWaznosci = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NarzedzieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObslugaMetrologiczna", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ObslugaMetrologiczna_Narzedzia_NarzedzieId",
+                        column: x => x.NarzedzieId,
+                        principalTable: "Narzedzia",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ZadowolenieKlientow",
                 columns: table => new
                 {
@@ -374,27 +396,6 @@ namespace MalaFirma.DataAccess.Migrations
                         column: x => x.ZamowienieId,
                         principalTable: "Zamowienia",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ObslugaMetrologiczna",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DataObslugi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataWaznosci = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NarzedzieId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ObslugaMetrologiczna", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ObslugaMetrologiczna_Narzedzia_NarzedzieId",
-                        column: x => x.NarzedzieId,
-                        principalTable: "Narzedzia",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -569,12 +570,12 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "0eba8f18-c354-4767-8878-a36104c97754", "Admin", "Admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "926fcc3c-fe87-45b3-9cc9-eb8a7b64ad7a", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Imie", "KodPocztowy", "Kraj", "LockoutEnabled", "LockoutEnd", "Miasto", "Nazwisko", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UlicaNumer", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "006fdeeb-0572-4798-94a2-2d363813f5f4", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEIvwdap54OSZWpFfNBEv0/7Egf+6mU2RX9CzCJeO6m1L8YN1TavJNEHjhlZ9C5Tx6Q==", null, false, "", false, "", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "ac6f0493-ef2c-4668-a017-1c8d0fbaf8d8", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEPE+k25ofmvvu7+J6r7nD4ctUlkMFyWLUmyVAnuOfnhHTEoDs2lKTi6F/tboUpiZ1Q==", null, false, "", false, "", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -628,6 +629,11 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_KartaProjektu_ZamowienieId",
                 table: "KartaProjektu",
+                column: "ZamowienieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Klient_ZamowienieId",
+                table: "Klient",
                 column: "ZamowienieId");
 
             migrationBuilder.CreateIndex(
@@ -694,11 +700,6 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "IX_ZadowolenieKlientow_ZamowienieId",
                 table: "ZadowolenieKlientow",
                 column: "ZamowienieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Zamowienia_KlientId",
-                table: "Zamowienia",
-                column: "KlientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -770,6 +771,9 @@ namespace MalaFirma.DataAccess.Migrations
                 name: "SwiadectwoJakosci");
 
             migrationBuilder.DropTable(
+                name: "Klient");
+
+            migrationBuilder.DropTable(
                 name: "TypNarzedzia");
 
             migrationBuilder.DropTable(
@@ -777,9 +781,6 @@ namespace MalaFirma.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Zamowienia");
-
-            migrationBuilder.DropTable(
-                name: "Klient");
         }
     }
 }

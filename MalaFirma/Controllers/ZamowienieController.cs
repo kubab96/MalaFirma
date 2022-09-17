@@ -20,7 +20,7 @@ namespace MalaFirma.Controllers
         #region Zamowienia
         public IActionResult Index()
         {
-            IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll(includeProperties: "Klient");
+            IEnumerable<Zamowienie> objZamowienieList = _unitOfWork.Zamowienie.GetAll();
             IEnumerable<Zamowienie> objZamowienieListNotExisting = _unitOfWork.Zamowienie.GetAll().Where(x => x.StatusZamowienia == "Nie potwierdzone");
             if (objZamowienieListNotExisting.Any())
             {
@@ -334,7 +334,6 @@ namespace MalaFirma.Controllers
             return View();
         }
 
-        [Authorize(Roles ="Menager")]
         [HttpPost]
         public IActionResult CreateKlient(Klient obj)
         {

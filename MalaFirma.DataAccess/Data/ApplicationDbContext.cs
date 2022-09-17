@@ -1,4 +1,4 @@
-﻿    using MalaFirma.Models;
+﻿using MalaFirma.Models;
 using MalaFirma.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -106,6 +106,12 @@ namespace MalaFirma.DataAccess
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+
+            modelBuilder.Entity<Zamowienie>()
+                .HasMany(c => c.Klient)
+                .WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
+
         }
         public DbSet<Zamowienie> Zamowienia { get; set; }
         public DbSet<Wymaganie> Wymagania { get; set; }
@@ -127,6 +133,6 @@ namespace MalaFirma.DataAccess
         public DbSet<Przywieszka> Przywieszki { get; set; }
         public DbSet<ZadowolenieKlienta> ZadowolenieKlientow { get; set; }
         public DbSet<RysunekPrzewodnika> RysunekPrzewodnikow { get; set; }
-        
+
     }
 }
