@@ -9,6 +9,7 @@
 
         <div class="card-body">
             <form method="post" asp-action="Upsert">
+                <div class="row">
                 <div class="mb-3">
                     <label asp-for="NazwaDostawcy"></label>
                     <input asp-for="NazwaDostawcy" class="form-control" />
@@ -21,32 +22,35 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="ZakresDzialalnosci"></label>
-                    <input asp-for="ZakresDzialalnosci" class="form-control" />
+                    <textarea asp-for="ZakresDzialalnosci" class="form-control" rows="3"> </textarea>
                     <span asp-validation-for="ZakresDzialalnosci" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="py-2 col-6">
                     <label asp-for="DataZatwierdzenia"></label>
                     <input class="form-control" asp-for="DataZatwierdzenia" />
                     <span asp-validation-for="DataZatwierdzenia" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="py-2 col-6">
                     <label asp-for="DataWygasniecia"></label>
                     <input class="form-control" asp-for="DataWygasniecia" />
                     <span asp-validation-for="DataWygasniecia" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Uwagi"></label>
-                    <input asp-for="Uwagi" class="form-control" />
+                    <textarea asp-for="Uwagi" class="form-control" rows="3"> </textarea>
+                </div>
                 </div>
                 @if (Model.Id != 0)
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
+                    <button type="submit" class="btn btn-primary">Utwórz</button>
                 }
-                <a asp-controller="Dostawca" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                <a asp-controller="Dostawca" asp-action="Index" class="btn btn-dark">
+                    Anuluj
+                    </a>
             </form>
         </div>
 

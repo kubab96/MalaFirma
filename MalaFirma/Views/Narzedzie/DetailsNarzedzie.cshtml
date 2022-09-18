@@ -38,11 +38,11 @@
                 <dd class="col-sm-9">
                     @if(Model.Narzedzie.ObslugaMetrologiczna == true)
                                 {
-                                    <b>Tak</b>
+                                    <h7>Tak</h7>
                                 }
                                 else
                                 {
-                                  <b>Nie</b> 
+                                  <h7>Nie</h7> 
                                 }
                 </dd>
             </dl>
@@ -51,7 +51,6 @@
 
 
             <a class="btn btn-danger delete"
-             style="margin-right:5px; float:right;"
                data-id="@Model.Narzedzie.Id"
                data-controller="Narzedzie"
                data-action="Delete"
@@ -59,10 +58,10 @@
                data-body-message="Czy napewno chcesz usunąć to narzędzie?">
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
-            <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@Model.Narzedzie.Id" class="btn btn-warning"  style="margin-right:5px; float:right;">
+            <a asp-controller="Narzedzie" asp-action="Upsert" asp-route-id="@Model.Narzedzie.Id" class="btn btn-warning">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
-            <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+            <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-dark" style="margin-right:5px; float:right;"><i class="bi bi-tools"></i> Lista narzędzi</a>
         </div>
 
 

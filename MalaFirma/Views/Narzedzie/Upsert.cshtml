@@ -34,8 +34,21 @@
                         <label class="form-check-label" for="flexSwitchCheckDefault">Obsługa Metrologiczna</label>
                     </div>
                 </div>
+                @if (Model.ObslugaMetrologiczna != null)
+                {
+                    <div id="obsluga" class="mb-3">
 
-                <div id="obsluga" style="display:none" class="mb-3">
+                    <div class="mb-3">
+                        <label>Data ważności obsługi metrologicznej</label>
+                        <input asp-for="ObslugaMetrologiczna.DataWaznosci" class="form-control" />
+                        <span asp-validation-for="ObslugaMetrologiczna.DataWaznosci" class="text-danger"></span>
+                    </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div id="obsluga" style="display:none" class="mb-3">
 
                     <div class="mb-3">
                         <label>Data ważności obsługi metrologicznej</label>
@@ -44,16 +57,18 @@
                     </div>
 
                 </div>
+                }
+                
 
                 @if (Model.Narzedzie.Id != 0)
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
-                    <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@Model.Narzedzie.Id" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                    <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@Model.Narzedzie.Id" class="btn btn-dark">Anuluj</a>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
-                    <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <a asp-controller="Narzedzie" asp-action="Index" class="btn btn-dark">Anuluj</a>
                 }
                 
                 

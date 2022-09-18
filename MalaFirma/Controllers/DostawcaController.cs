@@ -58,6 +58,7 @@ namespace MalaFirma.Controllers
                     }
                     else
                     {
+                        TempData["error"] = "Maksymalny okres zatwierdzenia nie może wynosić więcej niż 2 lata";
                         return View(obj);
                     }
                     
@@ -100,10 +101,21 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Dostawca.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Data dostawcy została zaktualizowana.";
-                return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
+                System.DateTime dataZatwierdzenia = obj.DataZatwierdzenia;
+                System.DateTime dataWygasniecia = obj.DataWygasniecia;
+                System.TimeSpan subtract = dataWygasniecia.Subtract(dataZatwierdzenia);
+                if (subtract.Days <= 730)
+                {
+                    _unitOfWork.Dostawca.Update(obj);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Data dostawcy została zaktualizowana.";
+                    return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
+                }
+                else
+                {
+                    TempData["error"] = "Maksymalny okres zatwierdzenia nie może wynosić więcej niż 2 lata";
+                    return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
+                }
             }
             return PartialView(obj);
         }

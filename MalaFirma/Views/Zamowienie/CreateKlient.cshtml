@@ -1,46 +1,47 @@
 ﻿@model Klient
 <partial name="_Notification" />
-
 <form method="post">
-<div class="container p-3">
+    <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
-                </div>
-                <div class="card-body">
+                <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
                     <div class="mb-3">
                         <label asp-for="NazwaKlienta"></label>
                         <input asp-for="NazwaKlienta" class="form-control" />
                         <span asp-validation-for="NazwaKlienta" class="text-danger" class="invalid-feedback"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="Kraj"></label>
                         <input asp-for="Kraj" class="form-control" />
                         <span asp-validation-for="Kraj" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="Miasto"></label>
                         <input asp-for="Miasto" class="form-control" />
                         <span asp-validation-for="Miasto" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="UlicaNumer"></label>
                         <input asp-for="UlicaNumer" class="form-control" />
                         <span asp-validation-for="UlicaNumer" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="KodPocztowy"></label>
                         <input asp-for="KodPocztowy" class="form-control" />
                         <span asp-validation-for="KodPocztowy" class="text-danger"></span>
                     </div>
-
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Utwórz</button>
-                <a asp-controller="Zamowienie" asp-action="Klient" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Powrót
-                </a>
                 </div>
+
+                <button type="submit" class="btn btn-primary">Utwórz</button>
+                <a asp-controller="Zamowienie" asp-action="Klient" class="btn btn-dark">
+                    Anuluj
+                </a>
             </div>
         </div>
+    </div>
 </form>
 
 @section Scripts{

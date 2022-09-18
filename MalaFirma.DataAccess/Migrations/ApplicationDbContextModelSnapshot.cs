@@ -115,7 +115,7 @@ namespace MalaFirma.DataAccess.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac6f0493-ef2c-4668-a017-1c8d0fbaf8d8",
+                            ConcurrencyStamp = "1508e8c0-33d9-41c4-9376-d72ee701cb02",
                             EmailConfirmed = true,
                             Imie = "Admin",
                             KodPocztowy = "",
@@ -124,7 +124,7 @@ namespace MalaFirma.DataAccess.Migrations
                             Miasto = "",
                             Nazwisko = "",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPE+k25ofmvvu7+J6r7nD4ctUlkMFyWLUmyVAnuOfnhHTEoDs2lKTi6F/tboUpiZ1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBNPQOZvPbQ+4nL4qGyEcDT9wFJerlECirNkRGTL2mODiNjLyLMVZyIgA2s2qUhHUw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -723,7 +723,7 @@ namespace MalaFirma.DataAccess.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "926fcc3c-fe87-45b3-9cc9-eb8a7b64ad7a",
+                            ConcurrencyStamp = "84c4ea54-19ca-41a9-a898-dc7792ef03e4",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });

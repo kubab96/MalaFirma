@@ -9,6 +9,7 @@
 
         <div class="card-body">
             <form method="post" asp-action="Upsert">
+                <div class="row">
                 <div class="mb-3">
                     <label asp-for="Temat"></label>
                     <input asp-for="Temat" class="form-control" />
@@ -21,30 +22,31 @@
                     </select>
                     <span asp-validation-for="RodzajSz" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="form-floating py-2 col-6">
                     <label asp-for="DataRozpoczecia"></label>
                     <input class="form-control" asp-for="DataRozpoczecia" />
                     <span asp-validation-for="DataRozpoczecia" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="form-floating py-2 col-6">
                     <label asp-for="DataZakonczenia"></label>
                     <input class="form-control" asp-for="DataZakonczenia" />
                     <span asp-validation-for="DataZakonczenia" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Uwagi"></label>
-                    <input asp-for="Uwagi" class="form-control" />
+                    <textarea asp-for="Uwagi" class="form-control" rows="3"> </textarea>
+                </div>
                 </div>
                 @if (Model.Id != 0)
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
-                    <a asp-controller="Szkolenie" asp-action="DetailsSzkolenie" asp-route-id="@Model.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                    <a asp-controller="Szkolenie" asp-action="DetailsSzkolenie" asp-route-id="@Model.Id" class="btn btn-dark">
+                Anuluj</a>
                 }
                 else
                 {
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
-                    <a asp-controller="Szkolenie" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+                    <button type="submit" class="btn btn-primary">Utwórz</button>
+                    <a asp-controller="Szkolenie" asp-action="Index" class="btn btn-dark">Anuluj</a>
                 }
                 
             </form>

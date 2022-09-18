@@ -10,5 +10,8 @@ namespace MalaFirma.Models
     {
         public IEnumerable<Zamowienie> Zamowienia { get; set; }
         public IEnumerable<Zamowienie> Zamowienia2 { get; set; }
+        public IEnumerable<Dostawca> Dostawcy { get; set; }
+        public IEnumerable<Szkolenie> Szkolenia { get; set; }
+        public IEnumerable<Audyt> Audyty { get; set; }
     }
 }

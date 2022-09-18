@@ -24,6 +24,15 @@ namespace MalaFirma.Controllers
                     .Take(8)
                     .ToList();
             model.Zamowienia = ostatnieZamowienia;
+
+            DateTime dateTime = DateTime.Now.AddDays(-7);
+            DateTime date = DateTime.Now;
+            IEnumerable<Dostawca> dostawcy = _db.Dostawcy.ToArray().Where(x => x.DataWygasniecia > dateTime).ToList();
+            model.Dostawcy = dostawcy;
+            IEnumerable<Szkolenie> szkolenie = _db.Szkolenia.ToArray().Where(x => x.DataRozpoczecia > date).ToList();
+            model.Szkolenia = szkolenie;
+            IEnumerable<Audyt> audyt = _db.Audyty.ToArray().Where(x => x.DataRozpoczecia > date).ToList();
+            model.Audyty = audyt;
             return View(model);
         }
 

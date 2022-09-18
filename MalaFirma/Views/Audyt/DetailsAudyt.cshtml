@@ -67,11 +67,10 @@
                 }
             </dl>
 
-            <a asp-controller="Audyt" asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-90deg-left"></i> Powrót</a>
+            <a asp-controller="Audyt" asp-action="Index" class="btn btn-dark" style="margin-right:5px; float:right"><i class="bi bi-clipboard2-pulse"></i> Lista audytów</a>
 
 
             <a class="btn btn-danger delete"
-            style="float:right"
                data-id="@Model.Id"
                data-controller="Audyt"
                data-action="Delete"
@@ -80,17 +79,17 @@
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
             
-            <a asp-controller="Audyt" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning" style="margin-right:5px; float:right">
+            <a asp-controller="Audyt" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
-            <a asp-controller="Audyt" asp-action="EndAudyt" asp-route-id="@Model.Id" id="btn" class="btn btn-info" style="margin-right:5px; float:right" hidden>
+            <a asp-controller="Audyt" asp-action="EndAudyt" asp-route-id="@Model.Id" id="btn" class="btn btn-info" hidden>
                 <i class="bi bi-pencil-square"></i> Zakończ
             </a>
             
 
 
             <input type="file" id="formFile" name="file" class="form-control" hidden />
-            <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-right:5px; float:right;" >Zatwierdź</button>
+            <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" >Zakończ audyt</button>
         </div>
 
 

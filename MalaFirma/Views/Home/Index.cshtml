@@ -1,4 +1,7 @@
 ﻿@model DaneVM
+@{
+    var dateAndTime = DateTime.Now;
+}
      <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Ostatnie zamówienia</h6>
@@ -44,6 +47,157 @@
                                 </td>
                             </tr>
                             }
+                        }
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+
+     <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Zatwierdzenia dostawców</h6>
+        </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nazwa
+                            </th>
+                            <th>
+                                Termin zatwierdzenia dostawcy
+                            </th>
+                            <th>
+                               
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Dostawcy)
+                        {
+                            <tr>
+                                <td width="55%">
+                                    @obj.NazwaDostawcy
+                                </td>
+                                <td width="30%">
+                            @{
+                                var data = @obj.DataWygasniecia.Subtract(@dateAndTime).Days;
+                            }
+                            @if(data < 0)
+                            {
+                                <h7 style="color:red">Zatwierdzenie dostawcy wygasło</h7>
+                            }
+                            else
+                            {
+                                <h7>Do końca zatwierdzenia pozostało @data dni</h7>
+                            }
+
+                                </td>
+                                <td style="text-align: center">
+                                    <a asp-controller="Dostawca" asp-action="DetailsDostawca" asp-route-id="@obj.Id" class="btn btn-info">
+                                        <i class="bi bi-info-circle"></i> Szczegóły
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+
+    <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Nadchodzące szkolenia</h6>
+        </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                    <thead>
+                        <tr>
+                            <th>
+                                Temat szkolenia
+                            </th>
+                            <th>
+                                Rodzaj
+                            </th>
+                            <th>
+                               Termin
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Szkolenia)
+                        {
+                            <tr>
+                                <td width="50%">
+                                    @obj.Temat
+                                </td>
+                                <td width="15%">
+                                    @obj.RodzajSz
+                                </td>
+                                <td width="20%">
+                                    @obj.DataRozpoczecia.ToShortDateString() - @obj.DataZakonczenia.ToShortDateString()
+                                </td>
+                                <td style="text-align: center">
+                                    <a asp-controller="Szkolenie" asp-action="DetailsSzkolenie" asp-route-id="@obj.Id" class="btn btn-info">
+                                        <i class="bi bi-info-circle"></i> Szczegóły
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+    <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Nadchodzące audyty</h6>
+        </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                    <thead>
+                        <tr>
+                            <th>
+                                Temat szkolenia
+                            </th>
+                            <th>
+                                Rodzaj
+                            </th>
+                            <th>
+                               Termin
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Audyty)
+                        {
+                            <tr>
+                                <td width="50%">
+                                    @obj.Temat
+                                </td>
+                                <td width="15%">
+                                    @obj.RodzajAudytu
+                                </td>
+                                <td width="20%">
+                                    @obj.DataRozpoczecia.ToShortDateString() - @obj.DataZakonczenia.ToShortDateString()
+                                </td>
+                                <td style="text-align: center">
+                                    <a asp-controller="Audyt" asp-action="DetailsAudyt" asp-route-id="@obj.Id" class="btn btn-info">
+                                        <i class="bi bi-info-circle"></i> Szczegóły
+                                    </a>
+                                    
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
