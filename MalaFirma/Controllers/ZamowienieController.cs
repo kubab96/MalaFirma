@@ -157,6 +157,7 @@ namespace MalaFirma.Controllers
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.Zamowienie.KlientId);
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
+            model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
             IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
             model.PrzewodnikiPracy = objPrzewodnikiList;
             return View(model);
@@ -405,6 +406,7 @@ namespace MalaFirma.Controllers
                 return RedirectToAction("CreateZadowolenie", "Zamowienie", new { idZamowienia });
             }
             model.Klient = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == model.ZadowolenieKlienta.KlientId);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
             return View(model);
         }
 

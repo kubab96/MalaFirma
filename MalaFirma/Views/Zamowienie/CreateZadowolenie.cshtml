@@ -8,21 +8,37 @@
                 <h6 class="m-0 font-weight-bold text-primary">Zadowolenie klienta</h6>
             </div>
             <div class="card-body">
-                <div class="mb-3">
-                    <label asp-for="ZadowolenieKlienta.Jakosc"></label>
-                    <input asp-for="ZadowolenieKlienta.Jakosc" class="form-control" />
+                <div class="row">
+                    <div class="py-2 col-6">
+                        <label asp-for="ZadowolenieKlienta.Jakosc"></label>
+                        <select asp-for="ZadowolenieKlienta.Jakosc" class="form-select" id="exampleSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option selected>5</option>
+                        </select>
+                        <span asp-validation-for="ZadowolenieKlienta.Jakosc" class="text-danger"></span>
+                    </div>
+                    <div class="py-2 col-6">
+                        <label asp-for="ZadowolenieKlienta.CzasRealizacji"></label>
+                        <select asp-for="ZadowolenieKlienta.CzasRealizacji" class="form-select" id="exampleSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option selected>5</option>
+                        </select>
+                        <span asp-validation-for="ZadowolenieKlienta.CzasRealizacji" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ZadowolenieKlienta.Uwagi"></label>
+                        <textarea asp-for="ZadowolenieKlienta.Uwagi" rows="3" class="form-control"></textarea>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="ZadowolenieKlienta.CzasRealizacji"></label>
-                    <input asp-for="ZadowolenieKlienta.CzasRealizacji" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label asp-for="ZadowolenieKlienta.Uwagi"></label>
-                    <input asp-for="ZadowolenieKlienta.Uwagi" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Dodaj</button>
-                <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Powrót
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+                <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
+                    Anuluj
                 </a>
             </div>
         </div>

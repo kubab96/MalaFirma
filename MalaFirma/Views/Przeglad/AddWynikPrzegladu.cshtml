@@ -3,7 +3,7 @@
     <partial name="_Notification" />
 
 
-};
+}
 <div class="container p-3">
     <div class="card shadow mb-4" style="margin:15px">
         <div class="card-header py-3">
@@ -21,15 +21,15 @@
                 </div>
                 <div class="mb-3">
                     <label>Zidentyfikowane Problemy</label>
-                    <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                    <textarea asp-for="ZidentyfikowaneProblemy" rows="3" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
                     <label>Planowane Działania</label>
-                    <input asp-for="PlanowaneDzialania" class="form-control" />
+                    <textarea asp-for="PlanowaneDzialania" rows="3" class="form-control"></textarea>
                 </div>
-                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Zakończ przegląd</button>
-                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-primary">
-                    <i class="bi bi-arrow-90deg-left"></i> Powrót
+                <button type="submit" class="btn btn-primary">Zakończ przegląd</button>
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.zamowienieId" class="btn btn-dark">
+                   Anuluj
                 </a>
             </form>
 

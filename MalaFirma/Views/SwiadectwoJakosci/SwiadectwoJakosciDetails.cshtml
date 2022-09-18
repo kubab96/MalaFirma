@@ -100,7 +100,7 @@
             <form method="post" asp-action="SwiadectwoJakosciDetails" enctype="multipart/form-data">
                 <input asp-for="Przywieszka.Rysunek" hidden />
                     <input type="file" id="formFile" name="file" class="form-control" />
-                    <button type="submit" class="btn btn-info" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
 
                         <div class="card-body">
                     <table class="table table-bordered table-striped" style="width:100%">
@@ -124,7 +124,7 @@
                                     <td width="20%">
                                         
                                         <input type="file" id="Edit @idPrzyw" name="file" class="form-control" />
-                                        <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                                        <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Edytuj</button>
                                        
                                         <a class="btn btn-danger delete" style="margin-top:15px; margin-bottom:15px"
                                        data-id="@obj.Id"
@@ -148,20 +148,20 @@
             </div>
             @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")
             {
-                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-info">
-                    <i class="bi bi-shield-check"></i> Zakończ świadectwo jakości
+                <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-primary">
+                    <i class="bi bi-clipboard2-minus"></i> Zakończ świadectwo jakości
                 </a>
             }
             else
             {
                 <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-success">
-                    <i class="bi bi-shield-check"></i> Zakończono świadectwo jakości
+                    <i class="bi bi-clipboard2-check"></i> Zakończono świadectwo jakości
                 </a>
                 
                 
             }
-            <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-primary">
-                    Powrót
+            <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-dark" style="margin-right:5px; float:right;">
+                    <i class="bi bi-wrench"></i>  Przewodnik pracy
                 </a>
         </div>
     </div>

@@ -115,27 +115,46 @@
                                 <tr>
                                     <td width="80%">@obj.Nazwa</td>
                                     <td style="text-align: center">
-                                        <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
-                                            <i class="bi bi-tools"></i> Przewodnik pracy
+                                        @if(@obj.WynikPrzewodnika == "")
+                                        {
+                                            <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
+                                            <i class="bi bi-wrench"></i> Przewodnik pracy
                                         </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-success">
+                                            <i class="bi bi-wrench"></i> Przewodnik pracy
+                                        </a>
+                                        }
                                     </td>
                                 </tr>
                             }
                     </table>
-                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                        Zarządzaj wymaganiami
+                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
+                        <i class="bi bi-gear"></i> Zarządzaj wymaganiami
                     </a>
                 </div>
             </div>
-            <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>
-            <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
+            <a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Zamowienie.Id })" class="btn btn-dark" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>
+            @if(Model.Przeglad.WynikPrzegladu == "Nie wykonano")
+            {
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-question-circle"></i> Przegląd zamówienia
-            </a>
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Przeglad" asp-action="PrzegladZamowienia" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-success">
+                <i class="bi bi-question-circle"></i> Przegląd zamówienia
+                </a>
+            }
+            
             @*<a asp-controller="PrzewodnikPracy" asp-action="ListaPrzewodnikowPracy" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-tools"></i> Przewodnik Pracy
             </a>
             <a href="@Url.Action("SwiadectwoJakosci", "SwiadectwoJakosci", new { id = Model.Zamowienie.Id })" class="btn btn-primary" role="button">Świadectwo jakości</a>*@
-            
+
             <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.Zamowienie.Id" class="btn btn-primary">
                 <i class="bi bi-emoji-smile"></i> Zadowolenie Klienta
             </a>

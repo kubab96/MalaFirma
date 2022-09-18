@@ -20,11 +20,11 @@
                 </div>
                 <div class="mb-3">
                     <label>Zidentyfikowane problemy</label>
-                    <input asp-for="ZidentyfikowaneProblemy" class="form-control" />
+                    <textarea asp-for="ZidentyfikowaneProblemy" rows="3" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
                     <label>Planowane działania</label>
-                    <input asp-for="PlanowaneDzialania" class="form-control" />
+                    <textarea asp-for="PlanowaneDzialania" rows="3" class="form-control"></textarea>
                 </div>
                 @if (Model.WynikSwiadectwa != "")
                 {
@@ -44,8 +44,8 @@
                 {
                     <button type="submit" class="btn btn-primary">Edytuj</button>
                 }
-               <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.WymaganieId" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Wróć do świadectwa
+               <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.WymaganieId" class="btn btn-dark">
+                Anuluj
             </a>
             </div>
         </div>

@@ -40,17 +40,19 @@
                 }
                 @if (Model.Zamowienie.Id != 0)
                 {
-                    <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                    <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
+                Anuluj
             </a>
-                    <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
+                    
                 }
                 else
                 {
-                    <a asp-controller="Zamowienie" asp-action="Index" class="btn btn-primary">
-                        <i class="bi bi-arrow-90deg-left"></i> Powrót
+                    <button type="submit" class="btn btn-primary">Przejdź do wymagań</button>
+                    <a asp-controller="Zamowienie" asp-action="Index" class="btn btn-dark">
+                        Anuluj
                     </a>
-                    <button type="submit" class="btn btn-info" style="float:right">Przejdź do wymagań</button>
+                    
 
                 }
             </form>

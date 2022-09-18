@@ -133,7 +133,7 @@
                             <input asp-for="PrzewodnikPracy.Rysunek" hidden />
                             <div class="mb-3">
                                 <input type="file" id="formFile" name="file" class="form-control" />
-                                <button type="submit" class="btn btn-info" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                                <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
                                 <div style="display: inline">
                                     <div style="display: inline">
                                         @if (Model.PrzewodnikPracy.Rysunek != null)
@@ -164,34 +164,34 @@
 
                 @if (Model.PrzewodnikPracy.WynikPrzewodnika == "")
                 {
-                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-info" style="margin-right:5px; float:right;">
-                        <i class="bi bi-shield-check"></i> Zakończ przewodnik
+                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-primary">
+                        <i class="bi bi-shield-minus"></i> Zakończ przewodnik
                     </a>
 
 
                 }
                 else
                 {
-                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-success" style="margin-right:5px; float:right;">
+                    <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-success">
                         <i class="bi bi-shield-check"></i> Zakończono przewodnik
                     </a>
                 }
                 @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")
                 {
-                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
-                        <i class="bi bi-clipboard2-check"></i> Świadectwo jakości
+                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info">
+                        <i class="bi bi-clipboard2-minus"></i> Świadectwo jakości
                     </a>
                 }
                 else
                 {
-                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-info" style="margin-right:5px; float:right;">
+                    <a asp-controller="SwiadectwoJakosci" asp-action="SwiadectwoJakosciDetails" asp-route-id="@Model.Wymaganie.Id" class="btn btn-success">
                         <i class="bi bi-clipboard2-check"></i> Zakończono świadectwo jakości
                     </a>
                 }
 
             }
-            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark"  style="margin-right:5px; float:right;">
+                <i class="bi bi-arrow-90deg-left"></i> Powrót do zamówienia
             </a>
             @*            <a asp-controller="PrzewodnikPracy" asp-action="Rysunek" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
                 <i class="bi bi-shield-check"></i> Rysunek

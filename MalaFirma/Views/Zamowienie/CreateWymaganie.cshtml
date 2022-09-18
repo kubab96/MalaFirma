@@ -55,6 +55,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
                 </div>
                 <div class="card-body">
+                <div class="row">
                     <div class="mb-3">
                         <label asp-for="Wymaganie.Nazwa"></label>
                         <input asp-for="Wymaganie.Nazwa" class="form-control" />
@@ -62,21 +63,21 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Wymaganie.Opis"></label>
-                        <input asp-for="Wymaganie.Opis" class="form-control" />
+                        <textarea asp-for="Wymaganie.Opis" class="form-control" rows="3"></textarea>
                         <span asp-validation-for="Wymaganie.Opis" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="Wymaganie.Ilosc"></label>
                         <input asp-for="Wymaganie.Ilosc" class="form-control" value="1" />
                         <span asp-validation-for="Wymaganie.Ilosc" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="py-2 col-6">
                         <label asp-for="Wymaganie.Material"></label>
                         <input asp-for="Wymaganie.Material" class="form-control" />
                         <span asp-validation-for="Wymaganie.Material" class="text-danger"></span>
                     </div>
-                    
-                    <button type="submit" name="SubmitForm" value="AddWymaganie" class="btn btn-primary">Dodaj wymaganie</button>
+                    </div>
+                    <button type="submit" name="SubmitForm" value="AddWymaganie" class="btn btn-outline-success">Dodaj wymaganie</button>
 
                 </div>
             </div>
@@ -90,7 +91,7 @@
                         <textarea asp-for="Zamowienie.UwagiZamowienia" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                         <span asp-validation-for="Zamowienie.UwagiZamowienia" class="text-danger"></span>
                     </div>
-                    <button type="submit" id="section1" name="SubmitForm" value="Create" formnovalidate class="btn btn-info">Zakończ zamówienie</button>
+                    <button type="submit" id="section1" name="SubmitForm" value="Create" formnovalidate class="btn btn-primary">Złóż zamówienie</button>
                 </div>
             </div>
         </div>

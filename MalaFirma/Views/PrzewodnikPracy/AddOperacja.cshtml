@@ -13,9 +13,9 @@
                     <input asp-for="Operacja.TrescOperacji" class="form-control" />
                     <span asp-validation-for="Operacja.TrescOperacji" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-info">Dodaj</button>
-                <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Wróć do przewodnika
+                <button type="submit" class="btn btn-primary">Utwórz</button>
+                <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-dark">
+                Anuluj
             </a>
             </div>
         </div>

@@ -2,11 +2,11 @@
 @{
     TempData["Data1"] = ViewBag.EditId;
     int wartosc = 0;
-    if(ViewBag.EditId != null)
+    if (ViewBag.EditId != null)
     {
-       wartosc = ViewBag.EditId; 
+        wartosc = ViewBag.EditId;
     }
-    
+
     <partial name="_Notification" />
 }
 <form method="post">
@@ -16,44 +16,46 @@
                 <h6 class="m-0 font-weight-bold text-primary">Utwórz wymaganie do wykonania</h6>
             </div>
             <div class="card-body">
-                <input asp-for="ZamowienieId" hidden />
-                <input asp-for="Id" hidden />
-                <input name='edit' value='@ViewBag.EditId' hidden />
-                <div class="mb-3">
-                    <label asp-for="Nazwa"></label>
-                    <input asp-for="Nazwa" class="form-control" />
-                    <span asp-validation-for="Nazwa" class="text-danger"></span>
+                <div class="row">
+                    <input asp-for="ZamowienieId" hidden />
+                    <input asp-for="Id" hidden />
+                    <input name='edit' value='@ViewBag.EditId' hidden />
+                    <div class="mb-3">
+                        <label asp-for="Nazwa"></label>
+                        <input asp-for="Nazwa" class="form-control" />
+                        <span asp-validation-for="Nazwa" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Opis"></label>
+                        <textarea asp-for="Opis" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Opis" class="text-danger"></span>
+                    </div>
+                    <div class="py-2 col-6">
+                        <label asp-for="Ilosc"></label>
+                        <input asp-for="Ilosc" class="form-control" value="1" />
+                        <span asp-validation-for="Ilosc" class="text-danger"></span>
+                    </div>
+                    <div class="py-2 col-6">
+                        <label asp-for="Material"></label>
+                        <input asp-for="Material" class="form-control" />
+                        <span asp-validation-for="Material" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="Ilosc"></label>
-                    <input asp-for="Ilosc" class="form-control" value="1" />
-                    <span asp-validation-for="Ilosc" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Material"></label>
-                    <input asp-for="Material" class="form-control" />
-                    <span asp-validation-for="Material" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Opis"></label>
-                    <input asp-for="Opis" class="form-control" />
-                    <span asp-validation-for="Opis" class="text-danger"></span>
-                </div>
-                <button type="submit" name="SubmitForm" value="EditWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
-                @if(wartosc == 0)
+                <button type="submit" name="SubmitForm" value="EditWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">Edytuj</button>
+                @if (wartosc == 0)
                 {
-                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót
+                    <a asp-controller="Zamowienie" asp-action="Wymagania" asp-route-id="@Model.ZamowienieId" class="btn btn-dark">
+                        Anuluj
                     </a>
                 }
                 else
                 {
-                    <a asp-controller="Zamowienie" asp-action="CreateWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót
-                </a>
+                    <a asp-controller="Zamowienie" asp-action="CreateWymaganie" asp-route-id="@Model.ZamowienieId" class="btn btn-dark">
+                        Anuluj
+                    </a>
                 }
-                
-            
+
+
             </div>
         </div>
     </div>
@@ -61,6 +63,6 @@
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
     }
     }

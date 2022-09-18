@@ -19,7 +19,7 @@ namespace MalaFirma.Models
         [Required(ErrorMessage = "Ocena jakości realizacji jest wymagana.")]
         [DisplayName("Jakość realizacji")]
         public int Jakosc { get; set; }
-        public string Uwagi { get; set; }
+        public string? Uwagi { get; set; }
         [DisplayName("Data zakończenia zadowolenia")]
         [DataType(DataType.DateTime)]
         public DateTime DataZakonczeniaZadowolenia { get; set; }
