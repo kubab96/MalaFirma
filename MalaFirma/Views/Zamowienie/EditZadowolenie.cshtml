@@ -8,31 +8,45 @@
                 <h6 class="m-0 font-weight-bold text-primary">Zadowolenie klienta</h6>
             </div>
             <div class="card-body">
-                <input asp-for="ZamowienieId" hidden />
-                <input asp-for="KlientId" hidden />
-                <div class="mb-3">
-                    <label asp-for="Jakosc"></label>
-                    <input asp-for="Jakosc" class="form-control" />
-                    <span asp-validation-for="Jakosc" class="text-danger"></span>
+                <div class="row">
+                    <input asp-for="ZamowienieId" hidden />
+                    <input asp-for="KlientId" hidden />
+                    <div class="py-2 col-6">
+                        <label asp-for="Jakosc"></label>
+                        <select asp-for="Jakosc" class="form-select" id="exampleSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <span asp-validation-for="Jakosc" class="text-danger"></span>
+                    </div>
+                    <div class="py-2 col-6">
+                        <label asp-for="CzasRealizacji"></label>
+                        <select asp-for="CzasRealizacji" class="form-select" id="exampleSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <span asp-validation-for="CzasRealizacji" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Uwagi"></label>
+                        <textarea asp-for="Uwagi" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="DataZakonczeniaZadowolenia"></label>
+                        <input asp-for="DataZakonczeniaZadowolenia" class="form-control" />
+                        <span asp-validation-for="DataZakonczeniaZadowolenia" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="CzasRealizacji"></label>
-                    <input asp-for="CzasRealizacji" class="form-control" />
-                    <span asp-validation-for="CzasRealizacji" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Uwagi"></label>
-                    <input asp-for="Uwagi" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label asp-for="DataZakonczeniaZadowolenia"></label>
-                    <input asp-for="DataZakonczeniaZadowolenia" class="form-control" />
-                    <span asp-validation-for="DataZakonczeniaZadowolenia" class="text-danger"></span>
-                </div>
-                <button type="submit" class="btn btn-info" style="margin-right:5px; float:right;">Edytuj</button>
-                <a asp-controller="Zamowienie" asp-action="ZadowolenieKlienta" asp-route-idZamowienia="@Model.ZamowienieId" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót
-            </a>
+                <button type="submit" class="btn btn-primary">Edytuj</button>
+                <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.ZamowienieId" class="btn btn-dark">
+                    Anuluj
+                </a>
             </div>
         </div>
 

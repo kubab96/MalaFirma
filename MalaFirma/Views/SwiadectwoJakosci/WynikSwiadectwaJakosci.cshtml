@@ -37,8 +37,9 @@
 
                 @if (Model.WynikSwiadectwa == "")
                 {
-                    
-                    <button type="submit" class="btn btn-primary">Zakończ świadectwo</button>
+                   
+                    <button type="submit" id="zakoncz" hidden class="btn btn-info">Zakończ świadectwo</button>
+                    <button onclick="return ValidateInput()" class="btn btn-primary">Zakończ świadectwo</button>
                 }
                 else
                 {
@@ -56,4 +57,28 @@
     @{
     <partial name="_ValidationScriptsPartial" />
     }
+
+    <script>
+
+    function ValidateInput(){
+
+            Swal.fire({
+      title: 'Zakończyć świadectwo jakości?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Nie',
+      confirmButtonText: 'Tak'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("zakoncz").click();
+      }
+    });
+        return false;
+    }
+
+
+</script>
+
 }

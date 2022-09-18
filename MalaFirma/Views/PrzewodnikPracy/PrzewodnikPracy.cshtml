@@ -165,7 +165,7 @@
                 @if (Model.PrzewodnikPracy.WynikPrzewodnika == "")
                 {
                     <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-primary">
-                        <i class="bi bi-shield-minus"></i> Zakończ przewodnik
+                        <i class="bi bi-shield-minus"></i> Zakończ przewodnik pracy
                     </a>
 
 
@@ -173,7 +173,7 @@
                 else
                 {
                     <a asp-controller="PrzewodnikPracy" asp-action="WynikPrzewodnikaPracy" asp-route-idPrzewodnika="@Model.PrzewodnikPracy.Id" asp-route-wynik="@Model.PrzewodnikPracy.WynikPrzewodnika" class="btn btn-success">
-                        <i class="bi bi-shield-check"></i> Zakończono przewodnik
+                        <i class="bi bi-shield-check"></i> Zakończono przewodnik pracy
                     </a>
                 }
                 @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")

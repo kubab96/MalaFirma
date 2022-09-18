@@ -158,6 +158,7 @@ namespace MalaFirma.Controllers
             IEnumerable<Wymaganie> objWymaganiaList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
             model.Wymagania = objWymaganiaList;
             model.Przeglad = _unitOfWork.Przeglad.GetFirstOrDefault(x => x.zamowienieId == id);
+            model.ZadowolenieKlienta = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == id);
             IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
             model.PrzewodnikiPracy = objPrzewodnikiList;
             return View(model);
@@ -432,7 +433,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
                 _unitOfWork.Save();
                 TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
-                return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia });
+                return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = idZamowienia });
             }
             return View(obj);
         }
@@ -471,7 +472,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.ZadowolenieKlienta.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Zadowolenie klienta zostało pomyślnie zaktualizowane";
-                return RedirectToAction("ZadowolenieKlienta", "Zamowienie", new { idZamowienia = obj.ZamowienieId });
+                return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = zamowienieId });
             }
             return View(obj);
         }
