@@ -1,6 +1,6 @@
 ﻿@model PrzewodnikPracyVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista przewodników";
     var query =
     from wym in Model.Wymagania
     join prze in Model.PrzewodnikiPracy on wym.Id equals prze.WymaganieId

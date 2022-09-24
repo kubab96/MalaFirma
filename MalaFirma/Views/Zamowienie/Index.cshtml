@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Zamowienie>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zamówienia";
 }
 <partial name="_Notification" />
 
@@ -42,7 +42,7 @@
                                     @obj.Nazwa
                                 </td>
                                 <td width="20%">
-                                    @obj.DataZamowienia
+                                    @obj.DataZamowienia.ToShortDateString()
                                 </td>
                                 <td width="15%">
                                     @obj.StatusZamowienia

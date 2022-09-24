@@ -1,6 +1,7 @@
 ﻿using MalaFirma.DataAccess;
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -48,10 +49,13 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         public IActionResult PrzewodnikPracy(PrzewodnikPracyVM model, IFormFile file, int id)
         {
             model.PrzewodnikPracy = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
+            model.Wymaganie = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.Id == model.PrzewodnikPracy.WymaganieId);
+            model.Zamowienie = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == model.Wymaganie.ZamowienieId);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             if (file != null)
             {
@@ -78,14 +82,14 @@ namespace MalaFirma.Controllers
                 }
                 model.PrzewodnikPracy.Rysunek = @"\images\rysunki\" + fileName + extension;
             }
-            model.PrzewodnikPracy.NumerRysunku = $"/{model.PrzewodnikPracy.WymaganieId}";
-            //model.PrzewodnikPracy.NumerRysunku = $"{model.Zamowienie.Id}/{model.PrzewodnikPracy.WymaganieId}";
+            model.PrzewodnikPracy.NumerRysunku = $"{model.Zamowienie.Id}/{model.PrzewodnikPracy.WymaganieId}";
             _unitOfWork.PrzewodnikPracy.Update(model.PrzewodnikPracy);
             _unitOfWork.Save();
-            TempData["success"] = "Rysunek został pomyślnie dodany.";
+            TempData["success"] = "Rysunek został pomyślnie dodany do przewodnika pracy";
             return RedirectToAction("PrzewodnikPracy", new { id = model.PrzewodnikPracy.Id });
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         public IActionResult Rysunek(int id)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
@@ -99,6 +103,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         public IActionResult Rysunek(PrzewodnikPracyVM model, IFormFile file, int id)
         {
@@ -129,15 +134,15 @@ namespace MalaFirma.Controllers
                 }
                 model.RysunekPrzewodnika.Rysunek = @"\images\rysunki\" + fileName + extension;
             }
-            //model.RysunekPrzewodnika.NumerRysunku = $"{model.PrzewodnikPracy.ZamowienieId}/{model.PrzewodnikPracy.WymaganieId}";
             model.RysunekPrzewodnika.NumerRysunku = $"/{model.PrzewodnikPracy.WymaganieId}";
             model.RysunekPrzewodnika.WymaganieId = (int)model.PrzewodnikPracy.WymaganieId;
             _unitOfWork.RysunekPrzewodnika.AddId(model.RysunekPrzewodnika);
             _unitOfWork.Save();
-            TempData["success"] = "Rysunek został pomyślnie dodany.";
+            TempData["success"] = "Rysunek został pomyślnie dodany do przewodnika pracy";
             return RedirectToAction("Operacja", new { id = model.PrzewodnikPracy.WymaganieId });
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         public IActionResult DeleteRysunek(int? id)
         {
             var obj = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.Id == id);
@@ -154,12 +159,13 @@ namespace MalaFirma.Controllers
                 _unitOfWork.PrzewodnikPracy.Update(obj);
                 _unitOfWork.Save();
                 ModelState.Clear();
-                TempData["success"] = "Rysunek został pomyślnie usnięty.";
+                TempData["success"] = "Rysunek został pomyślnie usnięty";
                 return RedirectToAction("PrzewodnikPracy", new { id = obj.Id });
             }
             return View();
         }
 
+        [Authorize(Roles = "Projektant, Admin, Operator, Kierownik kontroli jakości")]
         public IActionResult AddOperacja(int idPrzewodnika)
         {
             PrzewodnikPracyVM model = new PrzewodnikPracyVM();
@@ -167,6 +173,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Operator, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddOperacja(PrzewodnikPracyVM obj, int idPrzewodnika)
@@ -176,12 +183,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Operacja.AddId(obj.Operacja);
                 _unitOfWork.Save();
-                TempData["success"] = "Operacja została pomyślnie dodana";
+                TempData["success"] = "Operacja została pomyślnie utworzona";
                 return RedirectToAction("PrzewodnikPracy", new { id = idPrzewodnika });
             }
             return RedirectToAction("AddOperacja", new { idPrzewodnika = idPrzewodnika });
         }
 
+        [Authorize(Roles = "Projektant, Admin, Operator, Kierownik kontroli jakości")]
         public IActionResult EditOperacja(int? id)
         {
             if (id == null || id == 0)
@@ -196,6 +204,7 @@ namespace MalaFirma.Controllers
             return View(operacjaFormDb);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Operator, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditOperacja(Operacja obj)
@@ -204,12 +213,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Operacja.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Edycja operacji przebiegła pomyślnie";
+                TempData["success"] = "operacji została zaktualizowana";
                 return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracyId });
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Operator, Kierownik kontroli jakości")]
         public IActionResult DeleteOperacja(int? id)
         {
             var obj = _unitOfWork.Operacja.GetFirstOrDefault(x => x.Id == id);
@@ -223,6 +233,7 @@ namespace MalaFirma.Controllers
             return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracyId });
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracyVM obj, int? idPrzewodnika, string? wynik)
         {
             if (idPrzewodnika == null || idPrzewodnika == 0)
@@ -238,57 +249,60 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
+        [Authorize(Roles = "Projektant, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult WynikPrzewodnikaPracy(PrzewodnikPracyVM obj, string? wynik)
         {
             if (ModelState.IsValid)
             {
-                var swiadectwo = _unitOfWork.SwiadectwoJakosci.GetFirstOrDefault(x => x.WymaganieId == obj.PrzewodnikPracy.WymaganieId);
+                var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == obj.PrzewodnikPracy.Id);
                 if (wynik == null)
                 {
-                    if (swiadectwo.WynikSwiadectwa == "")
+                    if (operacje == null)
                     {
-                        TempData["error"] = "Przed zakończeniem przewodnika należy zakończyć świadectwo jakości";
-                        return RedirectToAction("SwiadectwoJakosciDetails", "SwiadectwoJakosci", new { id = swiadectwo.WymaganieId });
+                        TempData["error"] = "Wymagane jest wykonanie przynajmniej jednej operacji";
+                        return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
                     }
                     else
                     {
-                        //AddSwiadectwoJakosci(obj.WymaganieId);
                         obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika = DateTime.Now;
                         _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                         _unitOfWork.Save();
-                        TempData["success"] = "Przewodnik został zakończony.";
+                        TempData["success"] = "Zakończono przewodnik pracy";
                         return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
                     }
                 }
                 else
                 {
-                        if (obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika < swiadectwo.DataZakonczeniaSwiadectwa)
+                    var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
+                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == obj.PrzewodnikPracy.Id);
+                    if (lastOperacja != null)
+                    {
+                        DateTime data = lastOperacja.DataWykonania;
+                        if (obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika < data)
                         {
-                            TempData["error"] = "Nie można wprowadzić daty dalszej, niż data wykonanego świadectwa jakości";
+                            TempData["error"] = "Nie można wprowadzić daty dalszej, niż data ostatnio wykonanej operacji";
                             return View(obj);
                         }
                         else
                         {
                             _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                             _unitOfWork.Save();
-                            TempData["success"] = "Przewodnik został zaktualizowany";
+                            TempData["success"] = "Przewodnik pracy został zaktualizowany";
                             return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
                         }
-                    
+                    }
+                    else
+                    {
+                        _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
+                        _unitOfWork.Save();
+                        TempData["success"] = "Przewodnik pracy został zaktualizowany";
+                        return RedirectToAction("PrzewodnikPracy", new { id = obj.PrzewodnikPracy.Id });
+                    }
                 }
             }
             return View(obj);
         }
-
-        //public void AddSwiadectwoJakosci(int? idWymagania)
-        //{
-        //    SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
-        //    swiadectwo.WymaganieId = idWymagania;
-        //    _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
-        //    _unitOfWork.Save();
-        //}
-
     }
 }

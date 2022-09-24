@@ -2,49 +2,57 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">@(Model.Zamowienie.Id != 0 ? "Edytuj zamówienie" : "Dodaj zamówienie")</h6>
         </div>
         <div class="card-body">
-            <form method="post" asp-action="Upsert">
-                <input asp-for="Zamowienie.Id" hidden />
-                <input asp-for="Zamowienie.StatusZamowienia" hidden />
 
-                <div class="mb-3">
-                    <label asp-for="Zamowienie.Nazwa"></label>
-                    <input asp-for="Zamowienie.Nazwa" class="form-control" />
-                    <span asp-validation-for="Zamowienie.Nazwa" class="text-danger"></span>
-                </div>
-                @if(Model.Zamowienie.Id != 0){
-                <div class="mb-3">
-                    <label asp-for="Zamowienie.DataZamowienia"></label>
-                    <input asp-for="Zamowienie.DataZamowienia" class="form-control" />
-                    <span asp-validation-for="Zamowienie.DataZamowienia" class="text-danger"></span>
-                </div>
-                }
-                <div class="mb-3">
-                    <label>Klient</label>
-                    <select asp-for="Zamowienie.KlientId" asp-items="@Model.Klienci" class="form-select">
-                        <option disabled selected>-- Wybierz klienta --</option>
-                    </select>
-                    <span asp-validation-for="Zamowienie.KlientId" class="text-danger"></span>
-                </div>
-                @if (Model.Zamowienie.Id != 0)
-                {
+            <form method="post" asp-action="Upsert">
+                <div class="row" style="padding-bottom:15px">
+                    <input asp-for="Zamowienie.Id" hidden />
+                    <input asp-for="Zamowienie.StatusZamowienia" hidden />
+
                     <div class="mb-3">
-                        <label>Uwagi do zamówienia</label>
-                        <textarea asp-for="Zamowienie.UwagiZamowienia" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-                        <span asp-validation-for="Zamowienie.UwagiZamowienia" class="text-danger"></span>
+                        <label asp-for="Zamowienie.Nazwa"></label>
+                        <input asp-for="Zamowienie.Nazwa" class="form-control" />
+                        <span asp-validation-for="Zamowienie.Nazwa" class="text-danger"></span>
                     </div>
-                }
+                    @if (Model.Zamowienie.Id != 0)
+                    {
+                        <div class="mb-3">
+                            <label asp-for="Zamowienie.DataZamowienia"></label>
+                            <input asp-for="Zamowienie.DataZamowienia" class="form-control" />
+                            <span asp-validation-for="Zamowienie.DataZamowienia" class="text-danger"></span>
+                        </div>
+                    }
+
+                    <div class="col-10">
+                        <label>Klient</label>
+                        <select asp-for="Zamowienie.KlientId" asp-items="@Model.Klienci" class="form-select">
+                            <option disabled selected>-- Wybierz klienta --</option>
+                        </select>
+                        <span asp-validation-for="Zamowienie.KlientId" class="text-danger"></span>
+                    </div>
+                    <div class="col-2" style="text-align: center">
+                        <span class="btn btn-xs btn-success" style="margin-top:25px" onclick="createModal('@Url.Action("AddKlient", "Zamowienie")')"><i class="bi bi-plus-circle"></i> &nbsp; Utwórz klienta</span>
+                    </div>
+                    @if (Model.Zamowienie.Id != 0)
+                    {
+                        <div class="mb-3">
+                            <label>Uwagi do zamówienia</label>
+                            <textarea asp-for="Zamowienie.UwagiZamowienia" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            <span asp-validation-for="Zamowienie.UwagiZamowienia" class="text-danger"></span>
+                        </div>
+                    }
+                </div>
                 @if (Model.Zamowienie.Id != 0)
                 {
                     <button type="submit" class="btn btn-primary">Edytuj</button>
                     <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
-                Anuluj
-            </a>
-                    
+                        Anuluj
+                    </a>
+
                 }
                 else
                 {
@@ -52,16 +60,33 @@
                     <a asp-controller="Zamowienie" asp-action="Index" class="btn btn-dark">
                         Anuluj
                     </a>
-                    
+
 
                 }
             </form>
+
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="modelContent">
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
+<script>
+    function createModal(url){
+          $('#modelContent').load(url);
+          $('#myModal').modal('show');
+    }
+</script>
+
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
     }
+
     }

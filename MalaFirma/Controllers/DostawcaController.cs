@@ -1,5 +1,6 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MalaFirma.Controllers
@@ -19,6 +20,7 @@ namespace MalaFirma.Controllers
             return View(objDostawcaList);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Upsert(int? id)
         {
             Dostawca obj = new();
@@ -35,6 +37,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Dostawca obj)
@@ -54,7 +57,7 @@ namespace MalaFirma.Controllers
                     {
                         _unitOfWork.Dostawca.Add(obj);
                         _unitOfWork.Save();
-                        TempData["success"] = "Dostawca został pomyślnie dodany";
+                        TempData["success"] = "Dostawca został pomyślnie utworzony";
                     }
                     else
                     {
@@ -67,7 +70,7 @@ namespace MalaFirma.Controllers
                 {
                     _unitOfWork.Dostawca.Update(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Dostawca został zedytowany";
+                    TempData["success"] = "Dostawca został zaktualizowany";
                     return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
                 }
                 return RedirectToAction("Index");
@@ -81,6 +84,7 @@ namespace MalaFirma.Controllers
             return View(dostawca);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -95,6 +99,7 @@ namespace MalaFirma.Controllers
             return PartialView(dostawcaFormDb);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Dostawca obj)
@@ -108,7 +113,7 @@ namespace MalaFirma.Controllers
                 {
                     _unitOfWork.Dostawca.Update(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Data dostawcy została zaktualizowana.";
+                    TempData["success"] = "Data zatwierdzenia dostawcy została zaktualizowana.";
                     return RedirectToAction("DetailsDostawca", "Dostawca", new { obj.Id });
                 }
                 else
@@ -119,6 +124,8 @@ namespace MalaFirma.Controllers
             }
             return PartialView(obj);
         }
+
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Dostawca.GetFirstOrDefault(x => x.Id == id);

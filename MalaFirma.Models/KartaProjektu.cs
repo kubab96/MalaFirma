@@ -19,6 +19,7 @@ namespace MalaFirma.Models
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; }
         public string? DodatkoweInformacje { get; set; }
+        public string? NumerKarty { get; set; }
         public string? DodatkoweUwagi { get; set; }
     }
 }

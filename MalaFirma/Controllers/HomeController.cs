@@ -21,13 +21,13 @@ namespace MalaFirma.Controllers
             DaneVM model = new DaneVM();
             IEnumerable<Zamowienie> ostatnieZamowienia = _db.Zamowienia.ToArray().Where(x => x.StatusZamowienia != "Nie potwierdzone")
                     .Reverse()
-                    .Take(8)
+                    .Take(5)
                     .ToList();
             model.Zamowienia = ostatnieZamowienia;
 
-            DateTime dateTime = DateTime.Now.AddDays(-7);
+            DateTime dateTime = DateTime.Now.AddDays(30);
             DateTime date = DateTime.Now;
-            IEnumerable<Dostawca> dostawcy = _db.Dostawcy.ToArray().Where(x => x.DataWygasniecia > dateTime).ToList();
+            IEnumerable<Dostawca> dostawcy = _db.Dostawcy.ToArray().Where(x => x.DataWygasniecia < dateTime).ToList();
             model.Dostawcy = dostawcy;
             IEnumerable<Szkolenie> szkolenie = _db.Szkolenia.ToArray().Where(x => x.DataRozpoczecia > date).ToList();
             model.Szkolenia = szkolenie;

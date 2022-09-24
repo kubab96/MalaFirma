@@ -1,4 +1,7 @@
 ﻿@model TypNarzedzia
+@{
+    ViewData["Title"] = "Utwórz typ narzędzia";
+}
 
 <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
@@ -15,7 +18,7 @@
                         <input asp-for="NazwaTypu" class="form-control" />
                         <span asp-validation-for="NazwaTypu" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <button type="submit" class="btn btn-primary">Utwórz</button>
                     <a asp-controller="Narzedzie" asp-action="TypNarzedzia" class="btn btn-dark">Anuluj</a>
             </form>
         </div>

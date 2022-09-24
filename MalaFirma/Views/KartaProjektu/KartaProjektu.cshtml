@@ -1,6 +1,6 @@
 ﻿@model KartaProjektuVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Karta projektu";
 
     var query =
     from wym in Model.Wymagania
@@ -308,8 +308,8 @@
             {
 
             }
-            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-primary">
-                <i class="bi bi-arrow-90deg-left"></i> Wróć do zamówienia
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
+                <i class="bi bi-arrow-left-circle"></i> Wróć do zamówienia
             </a>
         </div>
     </div>

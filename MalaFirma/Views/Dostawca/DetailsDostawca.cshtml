@@ -1,12 +1,12 @@
 ﻿@model Dostawca
 @{
-    ViewData["Title"] = "Dostawca";
+    ViewData["Title"] = "Szczególy dostawcy";
 }
 <partial name="_Notification" />
 
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Dostawca</h6>
         </div>
         <br />
@@ -60,14 +60,14 @@
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
             @*<a href="@Url.Action("KartaProjektu", "KartaProjektu", new { id = Model.Id })" class="btn btn-primary" role="button"><i class="bi bi-file-text"></i> Karta Projektu</a>*@
-            <a asp-controller="Dostawca" asp-action="Index" class="btn btn-dark"  style="margin-right:5px; float:right;"><i class="bi bi-truck"></i> Lista dostawców</a>
+            <a asp-controller="Dostawca" asp-action="Index" class="btn btn-dark" style="margin-right:5px; float:right;"><i class="bi bi-truck"></i> Lista dostawców</a>
             <a asp-controller="Dostawca" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
 
-            
 
-            <span class="btn btn-xs btn-primary" id="@Model.Id" onclick="createModal('@Url.Action("Edit", "Dostawca", new { id = Model.Id })')">Aktualizuj datę</span>
+
+            <span class="btn btn-xs btn-primary" id="@Model.Id" onclick="createModal('@Url.Action("Edit", "Dostawca", new { id = Model.Id })')">Aktualizuj zatwierdzenie</span>
 
 
         </div>
@@ -94,3 +94,5 @@
                   $('#myModal').modal('show');
             }
         </script>
+    </div>
+</div>

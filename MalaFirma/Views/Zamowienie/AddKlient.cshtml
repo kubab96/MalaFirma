@@ -1,13 +1,10 @@
 ﻿@model Klient
-@{
-    ViewData["Title"] = "Edycja klienta";
-}
 <partial name="_Notification" />
-<form method="post">
-<div class="container p-3">
+<form method="post"  asp-action="AddKlient">
+    <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edycja klienta</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Dodawanie klienta</h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -38,9 +35,8 @@
                     </div>
                 </div>
 
-
-                <button type="submit" class="btn btn-primary">Edytuj</button>
-                <a asp-controller="Zamowienie" asp-action="DetailsKlient" asp-route-id="@Model.Id" class="btn btn-dark">
+                <button type="submit" class="btn btn-primary">Utwórz</button>
+                <a asp-controller="Zamowienie" asp-action="Upsert" class="btn btn-dark">
                     Anuluj
                 </a>
             </div>

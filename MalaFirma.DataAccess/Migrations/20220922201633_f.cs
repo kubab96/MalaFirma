@@ -4,58 +4,40 @@
 
 namespace MalaFirma.DataAccess.Migrations
 {
-    public partial class z : Migration
+    public partial class f : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Uwagi",
-                table: "ZadowolenieKlientow",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                 column: "ConcurrencyStamp",
-                value: "e0c7b262-5704-4391-a520-a631013c5b1e");
+                value: "42ea5331-b50a-4d9e-a196-332380c41444");
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash" },
-                values: new object[] { "500641ca-fcac-4220-b96a-8e2488b967e3", "AQAAAAEAACcQAAAAED6ysQqfVwqKTa3kaCLi38EaeeXMZikL1mBmsek5ntSyr//xXJ/NYDd7SSSTfBhYHQ==" });
+                values: new object[] { "550207c1-0f96-4e8f-8c0c-18a1686dea79", "AQAAAAEAACcQAAAAEGeI4sbbOiJaJaf2zQoufbxHZpZw7GzSth35Odfd1cqzkSo5B05nlY0BhREx4FAddQ==" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Uwagi",
-                table: "ZadowolenieKlientow",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                 column: "ConcurrencyStamp",
-                value: "84c4ea54-19ca-41a9-a898-dc7792ef03e4");
+                value: "eb101234-a922-4e0d-86ea-d6b27a735cdb");
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash" },
-                values: new object[] { "1508e8c0-33d9-41c4-9376-d72ee701cb02", "AQAAAAEAACcQAAAAEBNPQOZvPbQ+4nL4qGyEcDT9wFJerlECirNkRGTL2mODiNjLyLMVZyIgA2s2qUhHUw==" });
+                values: new object[] { "b8358e8c-3877-4b60-a2da-7b4b9ac5da7e", "AQAAAAEAACcQAAAAEJTSHn2i25bXbPcwI25XXOZwwZ4GSwA4rkXhyNH/h0roXr9TFxLyE+kyN7k0zYOOZg==" });
         }
     }
 }

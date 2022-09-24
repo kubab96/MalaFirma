@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MalaFirma.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220917142921_baza")]
+    [Migration("20220921135705_baza")]
     partial class baza
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace MalaFirma.DataAccess.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1508e8c0-33d9-41c4-9376-d72ee701cb02",
+                            ConcurrencyStamp = "b8358e8c-3877-4b60-a2da-7b4b9ac5da7e",
                             EmailConfirmed = true,
                             Imie = "Admin",
                             KodPocztowy = "",
@@ -126,7 +126,7 @@ namespace MalaFirma.DataAccess.Migrations
                             Miasto = "",
                             Nazwisko = "",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBNPQOZvPbQ+4nL4qGyEcDT9wFJerlECirNkRGTL2mODiNjLyLMVZyIgA2s2qUhHUw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJTSHn2i25bXbPcwI25XXOZwwZ4GSwA4rkXhyNH/h0roXr9TFxLyE+kyN7k0zYOOZg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -150,7 +150,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Opis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RodzajAudytu")
@@ -217,6 +216,9 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DodatkoweUwagi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumerKarty")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrzegladId")
@@ -653,7 +655,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Uwagi")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ZamowienieId")
@@ -725,7 +726,7 @@ namespace MalaFirma.DataAccess.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "84c4ea54-19ca-41a9-a898-dc7792ef03e4",
+                            ConcurrencyStamp = "eb101234-a922-4e0d-86ea-d6b27a735cdb",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });

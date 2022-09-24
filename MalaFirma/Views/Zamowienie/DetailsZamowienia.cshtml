@@ -1,5 +1,8 @@
 ﻿@model ZamowienieWymaganieVM
 @{
+
+    ViewData["Title"] = "Szczególy zamówienia";
+
     var query =
         from wym in Model.Wymagania
         join prze in Model.PrzewodnikiPracy on wym.Id equals prze.WymaganieId

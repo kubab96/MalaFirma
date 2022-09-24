@@ -1,5 +1,6 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace MalaFirma.Controllers
 {
@@ -17,6 +18,7 @@ namespace MalaFirma.Controllers
             return View(objSzkoleniaList);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Upsert(int? id)
         {
             Szkolenie obj = new();
@@ -33,6 +35,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Szkolenie obj)
@@ -44,20 +47,21 @@ namespace MalaFirma.Controllers
                     obj.Status = "Otwarty";
                     _unitOfWork.Szkolenie.Add(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Szkolenie zostało pomyślnie dodane";
+                    TempData["success"] = "Szkolenie zostało pomyślnie utworzone";
                     return RedirectToAction("DetailsSzkolenie", "Szkolenie", new { obj.Id });
                 }
                 else
                 {
                     _unitOfWork.Szkolenie.Update(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Szkolenie zostało zedytowane";
+                    TempData["success"] = "Szkolenie zostało zaktualizowane";
                     return RedirectToAction("DetailsSzkolenie", "Szkolenie", new { obj.Id });
                 }
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult EndSzkolenie(int? id)
         {
             var obj = _unitOfWork.Szkolenie.GetFirstOrDefault(u => u.Id == id);
@@ -73,6 +77,7 @@ namespace MalaFirma.Controllers
             return View(szkolenie);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Szkolenie.GetFirstOrDefault(x => x.Id == id);

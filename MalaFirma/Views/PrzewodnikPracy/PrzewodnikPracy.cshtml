@@ -1,6 +1,6 @@
 ﻿@model PrzewodnikPracyVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Przewodnik pracy";
 }
 <partial name="_Notification" />
 
@@ -43,12 +43,25 @@
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.Wymaganie.Ilosc)
                             </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Wymaganie.Material)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Wymaganie.Material)
-                            </dd>
+                            @if (@Model.Wymaganie.Material != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Wymaganie.Material)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Wymaganie.Material)
+                                </dd>
+                            }
+                            else
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Wymaganie.Material)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    <h7>N/D</h7>
+                                </dd>
+                            }
+
                         </dl>
                     </div>
                 </div>
@@ -88,7 +101,7 @@
                                                 @obj.TrescOperacji
                                             </td>
                                             <td width="20%">
-                                                @obj.DataWykonania
+                                                @obj.DataWykonania.ToString("MM/dd/yyyy HH:mm")
                                             </td>
 
                                             <td style="text-align: center">
@@ -190,8 +203,8 @@
                 }
 
             }
-            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark"  style="margin-right:5px; float:right;">
-                <i class="bi bi-arrow-90deg-left"></i> Powrót do zamówienia
+            <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark" style="margin-right:5px; float:right;">
+                <i class="bi bi-arrow-left-circle"></i>  Powrót do zamówienia
             </a>
             @*            <a asp-controller="PrzewodnikPracy" asp-action="Rysunek" asp-route-id="@Model.Wymaganie.Id" class="btn btn-primary">
                 <i class="bi bi-shield-check"></i> Rysunek

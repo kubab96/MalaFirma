@@ -2,6 +2,7 @@
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using MalaFirma.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,13 +21,6 @@ namespace MalaFirma.Controllers
         }
         public IActionResult Index()
         {
-            //var users = _userManager.Users;
-            //var roles = _roleMenager.Roles;
-            //var model = new UzytkownicyVM
-            //{
-            //    Id = User.Claims.us
-            //};
-            //return View(users);
             var usersWithRoles = (from roleUser in _application.UserRoles
                                   join role in _application.Roles on roleUser.RoleId equals role.Id
                                   join user in _application.Users on roleUser.UserId equals user.Id
@@ -50,6 +44,38 @@ namespace MalaFirma.Controllers
             return View(usersWithRoles);
         }
 
+        public async Task<IActionResult> DetailsUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Użytkownik o podanym identyfikatorze nie istnieje!";
+                return View();
+            }
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+
+            var model = new EditUserVM
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Imie = user.Imie,
+                Nazwisko = user.Nazwisko,
+                Kraj = user.Kraj,
+                Miasto = user.Miasto,
+                UlicaNumer = user.UlicaNumer,
+                KodPocztowy = user.KodPocztowy,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = userRoles,
+
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -81,6 +107,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserVM model)
         {
@@ -113,6 +140,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -137,35 +165,5 @@ namespace MalaFirma.Controllers
             
             return View("Index");
         }
-
-        //public IActionResult ListRoles()
-        //{
-        //    var roles = _roleMenager.Roles;
-        //    return View(roles);
-        //}
-
-        //public async Task<IActionResult> EditRole(string id)
-        //{
-        //    var role = await _roleMenager.FindByIdAsync(id);
-        //    if (role == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var model = new EditRoleVM
-        //    {
-        //        Id = role.Id,
-        //        RoleName = role.Name,
-        //    };
-
-        //    foreach(var user in _userManager.Users)
-        //    {
-        //        if(await _userManager.IsInRoleAsync(user, role.Name))
-        //        {
-        //            model.Users.Add(user.UserName);
-        //        }
-        //    }
-        //    return View(model);
-        //}
     }
 }

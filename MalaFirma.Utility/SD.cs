@@ -10,9 +10,9 @@ namespace MalaFirma.Utility
     {
         public const string Role_Admin = "Admin";
         public const string Role_Operator = "Operator";
+        public const string Role_Projektant = "Projektant";
+        public const string Role_Kierownik_Kontroli_Jakosci = "Kierownik kontroli jakości";
         public const string Role_Kontroler_Jakosci = "Kontroler jakości";
-        public const string Role_Kierownik_Jakosci = "Kierownik jakości";
-        public const string Role_Konstruktor = "Konstruktor";
-        public const string Role_Prezes = "Prezes";
+        public const string Role_Menager = "Menager";
     }
 }

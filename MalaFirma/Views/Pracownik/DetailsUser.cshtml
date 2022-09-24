@@ -1,0 +1,83 @@
+﻿@model EditUserVM
+@{
+    ViewData["Title"] = "Szczególy pracownika";
+}
+<partial name="_Notification" />
+
+<div class="container p-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@Model.UserName</h6>
+        </div>
+        <br />
+
+        <div class="card-body">
+
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Nazwa używkownika
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt class="col-sm-3">
+                    Imię
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Imie)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Nazwisko)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Nazwisko)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Kraj)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Kraj)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Miasto)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Miasto)
+                </dd>
+                <dt class="col-sm-3">
+                    Ulica oraz numer
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.UlicaNumer)
+                </dd>
+                <dt class="col-sm-3">
+                    Kod pocztowy
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.KodPocztowy)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Rola)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Roles)
+                </dd>
+                
+            </dl>
+
+            <a asp-controller="Pracownik" asp-action="EditUser" asp-route-id="@Model.Id" class="btn btn-warning ">
+                                    <i class="bi bi-pencil-square"></i> Edytuj
+                                </a>
+                                <a class="btn btn-danger delete"
+                               data-id="@Model.Id"
+                               data-controller="Pracownik"
+                               data-action="DeleteUser"
+                               data-body-message="Czy napewno chcesz usunąć tego pracownika?">
+                                    <i class="bi bi-trash3-fill"></i> Usuń
+                                </a>
+
+                                <a asp-controller="Pracownik" asp-action="Index" class="btn btn-dark" style="margin-right:5px; float:right;"><i class="bi bi-person-circle"></i> Lista pracowników</a>
+          
+
+    </div>
+</div>

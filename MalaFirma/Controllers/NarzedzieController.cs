@@ -3,6 +3,7 @@ using MalaFirma.DataAccess;
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MalaFirma.Controllers
 {
@@ -27,9 +28,14 @@ namespace MalaFirma.Controllers
             NarzedzieTypVM model = new NarzedzieTypVM();
             model.Narzedzie = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
             model.TypNarzedzia = _unitOfWork.TypNarzedzia.GetFirstOrDefault(x => x.Id == model.Narzedzie.TypNarzedziaId);
+            if(model.Narzedzie.ObslugaMetrologiczna == true)
+            {
+                model.ObslugaMetrologiczna = _unitOfWork.ObslugaMetrologiczna.GetFirstOrDefault(x => x.NarzedzieId == id);
+            }
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Upsert(int? id)
         {
             NarzedzieTypVM obj = new()
@@ -56,6 +62,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(NarzedzieTypVM obj)
@@ -69,7 +76,8 @@ namespace MalaFirma.Controllers
                 {
                     AddObsluga(obj.Narzedzie.Id, obj.ObslugaMetrologiczna.DataWaznosci);
                 }
-                TempData["success"] = "Narzędzie zostało pomyślnie dodane";
+                TempData["success"] = "Narzędzie zostało pomyślnie utworzone";
+                return RedirectToAction("DetailsNarzedzie", "Narzedzie", new { id = obj.Narzedzie.Id });
             }
             else
             {
@@ -85,12 +93,33 @@ namespace MalaFirma.Controllers
                     {
                         EditObsluga(obj.Narzedzie.Id, obj.ObslugaMetrologiczna.DataWaznosci);
                     }
-                    
+
                 }
                 _unitOfWork.Save();
-                TempData["success"] = "Narzędzie zostało zedytowane";
+                TempData["success"] = "Narzędzie zostało zaktualizowane";
             }
-            return RedirectToAction("Index");
+            return View(obj);
+        }
+
+        [Authorize(Roles = "Menager, Admin")]
+        public IActionResult EditDataObslugi(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obslugaMetrologiczna = _unitOfWork.ObslugaMetrologiczna.GetFirstOrDefault(x => x.NarzedzieId == id);
+            return PartialView(obslugaMetrologiczna);
+        }
+
+        [Authorize(Roles = "Menager, Admin")]
+        [HttpPost]
+        public IActionResult EditDataObslugi(ObslugaMetrologiczna obj)
+        {
+            _unitOfWork.ObslugaMetrologiczna.Update(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Data obsługi metrologicznej została zaktualizowana";
+            return RedirectToAction("DetailsNarzedzie", "Narzedzie", new { id = obj.NarzedzieId });
         }
 
         public void AddObsluga(int id, DateTime dataWaznosci)
@@ -110,6 +139,7 @@ namespace MalaFirma.Controllers
             _unitOfWork.Save();
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Narzedzie.GetFirstOrDefault(x => x.Id == id);
@@ -129,13 +159,13 @@ namespace MalaFirma.Controllers
             return View(objTypNarzedziaList);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult CreateTypNarzedzia()
         {
             return View();
         }
 
-
-
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateTypNarzedzia(TypNarzedzia obj)
@@ -144,12 +174,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.TypNarzedzia.AddId(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Typ Narzędzia został pomyślnie dodany";
+                TempData["success"] = "Typ Narzędzia został pomyślnie utworzony";
                 return RedirectToAction("TypNarzedzia");
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult EditTypNarzedzia(int? id)
         {
             if (id == null || id == 0)
@@ -164,6 +195,7 @@ namespace MalaFirma.Controllers
             return View(typNarzedziaFormDb);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditTypNarzedzia(TypNarzedzia obj)
@@ -172,12 +204,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.TypNarzedzia.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Edycja typu narzędzia przebiegła pomyślnie";
+                TempData["success"] = "Typu narzędzia został zaktualizowany";
                 return RedirectToAction("TypNarzedzia");
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult DeleteTypNarzedzia(int? id)
         {
             var obj = _unitOfWork.TypNarzedzia.GetFirstOrDefault(x => x.Id == id);

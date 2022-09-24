@@ -1,5 +1,7 @@
 ﻿@model EditUserVM
-
+@{
+    ViewData["Title"] = "Edycja pracownika";
+}
 
 <div class="container p-3">
     <div class="card shadow mb-4" style="margin:15px">
@@ -54,7 +56,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Edytuj</button>
-                <a asp-controller="Pracownik" asp-action="Index" class="btn btn-dark"><i class="bi bi-person-circle"></i> Lista pracowników</a>
+                <a asp-controller="Pracownik" asp-action="DetailsUser" asp-route-id="@Model.Id" class="btn btn-dark">Anuluj</a>
             </form>
         </div>
     </div>

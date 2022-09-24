@@ -15,9 +15,11 @@ namespace MalaFirma.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Wymagane jest podanie początkowej daty ważności obsługi metrologicznej.")]
         [DisplayName("Data obsługi")]
+        [DataType(DataType.Date)]
         public DateTime DataObslugi { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Wymagane jest podanie daty ważności obsługi metrologicznej.")]
         [DisplayName("Data ważnosci")]
+        [DataType(DataType.Date)]
         public DateTime DataWaznosci { get; set; }
         [ValidateNever]
         public int NarzedzieId { get; set; }

@@ -23,8 +23,8 @@ namespace MalaFirma.Models
         [DisplayName("Data zakończenia")]
         [DataType(DataType.Date)]
         public DateTime DataZakonczenia { get; set; } = DateTime.Now;
-        [Required(ErrorMessage = "Opis audytu jest wymagany.")]
-        public string Opis { get; set; }
+        [DisplayName("Opis niezgodności")]
+        public string? Opis { get; set; }
         public string? Status { get; set; }
         public string? Uwagi { get; set; }
         [DisplayName("Termin usunięcia niezgodności")]

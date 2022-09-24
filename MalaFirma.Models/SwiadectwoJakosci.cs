@@ -13,10 +13,12 @@ namespace MalaFirma.Models
     {
         [Key]
         public int Id { get; set; }
+        [DisplayName("Numer świadectwa")]
         public string? NumerSwiadectwa { get; set; }
         [DisplayName("Wynik świadectwa")]
         [Required(ErrorMessage = "Wynik świadectwa jest wymagany")]
         public string WynikSwiadectwa { get; set; }
+
         public string? ZidentyfikowaneProblemy { get; set; }
         public string? PlanowaneDzialania { get; set; }
         [DisplayName("Data zakończenia świadectwa")]

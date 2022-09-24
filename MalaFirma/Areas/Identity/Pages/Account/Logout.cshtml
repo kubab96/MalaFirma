@@ -1,9 +1,6 @@
 ﻿@page
 @using MalaFirma.Areas.Identity.Pages.Account
 @model LogoutModel
-@{
-    ViewData["Title"] = "Wyloguj";
-}
 
 <header>
     <h1>@ViewData["Title"]</h1>
@@ -11,7 +8,7 @@
         if (User.Identity.IsAuthenticated)
         {
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Naciśnij tutaj aby potwierdzić wylogowanie.</button>
+                <button type="submit" class="btn btn-lg btn-primary">Naciśnij tutaj aby potwierdzić wylogowanie.</button>
             </form>
         }
         else

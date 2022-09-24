@@ -1,5 +1,6 @@
 ﻿using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace MalaFirma.Controllers
 {
@@ -17,6 +18,7 @@ namespace MalaFirma.Controllers
             return View(objAudytyList);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Upsert(int? id)
         {
             Audyt obj = new();
@@ -33,6 +35,7 @@ namespace MalaFirma.Controllers
             }
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Audyt obj)
@@ -44,25 +47,30 @@ namespace MalaFirma.Controllers
                     obj.Status = "Otwarty";
                     _unitOfWork.Audyt.Add(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Audyt został pomyślnie dodany";
+                    TempData["success"] = "Audyt został pomyślnie utworzony";
                     return RedirectToAction("DetailsAudyt", "Audyt", new { obj.Id });
                 }
                 else
                 {
+                    obj.Status = "Otwarty";
                     _unitOfWork.Audyt.Update(obj);
                     _unitOfWork.Save();
-                    TempData["success"] = "Audyt został zedytowany";
+                    TempData["success"] = "Audyt został zaktualizowany";
                     return RedirectToAction("DetailsAudyt", "Audyt", new { obj.Id });
                 }
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult EndAudyt(int? id)
         {
             var obj = _unitOfWork.Audyt.GetFirstOrDefault(u => u.Id == id);
             obj.Status = "Zamknięty";
-            obj.TerminUsuniecia = DateTime.Now;
+            if(obj.Opis != null)
+            {
+                obj.TerminUsuniecia = DateTime.Now;
+            }
             _unitOfWork.Audyt.Update(obj);
             _unitOfWork.Save();
             return RedirectToAction("DetailsAudyt", "Audyt", new { obj.Id });
@@ -74,6 +82,7 @@ namespace MalaFirma.Controllers
             return View(audyt);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Audyt.GetFirstOrDefault(x => x.Id == id);

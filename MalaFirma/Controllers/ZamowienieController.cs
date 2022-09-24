@@ -31,7 +31,7 @@ namespace MalaFirma.Controllers
             return View(objZamowienieList);
         }
 
-        //[Authorize(Roles = "Prezes")]
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Upsert(int? id)
         {
             ZamowienieWymaganieVM obj = new()
@@ -57,7 +57,7 @@ namespace MalaFirma.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ZamowienieWymaganieVM obj)
@@ -80,7 +80,7 @@ namespace MalaFirma.Controllers
                     obj.Zamowienie.KlientId = obj.Zamowienie.KlientId;
                     _unitOfWork.Zamowienie.Update(obj.Zamowienie);
                     _unitOfWork.Save();
-                    TempData["success"] = "Edycja zamowienia została wykonana.";
+                    TempData["success"] = "Zamówienie zostało zaktualizowane.";
                     return RedirectToAction("DetailsZamowienia", "Zamowienie", new { obj.Zamowienie.Id });
                 }
             }
@@ -101,10 +101,11 @@ namespace MalaFirma.Controllers
             obj.StatusZamowienia = "Zakończono";
             _unitOfWork.Zamowienie.Update(obj);
             _unitOfWork.Save();
-            TempData["success"] = "Zamówienie zostało zakończone!";
+            TempData["success"] = "Zamówienie zostało zakończone";
             RedirectToAction("Index").ExecuteResult(this.ControllerContext);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult ZakonczZamowienie(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
@@ -112,19 +113,35 @@ namespace MalaFirma.Controllers
             return RedirectToAction("Index");
         }
 
+
         public void AddKartaProjektu(int id)
         {
             KartaProjektu karta = new KartaProjektu();
             karta.ZamowienieId = id;
+            karta.NumerKarty = $"KP/{id}";
             _unitOfWork.KartaProjektu.AddId(karta);
             _unitOfWork.Save();
         }
 
-
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
             var obj2 = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == id);
+            var obj5 = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == id);
+            var obj6 = _unitOfWork.KartaProjektu.GetFirstOrDefault(x => x.ZamowienieId == id);
+            if (obj6 != null)
+            {
+
+                _unitOfWork.KartaProjektu.Remove(obj6);
+                _unitOfWork.Save();
+            }
+            if (obj5 != null)
+            {
+
+                _unitOfWork.ZadowolenieKlienta.Remove(obj5);
+                _unitOfWork.Save();
+            }
             foreach (var item in obj2)
             {
                 var obj3 = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == item.Id);
@@ -167,6 +184,7 @@ namespace MalaFirma.Controllers
         #endregion
 
         #region Wymagania
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult CreateWymaganie(int? id)
         {
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
@@ -177,6 +195,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateWymaganie(IFormCollection fc, ZamowienieWymaganieVM obj, int id)
@@ -186,7 +205,7 @@ namespace MalaFirma.Controllers
                 var result = _unitOfWork.Wymaganie.GetFirstOrDefault(x => x.ZamowienieId == id);
                 if (result == null)
                 {
-                    TempData["error"] = "Wymagane jest dodanie przynajmniej jednego wymagania.";
+                    TempData["error"] = "Wymagane jest dodanie przynajmniej jednego wymagania";
                     return CreateWymaganie(id);
                 }
                 else
@@ -196,7 +215,7 @@ namespace MalaFirma.Controllers
                     zamowienieFormDb.UwagiZamowienia = obj.Zamowienie.UwagiZamowienia;
                     _unitOfWork.Zamowienie.Update(zamowienieFormDb);
                     _unitOfWork.Save();
-                    TempData["success"] = "Zamówienie zostało pomyślnie dodane.";
+                    TempData["success"] = "Zamówienie zostało pomyślnie utworzone";
                     return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id });
                 }
             }
@@ -205,11 +224,11 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, id);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == id);
-                AddPrzewodnikPracy(obj.Wymaganie.Id);
-                AddSwiadectwoJakosci(obj.Wymaganie.Id);
+                AddPrzewodnikPracy(obj.Wymaganie.Id, zamowienieId.Id);
+                AddSwiadectwoJakosci(obj.Wymaganie.Id, zamowienieId.Id);
                 _unitOfWork.Save();
                 ModelState.Clear();
-                TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
+                TempData["success"] = "Wymaganie zostało pomyślnie utworzone";
                 return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
             }
             return View();
@@ -224,6 +243,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         public IActionResult EditWymaganie(int? id, int? editId)
         {
             if (id == null || id == 0)
@@ -239,6 +259,7 @@ namespace MalaFirma.Controllers
             return View(wymaganieFormDb);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditWymaganie(Wymaganie obj)
@@ -247,7 +268,7 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Wymaganie.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Edycja wymagania przebiegła pomyślnie";
+                TempData["success"] = "Wymaganie zostało zaktualizowane";
                 int x = Convert.ToInt32(TempData["Data1"]);
                 if (x == 0)
                 {
@@ -261,6 +282,7 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         public IActionResult AddWymaganie(int? idZamowienia)
         {
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
@@ -268,6 +290,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddWymaganie(ZamowienieWymaganieVM obj, int idZamowienia)
@@ -276,14 +299,15 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, idZamowienia);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
-                AddPrzewodnikPracy(obj.Wymaganie.Id);
+                AddPrzewodnikPracy(obj.Wymaganie.Id, zamowienieId.Id);
                 _unitOfWork.Save();
-                TempData["success"] = "Wymaganie zostało pomyślnie dodane.";
+                TempData["success"] = "Wymaganie zostało pomyślnie utworzone";
                 return RedirectToAction("Wymagania", "Zamowienie", new { id = idZamowienia });
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         public IActionResult DeleteWymaganie(int? id)
         {
 
@@ -299,20 +323,22 @@ namespace MalaFirma.Controllers
             return RedirectToAction("CreateWymaganie", "Zamowienie", new { id });
         }
 
-        public void AddPrzewodnikPracy(int idWymagania)
+        public void AddPrzewodnikPracy(int idWymagania, int idZamowienia)
         {
             PrzewodnikPracy przewodnik = new PrzewodnikPracy();
             przewodnik.WymaganieId = idWymagania;
             przewodnik.WynikPrzewodnika = "";
+            przewodnik.NumerPrzewodnika = $"PP/{idZamowienia}/{idWymagania}";
             _unitOfWork.PrzewodnikPracy.AddId(przewodnik);
             _unitOfWork.Save();
         }
 
-        public void AddSwiadectwoJakosci(int idWymagania)
+        public void AddSwiadectwoJakosci(int idWymagania, int idZamowienia)
         {
             SwiadectwoJakosci swiadectwo = new SwiadectwoJakosci();
             swiadectwo.WymaganieId = idWymagania;
             swiadectwo.WynikSwiadectwa = "";
+            swiadectwo.NumerSwiadectwa = $"SW/{idZamowienia}/{idWymagania}";
             _unitOfWork.SwiadectwoJakosci.AddId(swiadectwo);
             _unitOfWork.Save();
         }
@@ -331,11 +357,13 @@ namespace MalaFirma.Controllers
             return View(klient);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult CreateKlient()
         {
             return View();
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         public IActionResult CreateKlient(Klient obj)
         {
@@ -343,12 +371,33 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Klient.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Klient został pomyślnie dodany.";
+                TempData["success"] = "Klient został pomyślnie utworzony";
                 return RedirectToAction("Klient");
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
+        public IActionResult AddKlient()
+        {
+            return PartialView();
+        }
+
+        [Authorize(Roles = "Menager, Admin")]
+        [HttpPost]
+        public IActionResult AddKlient(Klient obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Klient.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Klient został pomyślnie utworzony";
+                return RedirectToAction("Upsert");
+            }
+            return PartialView(obj);
+        }
+
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult EditKlient(int? id)
         {
             if (id == null || id == 0)
@@ -363,6 +412,7 @@ namespace MalaFirma.Controllers
             return View(klientFormDb);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditKlient(Klient obj)
@@ -371,12 +421,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.Klient.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Edycja klienta przebiegła pomyślnie";
+                TempData["success"] = "Klient został zaktualizowany";
                 return RedirectToAction("Klient");
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin")]
         public IActionResult DeleteKlient(int? id)
         {
             var obj = _unitOfWork.Klient.GetFirstOrDefault(x => x.Id == id);
@@ -391,12 +442,13 @@ namespace MalaFirma.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = "Nie można usunąć klienta przypisanego do zamówienia";
+                TempData["error"] = "Nie można usunąć klienta, który przypisany jest do zamówienia";
                 return RedirectToAction("Klient");
             }
             TempData["success"] = "Klient został usunięty";
             return RedirectToAction("Klient");
         }
+
 
         public IActionResult ZadowolenieKlienta(int? idZamowienia)
         {
@@ -411,6 +463,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         public IActionResult CreateZadowolenie(int idZamowienia)
         {
             ZamowienieWymaganieVM model = new ZamowienieWymaganieVM();
@@ -418,6 +471,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateZadowolenie(ZamowienieWymaganieVM obj, int idZamowienia)
@@ -432,12 +486,13 @@ namespace MalaFirma.Controllers
             {
                 _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
                 _unitOfWork.Save();
-                TempData["success"] = "Zadowolenie klienta zostało pomyślnie dodane.";
+                TempData["success"] = "Zakończono zadowolenie klienta";
                 return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = idZamowienia });
             }
             return View(obj);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         public IActionResult EditZadowolenie(int? id, int? zamowienieId)
         {
             if (id == null || id == 0)
@@ -452,6 +507,7 @@ namespace MalaFirma.Controllers
             return View(zadowolenieFormDb);
         }
 
+        [Authorize(Roles = "Menager, Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditZadowolenie(ZadowolenieKlienta obj, int? zamowienieId)
@@ -464,14 +520,14 @@ namespace MalaFirma.Controllers
                     var objPrzewodnik = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == item.Id);
                     if(obj.DataZakonczeniaZadowolenia < objPrzewodnik.DataZakonczeniaPrzewodnika)
                     {
-                        TempData["error"] = "Nie można wprowadzić daty dalszej niż data zakończonego przewodnika";
+                        TempData["error"] = "Nie można wprowadzić daty dalszej, niż data zakończonego przewodnika";
                         return View(obj);
                     }
                 }
                 
                 _unitOfWork.ZadowolenieKlienta.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Zadowolenie klienta zostało pomyślnie zaktualizowane";
+                TempData["success"] = "Zadowolenie klienta zostało zaktualizowane";
                 return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = zamowienieId });
             }
             return View(obj);

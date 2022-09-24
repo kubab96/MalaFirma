@@ -1,0 +1,42 @@
+﻿@model ObslugaMetrologiczna
+
+<div class="container p-3">
+        <div class="card shadow mb-4" style="margin:15px">
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Edytuj datę obsługi metrologicznej</h6>
+        </div>
+
+        <div class="card-body">
+            <form method="post" asp-action="EditDataObslugi">
+                <input asp-for="NarzedzieId" hidden />
+                <div class="mb-3">
+                    <label asp-for="DataObslugi"></label>
+                    <input asp-for="DataObslugi" class="form-control" />
+                    <span asp-validation-for="DataObslugi" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DataWaznosci"></label>
+                    <input asp-for="DataWaznosci" class="form-control" />
+                    <span asp-validation-for="DataWaznosci" class="text-danger"></span>
+                </div>
+
+
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
+                    <a asp-controller="Narzedzie" asp-action="DetailsNarzedzie" asp-route-id="@Model.NarzedzieId" class="btn btn-dark">Anuluj</a>
+
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    @section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+
+
+    }
+

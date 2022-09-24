@@ -1,6 +1,6 @@
 ﻿@model Szkolenie
 @{
-    ViewData["Title"] = "Szkolenie";
+    ViewData["Title"] = "Szczególy szkolenia";
 }
 <partial name="_Notification" />
 
@@ -38,12 +38,24 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.DataZakonczenia)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Uwagi)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Uwagi)
-                </dd>
+                @if (@Model.Uwagi != null)
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Uwagi)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Uwagi)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Uwagi)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <h7>Brak</h7>
+                    </dd>
+                }
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Status)
                 </dt>

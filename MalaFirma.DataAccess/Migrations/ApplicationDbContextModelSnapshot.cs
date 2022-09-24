@@ -115,7 +115,7 @@ namespace MalaFirma.DataAccess.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "500641ca-fcac-4220-b96a-8e2488b967e3",
+                            ConcurrencyStamp = "550207c1-0f96-4e8f-8c0c-18a1686dea79",
                             EmailConfirmed = true,
                             Imie = "Admin",
                             KodPocztowy = "",
@@ -124,7 +124,7 @@ namespace MalaFirma.DataAccess.Migrations
                             Miasto = "",
                             Nazwisko = "",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAED6ysQqfVwqKTa3kaCLi38EaeeXMZikL1mBmsek5ntSyr//xXJ/NYDd7SSSTfBhYHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGeI4sbbOiJaJaf2zQoufbxHZpZw7GzSth35Odfd1cqzkSo5B05nlY0BhREx4FAddQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -148,7 +148,6 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Opis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RodzajAudytu")
@@ -215,6 +214,9 @@ namespace MalaFirma.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DodatkoweUwagi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumerKarty")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PrzegladId")
@@ -722,7 +724,7 @@ namespace MalaFirma.DataAccess.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "e0c7b262-5704-4391-a520-a631013c5b1e",
+                            ConcurrencyStamp = "42ea5331-b50a-4d9e-a196-332380c41444",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });

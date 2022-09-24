@@ -63,7 +63,7 @@ namespace MalaFirma.DataAccess.Migrations
                     Temat = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataRozpoczecia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataZakonczenia = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminUsuniecia = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -377,7 +377,7 @@ namespace MalaFirma.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CzasRealizacji = table.Column<int>(type: "int", nullable: false),
                     Jakosc = table.Column<int>(type: "int", nullable: false),
-                    Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Uwagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataZakonczeniaZadowolenia = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ZamowienieId = table.Column<int>(type: "int", nullable: true),
                     KlientId = table.Column<int>(type: "int", nullable: false)
@@ -406,6 +406,7 @@ namespace MalaFirma.DataAccess.Migrations
                     PrzegladId = table.Column<int>(type: "int", nullable: true),
                     ZamowienieId = table.Column<int>(type: "int", nullable: false),
                     DodatkoweInformacje = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumerKarty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DodatkoweUwagi = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -570,12 +571,12 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "84c4ea54-19ca-41a9-a898-dc7792ef03e4", "Admin", "Admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "eb101234-a922-4e0d-86ea-d6b27a735cdb", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Imie", "KodPocztowy", "Kraj", "LockoutEnabled", "LockoutEnd", "Miasto", "Nazwisko", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UlicaNumer", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "1508e8c0-33d9-41c4-9376-d72ee701cb02", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEBNPQOZvPbQ+4nL4qGyEcDT9wFJerlECirNkRGTL2mODiNjLyLMVZyIgA2s2qUhHUw==", null, false, "", false, "", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "b8358e8c-3877-4b60-a2da-7b4b9ac5da7e", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEJTSHn2i25bXbPcwI25XXOZwwZ4GSwA4rkXhyNH/h0roXr9TFxLyE+kyN7k0zYOOZg==", null, false, "", false, "", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

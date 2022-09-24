@@ -1,12 +1,12 @@
 ﻿@model Audyt
 @{
-    ViewData["Title"] = "Audyt";
+    ViewData["Title"] = "Szczególy audytu";
 }
 <partial name="_Notification" />
 
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Audyt</h6>
         </div>
         <br />
@@ -26,12 +26,24 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.RodzajAudytu)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Opis)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Opis)
-                </dd>
+                @if (@Model.Opis != null)
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Opis)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Opis)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Opis)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <h7>Brak</h7>
+                    </dd>
+                }
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.DataRozpoczecia)
                 </dt>
@@ -44,12 +56,24 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.DataZakonczenia)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Uwagi)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Uwagi)
-                </dd>
+                @if (@Model.Uwagi != null)
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Uwagi)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Uwagi)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Uwagi)
+                    </dt>
+                    <dd class="col-sm-10">
+                        <h7>Brak</h7>
+                    </dd>
+                }
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Status)
                 </dt>
@@ -78,18 +102,18 @@
                data-body-message="Czy napewno chcesz usunąć ten audyt?">
                 <i class="bi bi-trash3-fill"></i> Usuń
             </a>
-            
+
             <a asp-controller="Audyt" asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-warning">
                 <i class="bi bi-pencil-square"></i> Edytuj
             </a>
             <a asp-controller="Audyt" asp-action="EndAudyt" asp-route-id="@Model.Id" id="btn" class="btn btn-info" hidden>
                 <i class="bi bi-pencil-square"></i> Zakończ
             </a>
-            
+
 
 
             <input type="file" id="formFile" name="file" class="form-control" hidden />
-            <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" >Zakończ audyt</button>
+            <button type="submit" class="btn btn-primary" onclick="return ValidateInput()">Zakończ audyt</button>
         </div>
 
 

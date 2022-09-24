@@ -1,4 +1,7 @@
 ﻿@model NarzedzieTypVM
+@{
+    ViewData["Title"] = "Narzędzie";
+}
 
 <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
@@ -8,18 +11,19 @@
 
         <div class="card-body">
             <form method="post" asp-action="Upsert">
+                <div class="row">
                 <input asp-for="Narzedzie.Id" hidden />
                 <div class="mb-3">
                     <label asp-for="Narzedzie.Nazwa"></label>
                     <input asp-for="Narzedzie.Nazwa" class="form-control" />
                     <span asp-validation-for="Narzedzie.Nazwa" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="col-6">
                     <label asp-for="Narzedzie.NumerFabryczny"></label>
                     <input asp-for="Narzedzie.NumerFabryczny" class="form-control" />
                     <span asp-validation-for="Narzedzie.NumerFabryczny" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
+                <div class="col-6" style="padding-bottom:15px">
                     <label asp-for="Narzedzie.TypNarzedziaId"></label>
                     <select asp-for="Narzedzie.TypNarzedziaId" asp-items="@Model.TypNarzedzi" class="form-select">
                         <option disabled selected>-- Wybierz typ narzędzia --</option>
@@ -58,7 +62,7 @@
 
                 </div>
                 }
-                
+                </div>
 
                 @if (Model.Narzedzie.Id != 0)
                 {

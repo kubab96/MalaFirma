@@ -1,6 +1,6 @@
 ﻿@model SwiadectwoJakosciVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Szczególy świadectwa jakości";
 
 }
 <partial name="_Notification" />
@@ -19,13 +19,13 @@
                     @Html.DisplayFor(model => model.Zamowienie.Nazwa)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.PrzewodnikPracy.NumerPrzewodnika)
+                    Numer przewodnika
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.PrzewodnikPracy.NumerPrzewodnika)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.PrzewodnikPracy.NumerRysunku)
+                    Numer rysunku
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.PrzewodnikPracy.NumerRysunku)
@@ -42,12 +42,25 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Wymaganie.Ilosc)
                 </dd>
-                <dt class="col-sm-2">
+                @if (@Model.Wymaganie.Material != null)
+                            {
+                                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
                 </dd>
+                            }
+                            else
+                            {
+                                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                </dt>
+                <dd class="col-sm-10">
+                    Nie wykonano
+                </dd>
+                            }
+                
             </dl>
 
 

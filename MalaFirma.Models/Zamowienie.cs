@@ -18,6 +18,7 @@ namespace MalaFirma.Models
         [DisplayName("Nazwa zamówienia")]
         public string Nazwa { get; set; }
         [DisplayName("Data zamówienia")]
+        [DataType(DataType.Date)]
         public DateTime DataZamowienia { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Wymagane jest wybranie klienta")]
         public int? KlientId { get; set; }

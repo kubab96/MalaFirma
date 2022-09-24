@@ -1,4 +1,7 @@
 ﻿@model Dostawca
+@{
+    ViewData["Title"] = "Dostawca";
+}
 <partial name="_Notification" />
 <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
@@ -25,12 +28,12 @@
                     <textarea asp-for="ZakresDzialalnosci" class="form-control" rows="3"> </textarea>
                     <span asp-validation-for="ZakresDzialalnosci" class="text-danger"></span>
                 </div>
-                <div class="py-2 col-6">
+                <div class="col-6">
                     <label asp-for="DataZatwierdzenia"></label>
                     <input class="form-control" asp-for="DataZatwierdzenia" />
                     <span asp-validation-for="DataZatwierdzenia" class="text-danger"></span>
                 </div>
-                <div class="py-2 col-6">
+                <div class="col-6" style="padding-bottom:15px">
                     <label asp-for="DataWygasniecia"></label>
                     <input class="form-control" asp-for="DataWygasniecia" />
                     <span asp-validation-for="DataWygasniecia" class="text-danger"></span>

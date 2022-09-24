@@ -1,6 +1,7 @@
 ﻿using MalaFirma.DataAccess;
 using MalaFirma.DataAccess.Repository.IRepository;
 using MalaFirma.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin, Kierownik kontroli jakości")]
         public IActionResult WynikSwiadectwaJakosci(int? idSwiadectwa)
         {
             if (idSwiadectwa == null || idSwiadectwa == 0)
@@ -48,6 +49,7 @@ namespace MalaFirma.Controllers
             return View(swiadectwoFormDb);
         }
 
+        [Authorize(Roles = "Admin, Kierownik kontroli jakości")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult WynikSwiadectwaJakosci(SwiadectwoJakosci obj, string? wynik)
@@ -55,12 +57,11 @@ namespace MalaFirma.Controllers
             if (ModelState.IsValid)
             {
                 var przewodnikId = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == obj.WymaganieId);
-                var operacje = _unitOfWork.Operacja.GetFirstOrDefault(x => x.PrzewodnikPracyId == przewodnikId.Id);
                 if (wynik == null)
                 {
-                    if (operacje == null)
+                    if (przewodnikId.WynikPrzewodnika == "")
                     {
-                        TempData["error"] = "Konieczne jest wykonanie przynajmniej jednej operacji przed zakończeniem świadectwa";
+                        TempData["error"] = "Konieczne jest zakończenie przewodnika pracy";
                         return RedirectToAction("PrzewodnikPracy", "PrzewodnikPracy", new { id = przewodnikId.Id });
                     }
                     else
@@ -80,39 +81,24 @@ namespace MalaFirma.Controllers
                         return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
                     }
                 }
+
                 else
                 {
-                    var lastOperacja = _db.Operacje.OrderByDescending(s => s.Id)
-                         .FirstOrDefault(s => s.PrzewodnikPracy.Id == przewodnikId.Id);
-                    if (lastOperacja != null)
+
+                    if (obj.DataZakonczeniaSwiadectwa < przewodnikId.DataZakonczeniaPrzewodnika)
                     {
-                        DateTime data = lastOperacja.DataWykonania;
-                        if (obj.DataZakonczeniaSwiadectwa < data)
-                        {
-                            TempData["error"] = "Nie można wprowadzić daty dalszej niż data ostatnio wykonanej operacji";
-                            return View(obj);
-                        }
-                        else
-                        {
-                            _unitOfWork.SwiadectwoJakosci.Update(obj);
-                            _unitOfWork.Save();
-                            TempData["success"] = "Świadectwo jakości zostało zakończone";
-                            return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
-                        }
+                        TempData["error"] = "Nie można wprowadzić daty dalszej, niż data zakończenia przewodnika";
+                        return View(obj);
                     }
                     else
                     {
                         _unitOfWork.SwiadectwoJakosci.Update(obj);
                         _unitOfWork.Save();
-                        TempData["success"] = "Świadectwo jakości zostało zakończone";
+                        TempData["success"] = "Zakończono świadectwo jakości";
                         return RedirectToAction("SwiadectwoJakosciDetails", new { id = obj.Id });
                     }
+
                 }
-
-
-
-
-
             }
             return View(obj);
         }
@@ -131,6 +117,7 @@ namespace MalaFirma.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Kierownik kontroli jakości, Kontroler jakości")]
         [HttpPost]
         public IActionResult SwiadectwoJakosciDetails(SwiadectwoJakosciVM model, IFormFile file, int id, IFormCollection fc, string? numerRysunku, int? idRysunku)
         {
@@ -170,25 +157,10 @@ namespace MalaFirma.Controllers
             {
                 DeleteRysunek(idRysunku);
                 return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.Przywieszka.SwiadectwoJakosciId });
-                //if (model.Przywieszka.Rysunek != null)
-                //{
-                //    var oldImage = Path.Combine(wwwRootPath, model.Przywieszka.Rysunek.TrimStart('\\'));
-                //    if (System.IO.File.Exists(oldImage))
-                //    {
-                //        System.IO.File.Delete(oldImage);
-                //    }
-                //    model.Przywieszka.Rysunek = null;
-
-                //    _unitOfWork.Przywieszka.Update(model.Przywieszka);
-                //    _unitOfWork.Save();
-                //    TempData["success"] = "Przywieszka została pomyślnie usunięta.";
-                //    return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.Przywieszka.SwiadectwoJakosciId });
-                //}
             }
 
             if (rysunek == null)
             {
-                //model.Przywieszka.NumerPrzywieszki = $"{model.SwiadectwoJakosci.ZamowienieId}/{model.SwiadectwoJakosci.WymaganieId}";
                 model.Przywieszka.NumerPrzywieszki = $"/{model.SwiadectwoJakosci.WymaganieId}";
                 model.Przywieszka.SwiadectwoJakosciId = id;
                 _unitOfWork.Przywieszka.Update(model.Przywieszka);
@@ -197,7 +169,6 @@ namespace MalaFirma.Controllers
             }
             else
             {
-                //rysunek.NumerPrzywieszki = $"{model.SwiadectwoJakosci.ZamowienieId}/{model.SwiadectwoJakosci.WymaganieId}";
                 rysunek.NumerPrzywieszki = $"/{model.SwiadectwoJakosci.WymaganieId}";
                 rysunek.SwiadectwoJakosciId = id;
                 _unitOfWork.Przywieszka.Update(rysunek);
@@ -207,6 +178,7 @@ namespace MalaFirma.Controllers
             return RedirectToAction("SwiadectwoJakosciDetails", new { id = model.SwiadectwoJakosci.WymaganieId });
         }
 
+        [Authorize(Roles = "Admin, Kierownik kontroli jakości, Kontroler jakości")]
         public IActionResult DeleteRysunek(int? id)
         {
             var obj = _unitOfWork.Przywieszka.GetFirstOrDefault(x => x.Id == id);
@@ -226,6 +198,6 @@ namespace MalaFirma.Controllers
             return View();
         }
 
-        
+
     }
 }

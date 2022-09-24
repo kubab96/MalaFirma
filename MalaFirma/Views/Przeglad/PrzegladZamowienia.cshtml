@@ -1,6 +1,6 @@
 ﻿@model PrzegladVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Przegląd zamówienia";
     var query =
     from pyt in Model.Pytania
     join odp in Model.Odpowiedzi on pyt.Id equals odp.PytanieId into op

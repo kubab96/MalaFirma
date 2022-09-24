@@ -1,4 +1,7 @@
 ﻿@model Szkolenie
+@{
+    ViewData["Title"] = "Szkolenie";
+}
 
 <div class="container p-3">
         <div class="card shadow mb-4" style="margin:15px">
@@ -22,12 +25,12 @@
                     </select>
                     <span asp-validation-for="RodzajSz" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-6">
+                <div class="col-6">
                     <label asp-for="DataRozpoczecia"></label>
                     <input class="form-control" asp-for="DataRozpoczecia" />
                     <span asp-validation-for="DataRozpoczecia" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-6">
+                <div class="py-2 col-6" style="padding-bottom:15px">
                     <label asp-for="DataZakonczenia"></label>
                     <input class="form-control" asp-for="DataZakonczenia" />
                     <span asp-validation-for="DataZakonczenia" class="text-danger"></span>
