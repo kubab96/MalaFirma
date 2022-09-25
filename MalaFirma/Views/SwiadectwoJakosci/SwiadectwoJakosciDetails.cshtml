@@ -6,8 +6,8 @@
 <partial name="_Notification" />
 
 <div class="container p-3">
-        <div class="card shadow mb-4" style="margin:15px">
-            <div class="card-header py-3">
+    <div class="card shadow mb-4" style="margin:15px">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Świadectwo jakości dla @Model.Wymaganie.Nazwa</h6>
         </div>
         <div class="card-body">
@@ -24,12 +24,24 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.PrzewodnikPracy.NumerPrzewodnika)
                 </dd>
-                <dt class="col-sm-2">
-                    Numer rysunku
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.PrzewodnikPracy.NumerRysunku)
-                </dd>
+                @if (@Model.PrzewodnikPracy.NumerRysunku != null)
+                {
+                    <dt class="col-sm-2">
+                        Numer rysunku
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PrzewodnikPracy.NumerRysunku)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2">
+                        Numer rysunku
+                    </dt>
+                    <dd class="col-sm-10">
+                        <h7>N/D</h7>
+                    </dd>
+                }
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Wymaganie.Nazwa)
                 </dt>
@@ -43,61 +55,61 @@
                     @Html.DisplayFor(model => model.Wymaganie.Ilosc)
                 </dd>
                 @if (@Model.Wymaganie.Material != null)
-                            {
-                                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
-                </dd>
-                            }
-                            else
-                            {
-                                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
-                </dt>
-                <dd class="col-sm-10">
-                    Nie wykonano
-                </dd>
-                            }
-                
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.SwiadectwoJakosci.WynikSwiadectwa)
+                    </dt>
+                    <dd class="col-sm-10">
+                        Nie wykonano
+                    </dd>
+                }
+
             </dl>
 
 
             @*Tabela wykonanych operacji*@
             @*<div class="card shadow mb-4" style="margin:15px">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Wykonane operacje</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Wykonane operacje</h6>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Treść operacji
-                                </th>
-                                <th>
-                                    Data wykonania
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var obj in Model.Operacje)
-                            {
-                                <tr>
-                                    <td width="20%">
-                                        @obj.TrescOperacji
-                                    </td>
-                                    <td width="20%">
-                                        @obj.DataWykonania
-                                    </td>
-                                </tr>
+                <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                <tr>
+                <th>
+                Treść operacji
+                </th>
+                <th>
+                Data wykonania
+                </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var obj in Model.Operacje)
+                {
+                <tr>
+                <td width="20%">
+                @obj.TrescOperacji
+                </td>
+                <td width="20%">
+                @obj.DataWykonania
+                </td>
+                </tr>
 
-                            }
-                        </tbody>
-                    </table>
+                }
+                </tbody>
+                </table>
                 </div>
-            </div>*@
+                </div>*@
 
 
             @*Tabela przywieszek*@
@@ -110,53 +122,53 @@
                 </div>
                 <div class="card-body">
 
-            <form method="post" asp-action="SwiadectwoJakosciDetails" enctype="multipart/form-data">
-                <input asp-for="Przywieszka.Rysunek" hidden />
-                    <input type="file" id="formFile" name="file" class="form-control" />
-                    <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
+                    <form method="post" asp-action="SwiadectwoJakosciDetails" enctype="multipart/form-data">
+                        <input asp-for="Przywieszka.Rysunek" hidden />
+                        <input type="file" id="formFile" name="file" class="form-control" />
+                        <button type="submit" class="btn btn-primary" onclick="return ValidateInput()" style="margin-top:15px; margin-bottom:15px">Zatwierdź</button>
 
                         <div class="card-body">
-                    <table class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Przywieszka
-                                </th>
-                                <th>
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Przywieszka
+                                        </th>
+                                        <th>
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var obj in Model.Przywieszki)
-                            {
-                                <tr>
-                                    <td width="20%">
-                                        <img src="@obj.Rysunek" width="250px" height="250px" style="border-radius:5px; border:1px solid #bbb9b9" />
-                                    </td>
-                                    <td width="20%">
-                                        
-                                        <input type="file" id="Edit @idPrzyw" name="file" class="form-control" />
-                                        <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Edytuj</button>
-                                       
-                                        <a class="btn btn-danger delete" style="margin-top:15px; margin-bottom:15px"
-                                       data-id="@obj.Id"
-                                       data-controller="SwiadectwoJakosci"
-                                       data-action="DeleteRysunek"
-                                       data-body-message="Czy napewno chcesz usunąć tą przywieszkę?">
-                                            <i class="bi bi-trash3-fill"></i> Usuń
-                                        </a>
-                                                    
-                                    </td>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var obj in Model.Przywieszki)
+                                    {
+                                        <tr>
+                                            <td width="20%">
+                                                <img src="@obj.Rysunek" width="250px" height="250px" style="border-radius:5px; border:1px solid #bbb9b9" />
+                                            </td>
+                                            <td width="20%">
 
-                                </tr>
-                                idPrzyw += 1;
-                            }
-                        </tbody>
-                    </table>
-                    </div>
+                                                <input type="file" id="Edit @idPrzyw" name="file" class="form-control" />
+                                                <button type="submit" class="btn btn-primary" onclick="return ValidateEdit(@idPrzyw)" asp-route-numerRysunku="@obj.NumerPrzywieszki" asp-route-idRysunku="@obj.Id" style="margin-top:15px; margin-bottom:15px">Edytuj</button>
 
-            </form>
+                                                <a class="btn btn-danger delete" style="margin-top:15px; margin-bottom:15px"
+                                               data-id="@obj.Id"
+                                               data-controller="SwiadectwoJakosci"
+                                               data-action="DeleteRysunek"
+                                               data-body-message="Czy napewno chcesz usunąć tą przywieszkę?">
+                                                    <i class="bi bi-trash3-fill"></i> Usuń
+                                                </a>
+
+                                            </td>
+
+                                        </tr>
+                                        idPrzyw += 1;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </form>
                 </div>
             </div>
             @if (Model.SwiadectwoJakosci.WynikSwiadectwa == "")
@@ -170,50 +182,50 @@
                 <a asp-controller="SwiadectwoJakosci" asp-action="WynikSwiadectwaJakosci" asp-route-idSwiadectwa="@Model.SwiadectwoJakosci.Id" asp-route-wynik="@Model.SwiadectwoJakosci.WynikSwiadectwa" class="btn btn-success">
                     <i class="bi bi-clipboard2-check"></i> Zakończono świadectwo jakości
                 </a>
-                
-                
+
+
             }
             <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@Model.PrzewodnikPracy.Id" class="btn btn-dark" style="margin-right:5px; float:right;">
-                    <i class="bi bi-wrench"></i>  Przewodnik pracy
-                </a>
+                <i class="bi bi-wrench"></i>  Przewodnik pracy
+            </a>
         </div>
     </div>
 </div>
 
 
-    @section Scripts{
+@section Scripts{
         @{
 
         }
-        <script>
+<script>
 
-            function ValidateInput() {
-                if (document.getElementById("formFile").value == "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Wystąpił błąd',
-                        footer: 'Nie załadowano rysunku.',
-                    });
-                    return false;
-                }
-                return true;
-            }
-        </script>
-        <script>
-            function ValidateEdit(id) {
+    function ValidateInput() {
+        if (document.getElementById("formFile").value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Wystąpił błąd',
+                footer: 'Nie załadowano rysunku.',
+            });
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    function ValidateEdit(id) {
 
-                if (document.getElementById("Edit " + id).value == "") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Wystąpił błąd',
-                        footer: 'Nie załadowano rysunku.',
-                    });
-                    return false;
-                }
-                return true;
+        if (document.getElementById("Edit " + id).value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Wystąpił błąd',
+                footer: 'Nie załadowano rysunku.',
+            });
+            return false;
+        }
+        return true;
 
-            }
-        </script>
+    }
+</script>
 
 
 

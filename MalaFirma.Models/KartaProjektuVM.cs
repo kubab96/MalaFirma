@@ -19,5 +19,6 @@ namespace SimpleQMS.Models
         public Zamowienie Zamowienie { get; set; }
         public Przeglad Przeglad { get; set; }
         public KartaProjektu KartaProjektu { get; set; }
+        public ZadowolenieKlienta ZadowolenieKlienta { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace SimpleQMS.Controllers
             model.Przewodniki = objPrzewodnikiList;
             IEnumerable<SwiadectwoJakosci> objSwiadectwaList = _unitOfWork.SwiadectwoJakosci.GetAll();
             model.Swiadectwa = objSwiadectwaList;
+            model.ZadowolenieKlienta = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == id);
 
             return View(model);
         }

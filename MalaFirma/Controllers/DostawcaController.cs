@@ -53,7 +53,7 @@ namespace SimpleQMS.Controllers
                     System.DateTime dataZatwierdzenia = obj.DataZatwierdzenia;
                     System.DateTime dataWygasniecia = obj.DataWygasniecia;
                     System.TimeSpan subtract = dataWygasniecia.Subtract(dataZatwierdzenia);
-                    if(subtract.Days <= 730)
+                    if(subtract.Days <= 731)
                     {
                         _unitOfWork.Dostawca.Add(obj);
                         _unitOfWork.Save();
@@ -109,7 +109,7 @@ namespace SimpleQMS.Controllers
                 System.DateTime dataZatwierdzenia = obj.DataZatwierdzenia;
                 System.DateTime dataWygasniecia = obj.DataWygasniecia;
                 System.TimeSpan subtract = dataWygasniecia.Subtract(dataZatwierdzenia);
-                if (subtract.Days <= 730)
+                if (subtract.Days <= 731)
                 {
                     _unitOfWork.Dostawca.Update(obj);
                     _unitOfWork.Save();

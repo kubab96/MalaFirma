@@ -181,11 +181,11 @@
                             <tbody>
                                 @foreach (var obj in query)
                                 {
-                                    @if (obj.WynikPrzewodnika == null)
+                                    @if (obj.WynikPrzewodnika == "")
                                     {
                                         <tr>
                                             <td width="33%">
-                                                @obj.Nazwa - Nie ukończono.
+                                                Nie wykonano
                                             </td>
                                         </tr>
                                     }
@@ -259,11 +259,11 @@
                             <tbody>
                                 @foreach (var obj in query)
                                 {
-                                    @if (obj.WynikSwiadectwa == null)
+                                    @if (obj.WynikSwiadectwa == "")
                                     {
                                         <tr>
                                             <td width="33%">
-                                                @obj.Nazwa - Nie ukończono.
+                                                Nie wykonano
                                             </td>
                                         </tr>
                                     }
@@ -308,6 +308,64 @@
             {
 
             }
+
+            @*Przegląd projektu*@
+            @if (Model.ZadowolenieKlienta != null)
+            {
+                <div class="card shadow mb-4" style="margin:15px; margin-top:-5px">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">V. Zadowolenie klienta</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Czas realizacji
+                                    </th>
+                                    <th>
+                                        Jakość realizacji
+                                    </th>
+                                    <th>
+                                        Uwagi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                        <tr>
+                                            <td width="33%">
+                                                @Model.ZadowolenieKlienta.CzasRealizacji
+                                            </td>
+                                            <td width="33%">
+      
+                                                    @Model.ZadowolenieKlienta.Jakosc
+                                            </td>
+                                            <td width="33%">
+                                                @if (Model.ZadowolenieKlienta.Uwagi == null)
+                                                {
+                                                    <h8>N/D</h8>
+                                                }
+                                                else
+                                                {
+                                                    @Model.ZadowolenieKlienta.Uwagi
+                                                }
+
+                                            </td>
+                                        </tr>
+ 
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+
+            }
+
             <a asp-controller="Zamowienie" asp-action="DetailsZamowienia" asp-route-id="@Model.Zamowienie.Id" class="btn btn-dark">
                 <i class="bi bi-arrow-left-circle"></i> Wróć do zamówienia
             </a>
