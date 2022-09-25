@@ -1,12 +1,12 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.DataAccess.Repository
+namespace SimpleQMS.DataAccess.Repository
 {
     public class OperacjaRepository : Repository<Operacja>, IOperacjaRepository
     {
@@ -23,6 +23,7 @@ namespace MalaFirma.DataAccess.Repository
             if (objFromDb != null)
             {
                 objFromDb.TrescOperacji = obj.TrescOperacji;
+                objFromDb.DataWykonania = obj.DataWykonania;
             }
         }
         public void AddId(Operacja obj)

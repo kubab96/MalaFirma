@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MalaFirma.DataAccess.Migrations
+namespace SimpleQMS.DataAccess.Migrations
 {
     public partial class baza : Migration
     {
@@ -571,12 +571,12 @@ namespace MalaFirma.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "eb101234-a922-4e0d-86ea-d6b27a735cdb", "Admin", "Admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "c5dccf36-4fbd-432c-8004-2a961848dbe2", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Imie", "KodPocztowy", "Kraj", "LockoutEnabled", "LockoutEnd", "Miasto", "Nazwisko", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UlicaNumer", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "b8358e8c-3877-4b60-a2da-7b4b9ac5da7e", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEJTSHn2i25bXbPcwI25XXOZwwZ4GSwA4rkXhyNH/h0roXr9TFxLyE+kyN7k0zYOOZg==", null, false, "", false, "", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "d56f6467-8929-450d-b100-5a0ca2a8fb90", null, true, "Admin", "", "", false, null, "", "", null, "admin", "AQAAAAEAACcQAAAAEEWxx3K5Mwbe0EUDhZqyCAkv0cl47t88bz5bVSI/DoQoRIUJMVoAIkQghq7+oLVjpQ==", null, false, "", false, "", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

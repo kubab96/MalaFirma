@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Models
+namespace SimpleQMS.Models
 {
     public class EditUserVM
     {

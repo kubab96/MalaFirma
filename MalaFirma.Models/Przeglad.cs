@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Models
+namespace SimpleQMS.Models
 {
     public class Przeglad
     {
@@ -20,7 +20,7 @@ namespace MalaFirma.Models
         public string? PlanowaneDzialania { get; set; }
         [DisplayName("Data przeglądu")]
         [DataType(DataType.DateTime)]
-        public DateTime DataPrzegladu { get; set; } = DateTime.Now;
+        public DateTime DataPrzegladu { get; set; }
         public int zamowienieId { get; set; }
         [ValidateNever]
         public Zamowienie Zamowienie { get; set; } 

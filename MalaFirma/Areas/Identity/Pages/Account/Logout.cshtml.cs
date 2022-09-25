@@ -4,14 +4,14 @@
 
 using System;
 using System.Threading.Tasks;
-using MalaFirma.Models;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace MalaFirma.Areas.Identity.Pages.Account
+namespace SimpleQMS.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {

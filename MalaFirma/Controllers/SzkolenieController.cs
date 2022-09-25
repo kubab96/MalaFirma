@@ -1,8 +1,8 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class SzkolenieController : Controller
     {

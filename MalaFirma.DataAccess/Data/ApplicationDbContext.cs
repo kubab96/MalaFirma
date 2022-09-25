@@ -1,10 +1,10 @@
-﻿using MalaFirma.Models;
-using MalaFirma.Utility;
+﻿using SimpleQMS.Models;
+using SimpleQMS.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace MalaFirma.DataAccess
+namespace SimpleQMS.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

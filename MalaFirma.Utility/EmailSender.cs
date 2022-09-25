@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Utility
+namespace SimpleQMS.Utility
 {
     public class EmailSender : IEmailSender
     {

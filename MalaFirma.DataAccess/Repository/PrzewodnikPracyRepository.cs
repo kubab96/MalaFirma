@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 
-namespace MalaFirma.DataAccess.Repository
+namespace SimpleQMS.DataAccess.Repository
 {
     public class PrzewodnikPracyRepository : Repository<PrzewodnikPracy>, IPrzewodnikPracyRepository
     {

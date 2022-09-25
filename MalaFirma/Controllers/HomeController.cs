@@ -1,9 +1,9 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class HomeController : Controller
     {

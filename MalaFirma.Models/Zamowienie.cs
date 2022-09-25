@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Models
+namespace SimpleQMS.Models
 {
     public class Zamowienie
     {

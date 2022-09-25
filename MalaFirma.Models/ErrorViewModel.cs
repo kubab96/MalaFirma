@@ -1,4 +1,4 @@
-﻿namespace MalaFirma.Models
+﻿namespace SimpleQMS.Models
 {
     public class ErrorViewModel
     {

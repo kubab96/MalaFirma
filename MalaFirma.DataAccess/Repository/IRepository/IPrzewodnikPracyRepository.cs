@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MalaFirma.Models;
+using SimpleQMS.Models;
 
-namespace MalaFirma.DataAccess.Repository.IRepository
+namespace SimpleQMS.DataAccess.Repository.IRepository
 {
     public interface IPrzewodnikPracyRepository : IRepository<PrzewodnikPracy>
     {

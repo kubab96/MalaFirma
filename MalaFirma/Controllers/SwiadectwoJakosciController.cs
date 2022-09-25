@@ -1,11 +1,11 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class SwiadectwoJakosciController : Controller
     {
@@ -74,7 +74,7 @@ namespace MalaFirma.Controllers
                         {
                             obj.PlanowaneDzialania = "N/D";
                         }
-                        obj.DataZakonczeniaSwiadectwa = DateTime.Now;
+                        obj.DataZakonczeniaSwiadectwa = DateTime.Now.Date;
                         _unitOfWork.SwiadectwoJakosci.Update(obj);
                         _unitOfWork.Save();
                         TempData["success"] = "Świadectwo jakości zostało zaktualizowane";

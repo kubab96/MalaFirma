@@ -1,11 +1,11 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoreLinq;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class PrzegladController : Controller
     {
@@ -185,7 +185,7 @@ namespace MalaFirma.Controllers
             if (przegladFormDb.WynikPrzegladu == "Nie wykonano")
             {
                 przegladFormDb.WynikPrzegladu = "";
-                przegladFormDb.DataPrzegladu = DateTime.Now;
+                przegladFormDb.DataPrzegladu = DateTime.Now.Date;
             }
             if (przegladFormDb == null)
             {
@@ -201,6 +201,7 @@ namespace MalaFirma.Controllers
         {
             if (ModelState.IsValid)
             {
+                obj.DataPrzegladu = DateTime.Now.Date;
                 _unitOfWork.Przeglad.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Zakończono przegląd zamówienia";
@@ -220,7 +221,6 @@ namespace MalaFirma.Controllers
             if (przegladFormDb.WynikPrzegladu == "Nie wykonano")
             {
                 przegladFormDb.WynikPrzegladu = "";
-                przegladFormDb.DataPrzegladu = DateTime.Now;
             }
             if (przegladFormDb == null)
             {

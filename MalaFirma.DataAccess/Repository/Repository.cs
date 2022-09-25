@@ -1,4 +1,4 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
+﻿using SimpleQMS.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.DataAccess.Repository
+namespace SimpleQMS.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

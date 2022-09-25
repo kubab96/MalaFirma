@@ -1,12 +1,12 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class PrzewodnikPracyController : Controller
     {
@@ -266,7 +266,7 @@ namespace MalaFirma.Controllers
                     }
                     else
                     {
-                        obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika = DateTime.Now;
+                        obj.PrzewodnikPracy.DataZakonczeniaPrzewodnika = DateTime.Now.Date;
                         _unitOfWork.PrzewodnikPracy.Update(obj.PrzewodnikPracy);
                         _unitOfWork.Save();
                         TempData["success"] = "Zakończono przewodnik pracy";

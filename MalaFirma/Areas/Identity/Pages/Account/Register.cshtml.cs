@@ -11,8 +11,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
-using MalaFirma.Models;
-using MalaFirma.Utility;
+using SimpleQMS.Models;
+using SimpleQMS.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-namespace MalaFirma.Areas.Identity.Pages.Account
+namespace SimpleQMS.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

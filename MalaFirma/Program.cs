@@ -1,15 +1,15 @@
-using MalaFirma.DataAccess;
+using SimpleQMS.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Builder;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.DataAccess.Repository;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.DataAccess.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using MalaFirma.Utility;
-using MalaFirma.Models;
+using SimpleQMS.Utility;
+using SimpleQMS.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

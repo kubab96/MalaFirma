@@ -6,12 +6,14 @@
     var query =
         from wym in Model.Wymagania
         join prze in Model.PrzewodnikiPracy on wym.Id equals prze.WymaganieId
+        join swia in Model.SwiadectwaJakosci on wym.Id equals swia.WymaganieId
         select new
         {
             wym.Nazwa,
             wym.Id,
             prze.WynikPrzewodnika,
-            IdPrze = prze?.Id
+            IdPrze = prze?.Id,
+            swia.WynikSwiadectwa
         };
 }
 <partial name="_Notification" />
@@ -118,7 +120,7 @@
                                 <tr>
                                     <td width="80%">@obj.Nazwa</td>
                                     <td style="text-align: center">
-                                        @if(@obj.WynikPrzewodnika == "")
+                                        @if(@obj.WynikSwiadectwa == "")
                                         {
                                             <a asp-controller="PrzewodnikPracy" asp-action="PrzewodnikPracy" asp-route-id="@obj.IdPrze" class="btn btn-info">
                                             <i class="bi bi-wrench"></i> Przewodnik pracy

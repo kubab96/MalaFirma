@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Models
+namespace SimpleQMS.Models
 {
     public class Operacja
     {
@@ -17,6 +17,8 @@ namespace MalaFirma.Models
         [DisplayName("Treść operacji")]
         [Required(ErrorMessage = "Treść wykonanej operacji jest wymagana")]
         public string TrescOperacji { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{MM/dd/yyyy HH:mm}")]
         public DateTime DataWykonania { get; set; } = DateTime.Now;
         public int PrzewodnikPracyId { get; set; }
         [ValidateNever]

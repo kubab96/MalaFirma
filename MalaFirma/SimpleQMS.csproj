@@ -51,8 +51,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MalaFirma.DataAccess\MalaFirma.DataAccess.csproj" />
-    <ProjectReference Include="..\MalaFirma.Utility\MalaFirma.Utility.csproj" />
+    <ProjectReference Include="..\MalaFirma.DataAccess\SimpleQMS.DataAccess.csproj" />
+    <ProjectReference Include="..\MalaFirma.Utility\SimpleQMS.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

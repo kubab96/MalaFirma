@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.Models
+namespace SimpleQMS.Models
 {
     public class ZamowienieWymaganieVM
     {
@@ -29,6 +29,8 @@ namespace MalaFirma.Models
         public KartaProjektu KartaProjektu { get; set; }
         [ValidateNever]
         public IEnumerable<PrzewodnikPracy> PrzewodnikiPracy { get; set; }
+        [ValidateNever]
+        public IEnumerable<SwiadectwoJakosci> SwiadectwaJakosci { get; set; }
         [ValidateNever]
         public PrzewodnikPracy PrzewodnikPracy { get; set; }
         [ValidateNever]

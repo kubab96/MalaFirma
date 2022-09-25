@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.DataAccess.Repository.IRepository
+namespace SimpleQMS.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork
     {

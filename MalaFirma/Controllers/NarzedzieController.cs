@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class NarzedzieController : Controller
     {

@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using MalaFirma.Models;
+using SimpleQMS.Models;
 
-namespace MalaFirma.Areas.Identity.Pages.Account
+namespace SimpleQMS.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

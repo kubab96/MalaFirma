@@ -1,11 +1,11 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class ZamowienieController : Controller
     {
@@ -178,6 +178,8 @@ namespace MalaFirma.Controllers
             model.ZadowolenieKlienta = _unitOfWork.ZadowolenieKlienta.GetFirstOrDefault(x => x.ZamowienieId == id);
             IEnumerable<PrzewodnikPracy> objPrzewodnikiList = _unitOfWork.PrzewodnikPracy.GetAll();
             model.PrzewodnikiPracy = objPrzewodnikiList;
+            IEnumerable<SwiadectwoJakosci> objSwiadectwaList = _unitOfWork.SwiadectwoJakosci.GetAll();
+            model.SwiadectwaJakosci = objSwiadectwaList;
             return View(model);
         }
 
@@ -272,7 +274,7 @@ namespace MalaFirma.Controllers
                 int x = Convert.ToInt32(TempData["Data1"]);
                 if (x == 0)
                 {
-                    return RedirectToAction("Wymagania", "Zamowienie", new { id =  obj.ZamowienieId });
+                    return RedirectToAction("Wymagania", "Zamowienie", new { id = obj.ZamowienieId });
                 }
                 else
                 {
@@ -300,6 +302,7 @@ namespace MalaFirma.Controllers
                 _unitOfWork.Wymaganie.AddId(obj.Wymaganie, idZamowienia);
                 var zamowienieId = _unitOfWork.Zamowienie.GetFirstOrDefault(x => x.Id == idZamowienia);
                 AddPrzewodnikPracy(obj.Wymaganie.Id, zamowienieId.Id);
+                AddSwiadectwoJakosci(obj.Wymaganie.Id, zamowienieId.Id);
                 _unitOfWork.Save();
                 TempData["success"] = "Wymaganie zostało pomyślnie utworzone";
                 return RedirectToAction("Wymagania", "Zamowienie", new { id = idZamowienia });
@@ -481,13 +484,27 @@ namespace MalaFirma.Controllers
             obj.ZadowolenieKlienta.ZamowienieId = idZamowienia;
             obj.ZadowolenieKlienta.Zamowienie = obj.Zamowienie;
             obj.ZadowolenieKlienta.KlientId = obj.Klient.Id;
-            obj.ZadowolenieKlienta.DataZakonczeniaZadowolenia = DateTime.Now;
+            obj.ZadowolenieKlienta.DataZakonczeniaZadowolenia = DateTime.Now.Date;
             if (ModelState.IsValid)
             {
-                _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
-                _unitOfWork.Save();
-                TempData["success"] = "Zakończono zadowolenie klienta";
-                return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = idZamowienia });
+                var lastWymaganie = _db.Wymagania.OrderByDescending(s => s.Id)
+                         .FirstOrDefault(s => s.ZamowienieId == idZamowienia);
+
+                var lastSwiadectwo = _db.SwiadectwoJakosci.OrderByDescending(s => s.Id)
+                                         .FirstOrDefault(s => s.WymaganieId == lastWymaganie.Id);
+
+                if (lastSwiadectwo.WynikSwiadectwa == "")
+                {
+                    TempData["error"] = "Wymagane jest zakończenie świadectwa jakości";
+                    return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = idZamowienia });
+                }
+                else
+                {
+                    _unitOfWork.ZadowolenieKlienta.Add(obj.ZadowolenieKlienta);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Zakończono zadowolenie klienta";
+                    return RedirectToAction("DetailsZamowienia", "Zamowienie", new { id = idZamowienia });
+                }
             }
             return View(obj);
         }
@@ -515,16 +532,16 @@ namespace MalaFirma.Controllers
             if (ModelState.IsValid)
             {
                 IEnumerable<Wymaganie> objWymaganieList = _unitOfWork.Wymaganie.GetAll().Where(x => x.ZamowienieId == zamowienieId);
-                foreach(var item in objWymaganieList)
+                foreach (var item in objWymaganieList)
                 {
                     var objPrzewodnik = _unitOfWork.PrzewodnikPracy.GetFirstOrDefault(x => x.WymaganieId == item.Id);
-                    if(obj.DataZakonczeniaZadowolenia < objPrzewodnik.DataZakonczeniaPrzewodnika)
+                    if (obj.DataZakonczeniaZadowolenia < objPrzewodnik.DataZakonczeniaPrzewodnika)
                     {
                         TempData["error"] = "Nie można wprowadzić daty dalszej, niż data zakończonego przewodnika";
                         return View(obj);
                     }
                 }
-                
+
                 _unitOfWork.ZadowolenieKlienta.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Zadowolenie klienta zostało zaktualizowane";
@@ -533,6 +550,6 @@ namespace MalaFirma.Controllers
             return View(obj);
         }
 
-        
+
     }
 }

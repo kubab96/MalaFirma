@@ -1,12 +1,12 @@
-﻿using MalaFirma.DataAccess;
-using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
-using MalaFirma.Utility;
+﻿using SimpleQMS.DataAccess;
+using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
+using SimpleQMS.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MalaFirma.Controllers
+namespace SimpleQMS.Controllers
 {
     public class PracownikController : Controller
     {

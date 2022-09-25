@@ -1,12 +1,12 @@
-﻿using MalaFirma.DataAccess.Repository.IRepository;
-using MalaFirma.Models;
+﻿using SimpleQMS.DataAccess.Repository.IRepository;
+using SimpleQMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalaFirma.DataAccess.Repository
+namespace SimpleQMS.DataAccess.Repository
 {
     public class NarzedzieRepository : Repository<Narzedzie>, INarzedzieRepository
     {
