@@ -9,6 +9,7 @@ using System.Linq;
 namespace SimpleQMS.Controllers
 {
     public class PrzewodnikPracyController : Controller
+        //test
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
